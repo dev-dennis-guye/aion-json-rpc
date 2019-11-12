@@ -1,5 +1,6 @@
 package org.aion.rpcgenerator;
 
+import freemarker.cache.FileTemplateLoader;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
@@ -96,9 +97,9 @@ public class Cli implements Runnable {
 
                 for (String template : templates) {// for each defined template file parse the template
                     logger.debug("Processing: {}", template);
-                    if (template.contains("errors")) {
+                    if (template.endsWith("errors")) {
                         processAllErrors(errorsOutputFile, errorSchemas, template, configuration);
-                    } else if (template.contains("rpc")) {
+                    } else if (template.endsWith("rpc")) {
                         processAllRPCTemplates(rpcOutputFile, rpcSchema, template, configuration);
                     } else if (template.endsWith("types")) {
                         processAllTypes(typesOutputFile, typeSchema, template, configuration);
@@ -115,16 +116,21 @@ public class Cli implements Runnable {
             logException(e);
             CommandLine.usage(this, System.out);//print out the help info if we
             // encountered a runtime exception
+            System.exit(-1);
         } catch (IOException e) {
             logger.warn("Failed due to io.");
             logException(e);
+            System.exit(-1);
         } catch (SAXException | ParserConfigurationException e) {
             logger.warn("Could not read the xml file.", e);
             logException(e);
+            System.exit(-1);
         } catch (TemplateException e) {
             logger.warn("Failed to create file from template.", e);
             logException(e);
+            System.exit(-1);
         }
+        System.exit(0);
     }
 
     private void logException(Exception e) {
@@ -276,9 +282,19 @@ public class Cli implements Runnable {
      */
     void process(Configuration configuration, String ftlFile, Writer writer, Map map)
         throws IOException, TemplateException {
+        File templateFile = new File(ftlFile);
+        File workingFileDir=new File(System.getProperty("user.dir"));
+        FileTemplateLoader templateLoader = new FileTemplateLoader(workingFileDir.getAbsoluteFile());
+        configuration.setTemplateLoader(templateLoader);
         logger.debug("Processing template with object map: {}", map);
-        Template template = configuration.getTemplate(ftlFile);
+        String path = getRelativePath(templateFile, workingFileDir);
+        logger.debug("Using file: {}", path);
+        Template template = configuration.getTemplate(path);
         template.process(map, writer);
+    }
+
+    private String getRelativePath(File file, File base) {
+        return base.toURI().relativize(file.toURI()).getPath();
     }
 
     /**
@@ -306,11 +322,13 @@ public class Cli implements Runnable {
         if (templates == null) {
             templates = new String[]{"definitions/templates/errors", "definitions/templates/rpc", "definitions/templates/types"};// default template paths
         }
+        logger.debug("Templates: [{}]", Arrays.stream(templates).collect(Collectors.joining(", ")));
         boolean validTemplates = true;
         for (String template :
             templates) {// checks that all the template paths are valid. If any have an issue fail
             File file = new File(template);
             if (!file.isDirectory()) {
+                logger.debug("Failed on: {}", template);
                 validTemplates = false;
                 continue;
             }
@@ -318,6 +336,7 @@ public class Cli implements Runnable {
             long fileCount = Arrays.stream(Paths.get(template).toFile().list()).filter(path -> path
                 .endsWith(".ftl")).count();// checks that the template path contains templates that can be read
             if (fileCount == 0) {
+                logger.debug("Failed on: {}", template);
                 logger.warn("Could not find any template files in the path.");
                 validTemplates = false;
             }
