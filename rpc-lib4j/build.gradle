@@ -1,0 +1,22 @@
+plugins {
+    id "com.github.johnrengelman.shadow" version "5.1.0"
+}
+
+shadowJar{
+    minimize()
+}
+
+group 'org.aion.rpc'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+    compile files("lib/util4j-cc9c754dd.jar")
+    compile files("lib/aion-types-22a3be9.jar")
+    compile group: 'org.json', name: 'json', version: '20180130'
+    compile group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5.10'
+    compile group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.3'
+}

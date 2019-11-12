@@ -1,0 +1,26 @@
+
+allprojects{
+    apply plugin: 'java'
+    apply plugin: 'idea'
+    buildDir="${rootDir.absolutePath}/build/${project.name}"
+}
+
+wrapper{
+    gradleVersion = '5.6'
+    distributionType = Wrapper.DistributionType.BIN
+}
+
+subprojects {
+    sourceCompatibility = 1.11
+    version = "0.1.1.${getCommitHash()}"
+}
+
+task genJava{
+
+}
+
+static def getCommitHash() {
+    def proc = "git rev-parse --short HEAD".execute()
+    proc.waitFor()
+    return proc.text.trim()
+}
