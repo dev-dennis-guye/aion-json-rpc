@@ -1,4 +1,8 @@
-
+def workingDir = rootDir.absolutePath
+def generatedFolderPath = "${workingDir}/out/"
+def generatorPath = "${workingDir}/generator"
+def javaTemplatePath = "${workingDir}/rpc-lib4j/templates"
+def specPath = "${workingDir}/spec/"
 allprojects{
     apply plugin: 'java'
     apply plugin: 'idea'
@@ -12,12 +16,82 @@ wrapper{
 
 subprojects {
     sourceCompatibility = 1.11
-    version = "0.1.1.${getCommitHash()}"
 }
 
-task genJava{
-
+task cleanGenerated {
+    delete ("${generatorPath}")
+    delete ("${generatedFolderPath}")
 }
+
+clean{
+    dependsOn 'cleanGenerated'
+}
+
+task createGenerator(type: Copy){
+    dependsOn(":rpc-gen:build")
+    def rpcZipFile = file("${rootDir.absolutePath}/build/rpc-gen/distributions/generator.zip")
+    def outputDir = file("${rootDir}/.")
+
+    from zipTree(rpcZipFile)
+    into outputDir
+}
+
+task packageJars4J(){
+    dependsOn  ':rpc-lib4j:build', ':rpc-lib4j:shadowJar'
+    doFirst{
+        println("Compiling jars")
+    }
+}
+
+
+task genJava(type:Exec){
+    dependsOn 'clean', 'createGenerator'
+    def stdOut = new ByteArrayOutputStream()
+    standardOutput=stdOut
+    commandLine("$generatorPath/bin/generator",
+            '-s',
+            "$specPath",
+            '-o', "$generatedFolderPath",
+            "--templates", "$javaTemplatePath/types",
+            "$javaTemplatePath/errors",
+            "$javaTemplatePath/rpc")
+
+    ant.echo(standardOutput.toString())
+
+    doLast {
+        println("moving files")
+        def javaLibraryPath = "${workingDir}/rpc-lib4j/src/main/org/aion/rpc"
+        def testsPath = "${workingDir}/rpc-lib4j/tests"
+        ant.echo(javaLibraryPath)
+
+        ant.move file: "${generatedFolderPath}/errors/RPCExceptions.java",
+                toFile: "${javaLibraryPath}/errors/RPCExceptions.java"
+
+        ant.move file: "${generatedFolderPath}/rpc/RPCClientMethods.java",
+                toFile: "${javaLibraryPath}/client/RPCClientMethods.java"
+
+        ant.move file: "${generatedFolderPath}/rpc/RPCServerMethods.java",
+                toFile: "${javaLibraryPath}/server/RPCServerMethods.java"
+
+        ant.move file: "${generatedFolderPath}/types/RPCTypes.java",
+                toFile: "${javaLibraryPath}/types/RPCTypes.java"
+
+        ant.move file: "${generatedFolderPath}/types/RPCTypesConverter.java",
+                toFile: "${javaLibraryPath}/types/RPCTypesConverter.java"
+
+        ant.move file: "${generatedFolderPath}/rpc/RPCTestUtilsInterface.java",
+                toFile: "${testsPath}/RPCTestUtilsInterface.java"
+
+        ant.move file: "${generatedFolderPath}/rpc/RPCMethodsTest.java",
+                toFile: "${testsPath}/RPCMethodsTest.java"
+
+
+    }
+    finalizedBy {
+        'packageJars4J'
+    }
+}
+
 
 static def getCommitHash() {
     def proc = "git rev-parse --short HEAD".execute()

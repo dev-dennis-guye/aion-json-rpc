@@ -1,3 +1,5 @@
 .idea
 .gradle
 build
+/generator/bin/
+/generator/lib/
