@@ -29,6 +29,7 @@
         typeName CDATA #REQUIRED>
     <!ELEMENT field (comment)*>
     <!ATTLIST field
+        defaultValue CDATA #IMPLIED
         fieldName CDATA #REQUIRED
         index CDATA #IMPLIED
         required CDATA #REQUIRED
@@ -103,6 +104,10 @@
             <union-element type="validateAddressResult" name="validateAddressResult"/>
             <union-element type="big_int_hex_string" name="bigInt"/>
             <union-element type="minerStats" name="minerStats"/>
+            <union-element type="pongEnum" name="pongEnum"/>
+            <union-element type="accountState" name="accountState"/>
+            <union-element type="opsTransaction" name="opsTransaction"/>
+            <union-element type="address_array" name="addressArray"/>
         </type-union>
         <type-union typeName="paramUnion" nullable="false">
             <!--Some of these types overlap eg address and blockSpecifier-->
@@ -114,6 +119,12 @@
             <union-element type="submitBlockParams" name="submitBlockParams"/>
             <union-element type="addressParams" name="addressParams"/>
             <union-element type="blockSpecifier" name="blockSpecifier"/>
+            <union-element name="transactionHashParams" type="transactionHashParams"/>
+            <union-element name="blockNumberParams" type="blockNumberParams"/>
+            <union-element name="blockHashParams" type="blockHashParams"/>
+            <union-element name="unlockAccountParams" type="unlockAccountParams"/>
+            <union-element name="lockAccountParams" type="lockAccountParams"/>
+            <union-element name="passwordParams" type="passwordParams"/>
         </type-union>
     </union>
     <composite>
@@ -222,6 +233,34 @@
             <field fieldName="minerHashrate" type="decimal_string" required="true"/>
             <field fieldName="minerHashrateShare" type="decimal_string" required="true"/>
         </type-composite>
+        <type-composite typeName="txLog">
+            <field fieldName="address" required="true" type="address"/>
+            <field fieldName="transactionIndex" required="true" type="int"/>
+            <field fieldName="data" required="true" type="data_hex_string"/>
+            <field fieldName="topics" required="true" type="data_hex_string_array"/>
+        </type-composite>
+        <type-composite typeName="accountState">
+            <field fieldName="address" type="address" required="true"/>
+            <field fieldName="blockNumber" type="long" required="true"/>
+            <field fieldName="balance" type="bigint" required="true"/>
+            <field fieldName="nonce" type="bigint" required="true"/>
+        </type-composite>
+        <type-composite typeName="opsTransaction">
+            <field fieldName="timestampVal" type="long" required="true"/>
+            <field fieldName="transactionHash" type="byte_32_string" required="true"/>
+            <field fieldName="blockNumber" type="long" required="true"/>
+            <field fieldName="blockHash" type="byte_32_string" required="true"/>
+            <field fieldName="nonce" type="big_int_hex_string" required="true"/>
+            <field fieldName="fromAddr" type="address" required="true"/>
+            <field fieldName="toAddr" type="address" required="true"/>
+            <field fieldName="value" type="big_int_hex_string" required="true"/>
+            <field fieldName="nrgPrice" type="long_hex_string" required="true"/>
+            <field fieldName="nrgConsumed" type="long_hex_string" required="true"/>
+            <field fieldName="data" type="data_hex_string" required="true"/>
+            <field fieldName="transactionIndex" type="int" required="true"/>
+            <field fieldName="beaconHash" type="byte_32_string" required="true"/>
+            <field fieldName="logs" type="txLog_array" required="true"/>
+        </type-composite>
     </composite>
     <array>
         <!--Array types are self explanatory. They can nest a composite type, constrained type, primitive type or param type.-->
@@ -229,7 +268,9 @@
         <type-list typeName="request_array" nestedType="request"/>
         <type-list typeName="response_array" nestedType="response"/>
         <type-list typeName="data_hex_string_array" nestedType="data_hex_string"/>
+        <type-list typeName="address_array" nestedType="address"/>
         <type-list typeName="txLogDetails_array" nestedType="txLogDetails"/>
+        <type-list typeName="txLog_array" nestedType="txLog"/>
         <type-list typeName="txDetails_array" nestedType="txDetails"/>
     </array>
     <constrained>
@@ -265,6 +306,9 @@
         <type-enum typeName="blockEnum" internalType="string">
             <value name="LATEST" var="latest"/>
         </type-enum>
+        <type-enum typeName="pongEnum" internalType="string">
+            <value name="PONG" var="pong"/>
+        </type-enum>
     </enum>
     <param>
         <!-- param types specific to each method-->
@@ -296,6 +340,27 @@
         </type-params-wrapper>
         <type-params-wrapper typeName="addressParams">
             <field fieldName="address" index="0" required="true" type="address"/>
+        </type-params-wrapper>
+        <type-params-wrapper typeName="unlockAccountParams">
+            <field fieldName="address" index="0" required="true" type="address"/>
+            <field fieldName="password" index="1" required="true" type="string"/>
+            <field fieldName="duration" index="2" required="false" type="int" defaultValue="300"/>
+        </type-params-wrapper>
+        <type-params-wrapper typeName="lockAccountParams">
+            <field fieldName="address" index="0" required="true" type="address"/>
+            <field fieldName="password" index="1" required="true" type="string"/>
+        </type-params-wrapper>
+        <type-params-wrapper typeName="blockHashParams">
+            <field fieldName="block" index="0" required="true" type="byte_32_string"/>
+        </type-params-wrapper>
+        <type-params-wrapper typeName="transactionHashParams">
+            <field fieldName="hash" index="0" required="true" type="byte_32_string"/>
+        </type-params-wrapper>
+        <type-params-wrapper typeName="passwordParams">
+            <field fieldName="password" index="0" required="true" type="string"/>
+        </type-params-wrapper>
+        <type-params-wrapper typeName="blockNumberParams">
+            <field fieldName="block" index="0" required="true" type="long"/>
         </type-params-wrapper>
         <!-- return type specific to each method-->
     </param>

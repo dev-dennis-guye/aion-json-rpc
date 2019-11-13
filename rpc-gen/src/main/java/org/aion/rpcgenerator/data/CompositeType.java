@@ -81,12 +81,13 @@ public class CompositeType extends Type {
         }
 
         public boolean setTypeDef(List<Type> types) {
-            for (var _type : types) {
-                if (_type.name.equals(this.typeName)) {
-                    this.type = _type;
+            for (var type : types) {
+                if (type.name.equals(this.typeName)) {
+                    this.type = type;
                     return true;
                 }
             }
+            System.out.println("Failed on :"+this.typeName);
             throw new NoSuchElementException();
         }
 

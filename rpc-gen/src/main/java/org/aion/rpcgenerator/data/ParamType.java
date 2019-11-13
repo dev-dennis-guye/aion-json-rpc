@@ -108,6 +108,7 @@ public class ParamType extends Type {
                     return true;
                 }
             }
+            System.out.println("Failed on: "+this.typeName);
             throw new NoSuchElementException();
         }
     }

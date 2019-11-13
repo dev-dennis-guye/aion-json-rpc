@@ -58,5 +58,14 @@
                 <error value="FailedToComputeMetrics"/>
             </errors>
         </method>
+        <method name="ping" param="voidParams" returnType="pongEnum"/>
+        <method name="ops_getAccountState" param="addressParams" returnType="accountState"/>
+        <method name="ops_getTransaction" param="transactionHashParams" returnType="opsTransaction"/>
+        <method name="ops_getBlockDetailsByNumber" param="blockNumberParams" returnType="blockDetails"/>
+        <method name="ops_getBlockDetailsByHash" param="blockHashParams" returnType="blockDetails"/>
+        <method name="personal_unlockAccount" param="unlockAccountParams" returnType="bool"/>
+        <method name="personal_lockAccount" param="lockAccountParams" returnType="bool"/>
+        <method name="personal_newAccount" param="passwordParams" returnType="address"/>
+        <method name="personal_listAccounts" param="voidParams" returnType="address_array"/>
     </methods>
 </rpc>

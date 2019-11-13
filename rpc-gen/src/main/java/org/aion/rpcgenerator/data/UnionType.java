@@ -64,6 +64,7 @@ public class UnionType extends Type {
                     return;
                 }
             }
+            System.out.println(this.typeName + " " + this.name);
             throw new IllegalStateException();
         }
 

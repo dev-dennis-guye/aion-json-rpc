@@ -2,6 +2,8 @@
     <#local typeName = type.name>
     <#if type.baseType?has_content>
         <#return toJavaType(type.baseType)>
+    <#elseif type.nestedType?has_content>
+        <#return "List<${toJavaType(type.nestedType)}>">
     <#elseif typeName=="uint16">
         <#return "Integer">
     <#elseif typeName=="uint32">
@@ -12,76 +14,8 @@
         <#return "BigInteger">
     <#elseif typeName=="uint256">
         <#return "BigInteger">
-    <#elseif typeName == "string">
-        <#return "String">
-    <#elseif typeName == "error">
-        <#return "RPCError">
-    <#elseif type.nestedType?has_content>
-        <#return "List<${toJavaType(type.nestedType)}>">
-    <#elseif typeName == "byte">
-        <#return "Byte">
-    <#elseif typeName == "bool">
-        <#return "Boolean">
-    <#elseif typeName == "byte-array">
-        <#return "ByteArray">
-    <#elseif typeName == "blockSpecifier">
-        <#return "BlockSpecifier">
-    <#elseif typeName == "blockDetails">
-        <#return "BlockDetails">
-    <#elseif typeName == "blockEnum">
-        <#return "BlockEnum">
-    <#elseif typeName=="blockSpecifierUnion">
-        <#return "BlockSpecifierUnion">
-    <#elseif typeName=="resultUnion">
-        <#return "ResultUnion">
-    <#elseif typeName=="paramUnion">
-        <#return "ParamUnion">
-    <#elseif typeName == "txDetails">
-        <#return "TransactionDetails">
-    <#elseif typeName == "address" >
-        <#return "AionAddress">
-    <#elseif typeName="request">
-        <#return "Request">
-    <#elseif typeName=="blockTemplate">
-        <#return "BlockTemplate">
-    <#elseif typeName=="submissionResult">
-        <#return "SubmissionResult">
-    <#elseif typeName=="validateAddressResult">
-        <#return "ValidateAddressResult">
-    <#elseif typeName=="minerStats">
-        <#return "MinerStats">
-    <#elseif typeName=="submitBlockParams">
-        <#return "SubmitBlockParams">
-    <#elseif typeName=="addressParams">
-        <#return "AddressParams">
-    <#elseif typeName=="ecRecoverParams">
-        <#return "EcRecoverParams">
-    <#elseif typeName=="voidParams">
-        <#return "VoidParams">
-    <#elseif typeName=="version_string">
-        <#return "VersionType">
-    <#elseif typeName=="long">
-        <#return "Long">
-    <#elseif typeName=="int">
-        <#return "Integer">
-    <#elseif typeName=="bigint">
-        <#return "BigInteger">
-    <#elseif typeName=="response">
-        <#return "Response">
-    <#elseif typeName=="any">
-        <#return "Object">
-    <#elseif typeName=="txLogDetails">
-        <#return "TxLogDetails">
-    <#elseif typeName=="submitSignatureParams">
-        <#return "SubmitSignatureParams">
-    <#elseif typeName=="submitSeedParams">
-        <#return "SubmitSeedParams">
-    <#elseif typeName=="addressParams">
-        <#return "AddressParams">
-    <#elseif typeName=="validateAddressResults">
-        <#return "ValidateAddressResults">
-    <#else >
-        <#return typeName>
+    <#else>
+        <#return toCamelCase(typeName)>
     </#if>
 </#function>
 
@@ -209,6 +143,26 @@
         <#return "AddressParams">
     <#elseif typeName=="validateAddressResults">
         <#return "ValidateAddressResults">
+    <#elseif typeName=="pongEnum">
+        <#return "PongEnum">
+    <#elseif typeName=="accountState">
+        <#return "AccountState">
+    <#elseif typeName=="txLog">
+        <#return "TxLog">
+    <#elseif typeName=="unlockAccountParams">
+        <#return "UnlockAccountParams">
+    <#elseif typeName=="lockAccountParams">
+        <#return "LockAccountParams">
+    <#elseif typeName=="blockHashParams">
+        <#return "BlockHashParams">
+    <#elseif typeName=="transactionHashParams">
+        <#return "TransactionHashParams">
+    <#elseif typeName=="passwordParams">
+        <#return "PasswordParams">
+    <#elseif typeName=="blockNumberParams">
+        <#return "BlockNumberParams">
+    <#elseif typeName == "string">
+        <#return "String">
     <#else >
         <#return typeName>
     </#if>
@@ -219,6 +173,8 @@
     <#local name = type.name>
     <#if name=="byte-array">
         <#return "r->r.byteArray">
+    <#elseif name=="address_array">
+        <#return "r->r.addressArray">
     <#elseif name=="bigint">
         <#return "r->r.bigInt">
     <#else>

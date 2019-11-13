@@ -7,6 +7,7 @@ import java.util.function.BiFunction;
 import org.aion.rpc.types.RPCTypes.*;
 import org.aion.rpc.types.RPCTypesConverter.*;
 import org.aion.types.AionAddress;
+import java.util.*;
 import org.aion.util.types.ByteArrayWrapper;
 
 /******************************************************************************
