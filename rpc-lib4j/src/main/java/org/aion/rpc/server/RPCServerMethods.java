@@ -12,7 +12,7 @@ import org.aion.util.types.ByteArrayWrapper;
 *
 * AUTO-GENERATED SOURCE FILE.  DO NOT EDIT MANUALLY -- YOUR CHANGES WILL
 * BE WIPED OUT WHEN THIS FILE GETS RE-GENERATED OR UPDATED.
-* GENERATED: 2019-11-21
+* GENERATED: 2019-11-22
 *
 *****************************************************************************/
 public interface RPCServerMethods extends RPC{
@@ -85,12 +85,66 @@ public interface RPCServerMethods extends RPC{
                 MinerStats result = rpc.getMinerStats(params.address);
                 res = MinerStatsConverter.encode(result);
             }else
+            if(request.method.equals("ping")){
+                VoidParams params= VoidParamsConverter.decode(request.params);
+                if (params==null) throw InvalidParamsRPCException.INSTANCE;
+                PongEnum result = rpc.ping();
+                res = PongEnumConverter.encode(result);
+            }else
+            if(request.method.equals("ops_getAccountState")){
+                AddressParams params= AddressParamsConverter.decode(request.params);
+                if (params==null) throw InvalidParamsRPCException.INSTANCE;
+                AccountState result = rpc.ops_getAccountState(params.address);
+                res = AccountStateConverter.encode(result);
+            }else
+            if(request.method.equals("ops_getTransaction")){
+                TransactionHashParams params= TransactionHashParamsConverter.decode(request.params);
+                if (params==null) throw InvalidParamsRPCException.INSTANCE;
+                opsTransaction result = rpc.ops_getTransaction(params.hash);
+                res = opsTransactionConverter.encode(result);
+            }else
+            if(request.method.equals("ops_getBlockDetailsByNumber")){
+                BlockNumberParams params= BlockNumberParamsConverter.decode(request.params);
+                if (params==null) throw InvalidParamsRPCException.INSTANCE;
+                BlockDetails result = rpc.ops_getBlockDetailsByNumber(params.block);
+                res = BlockDetailsConverter.encode(result);
+            }else
+            if(request.method.equals("ops_getBlockDetailsByHash")){
+                BlockHashParams params= BlockHashParamsConverter.decode(request.params);
+                if (params==null) throw InvalidParamsRPCException.INSTANCE;
+                BlockDetails result = rpc.ops_getBlockDetailsByHash(params.block);
+                res = BlockDetailsConverter.encode(result);
+            }else
+            if(request.method.equals("personal_unlockAccount")){
+                UnlockAccountParams params= UnlockAccountParamsConverter.decode(request.params);
+                if (params==null) throw InvalidParamsRPCException.INSTANCE;
+                Boolean result = rpc.personal_unlockAccount(params.address,params.password,params.duration);
+                res = BooleanConverter.encode(result);
+            }else
+            if(request.method.equals("personal_lockAccount")){
+                LockAccountParams params= LockAccountParamsConverter.decode(request.params);
+                if (params==null) throw InvalidParamsRPCException.INSTANCE;
+                Boolean result = rpc.personal_lockAccount(params.address,params.password);
+                res = BooleanConverter.encode(result);
+            }else
+            if(request.method.equals("personal_newAccount")){
+                PasswordParams params= PasswordParamsConverter.decode(request.params);
+                if (params==null) throw InvalidParamsRPCException.INSTANCE;
+                AionAddress result = rpc.personal_newAccount(params.password);
+                res = AionAddressConverter.encode(result);
+            }else
+            if(request.method.equals("personal_listAccounts")){
+                VoidParams params= VoidParamsConverter.decode(request.params);
+                if (params==null) throw InvalidParamsRPCException.INSTANCE;
+                List<AionAddress> result = rpc.personal_listAccounts();
+                res = AionAddressListConverter.encode(result);
+            }else
                 throw MethodNotFoundRPCException.INSTANCE;
         return res;
     }
 
     static Set<String> listMethods(){
-        return Set.of( "personal_ecRecover", "getseed", "submitseed", "submitsignature", "ops_getBlockDetails", "getblocktemplate", "submitblock", "validateaddress", "getDifficulty", "getMinerStats");
+        return Set.of( "personal_ecRecover", "getseed", "submitseed", "submitsignature", "ops_getBlockDetails", "getblocktemplate", "submitblock", "validateaddress", "getDifficulty", "getMinerStats", "ping", "ops_getAccountState", "ops_getTransaction", "ops_getBlockDetailsByNumber", "ops_getBlockDetailsByHash", "personal_unlockAccount", "personal_lockAccount", "personal_newAccount", "personal_listAccounts");
     }
 
     /**
@@ -175,6 +229,75 @@ public interface RPCServerMethods extends RPC{
     * @return 
     */
     MinerStats getMinerStats(AionAddress address);
+    /**
+    * 
+    * @return 
+    */
+    PongEnum ping();
+    /**
+    * 
+    * @param address 
+
+
+    * @return 
+    */
+    AccountState ops_getAccountState(AionAddress address);
+    /**
+    * 
+    * @param hash 
+
+
+    * @return 
+    */
+    opsTransaction ops_getTransaction(ByteArray hash);
+    /**
+    * 
+    * @param block 
+
+
+    * @return 
+    */
+    BlockDetails ops_getBlockDetailsByNumber(Long block);
+    /**
+    * 
+    * @param block 
+
+
+    * @return 
+    */
+    BlockDetails ops_getBlockDetailsByHash(ByteArray block);
+    /**
+    * 
+    * @param address 
+    * @param password 
+    * @param duration 
+
+
+    * @return 
+    */
+    Boolean personal_unlockAccount(AionAddress address,String password,Integer duration);
+    /**
+    * 
+    * @param address 
+    * @param password 
+
+
+    * @return 
+    */
+    Boolean personal_lockAccount(AionAddress address,String password);
+    /**
+    * 
+    * @param password 
+
+
+    * @return 
+    */
+    AionAddress personal_newAccount(String password);
+    /**
+    * 
+    * @return 
+    */
+    List<AionAddress> personal_listAccounts();
 
 
     static Map<String, String> methodInterfaceMap(){
@@ -188,7 +311,16 @@ public interface RPCServerMethods extends RPC{
             Map.entry("submitblock", "stratum"),
             Map.entry("validateaddress", "stratum"),
             Map.entry("getDifficulty", "stratum"),
-            Map.entry("getMinerStats", "stratum")
+            Map.entry("getMinerStats", "stratum"),
+            Map.entry("ping", ""),
+            Map.entry("ops_getAccountState", "ops"),
+            Map.entry("ops_getTransaction", "ops"),
+            Map.entry("ops_getBlockDetailsByNumber", "ops"),
+            Map.entry("ops_getBlockDetailsByHash", "ops"),
+            Map.entry("personal_unlockAccount", "personal"),
+            Map.entry("personal_lockAccount", "personal"),
+            Map.entry("personal_newAccount", "personal"),
+            Map.entry("personal_listAccounts", "personal")
         );
     }
 

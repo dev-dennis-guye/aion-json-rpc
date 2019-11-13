@@ -12,7 +12,7 @@ import org.json.JSONObject;
 *
 * AUTO-GENERATED SOURCE FILE.  DO NOT EDIT MANUALLY -- YOUR CHANGES WILL
 * BE WIPED OUT WHEN THIS FILE GETS RE-GENERATED OR UPDATED.
-* GENERATED: 2019-11-21
+* GENERATED: 2019-11-22
 *
 *****************************************************************************/
 public class RPCTypes{
@@ -152,7 +152,11 @@ public class RPCTypes{
         public final ValidateAddressResult validateAddressResult;
         public final BigInteger bigInt;
         public final MinerStats minerStats;
-        private ResultUnion(BlockDetails blockDetails ,AionAddress address ,ByteArray byteArray ,Boolean bool ,BlockTemplate blockTemplate ,SubmissionResult submissionResult ,ValidateAddressResult validateAddressResult ,BigInteger bigInt ,MinerStats minerStats ){
+        public final PongEnum pongEnum;
+        public final AccountState accountState;
+        public final opsTransaction opsTransaction;
+        public final List<AionAddress> addressArray;
+        private ResultUnion(BlockDetails blockDetails ,AionAddress address ,ByteArray byteArray ,Boolean bool ,BlockTemplate blockTemplate ,SubmissionResult submissionResult ,ValidateAddressResult validateAddressResult ,BigInteger bigInt ,MinerStats minerStats ,PongEnum pongEnum ,AccountState accountState ,opsTransaction opsTransaction ,List<AionAddress> addressArray ){
             this.blockDetails=blockDetails;
             this.address=address;
             this.byteArray=byteArray;
@@ -162,43 +166,63 @@ public class RPCTypes{
             this.validateAddressResult=validateAddressResult;
             this.bigInt=bigInt;
             this.minerStats=minerStats;
+            this.pongEnum=pongEnum;
+            this.accountState=accountState;
+            this.opsTransaction=opsTransaction;
+            this.addressArray=addressArray;
         }
 
         public ResultUnion(BlockDetails blockDetails){
-            this(blockDetails,null,null,null,null,null,null,null,null);
+            this(blockDetails,null,null,null,null,null,null,null,null,null,null,null,null);
             if(blockDetails == null) throw ParseErrorRPCException.INSTANCE;
         }
         public ResultUnion(AionAddress address){
-            this(null,address,null,null,null,null,null,null,null);
+            this(null,address,null,null,null,null,null,null,null,null,null,null,null);
             if(address == null) throw ParseErrorRPCException.INSTANCE;
         }
         public ResultUnion(ByteArray byteArray){
-            this(null,null,byteArray,null,null,null,null,null,null);
+            this(null,null,byteArray,null,null,null,null,null,null,null,null,null,null);
             if(byteArray == null) throw ParseErrorRPCException.INSTANCE;
         }
         public ResultUnion(Boolean bool){
-            this(null,null,null,bool,null,null,null,null,null);
+            this(null,null,null,bool,null,null,null,null,null,null,null,null,null);
             if(bool == null) throw ParseErrorRPCException.INSTANCE;
         }
         public ResultUnion(BlockTemplate blockTemplate){
-            this(null,null,null,null,blockTemplate,null,null,null,null);
+            this(null,null,null,null,blockTemplate,null,null,null,null,null,null,null,null);
             if(blockTemplate == null) throw ParseErrorRPCException.INSTANCE;
         }
         public ResultUnion(SubmissionResult submissionResult){
-            this(null,null,null,null,null,submissionResult,null,null,null);
+            this(null,null,null,null,null,submissionResult,null,null,null,null,null,null,null);
             if(submissionResult == null) throw ParseErrorRPCException.INSTANCE;
         }
         public ResultUnion(ValidateAddressResult validateAddressResult){
-            this(null,null,null,null,null,null,validateAddressResult,null,null);
+            this(null,null,null,null,null,null,validateAddressResult,null,null,null,null,null,null);
             if(validateAddressResult == null) throw ParseErrorRPCException.INSTANCE;
         }
         public ResultUnion(BigInteger bigInt){
-            this(null,null,null,null,null,null,null,bigInt,null);
+            this(null,null,null,null,null,null,null,bigInt,null,null,null,null,null);
             if(bigInt == null) throw ParseErrorRPCException.INSTANCE;
         }
         public ResultUnion(MinerStats minerStats){
-            this(null,null,null,null,null,null,null,null,minerStats);
+            this(null,null,null,null,null,null,null,null,minerStats,null,null,null,null);
             if(minerStats == null) throw ParseErrorRPCException.INSTANCE;
+        }
+        public ResultUnion(PongEnum pongEnum){
+            this(null,null,null,null,null,null,null,null,null,pongEnum,null,null,null);
+            if(pongEnum == null) throw ParseErrorRPCException.INSTANCE;
+        }
+        public ResultUnion(AccountState accountState){
+            this(null,null,null,null,null,null,null,null,null,null,accountState,null,null);
+            if(accountState == null) throw ParseErrorRPCException.INSTANCE;
+        }
+        public ResultUnion(opsTransaction opsTransaction){
+            this(null,null,null,null,null,null,null,null,null,null,null,opsTransaction,null);
+            if(opsTransaction == null) throw ParseErrorRPCException.INSTANCE;
+        }
+        public ResultUnion(List<AionAddress> addressArray){
+            this(null,null,null,null,null,null,null,null,null,null,null,null,addressArray);
+            if(addressArray == null) throw ParseErrorRPCException.INSTANCE;
         }
 
         public static ResultUnion wrap(BlockDetails blockDetails){
@@ -237,6 +261,22 @@ public class RPCTypes{
             if(minerStats == null) throw ParseErrorRPCException.INSTANCE;
             else return new ResultUnion(minerStats);
         }
+        public static ResultUnion wrap(PongEnum pongEnum){
+            if(pongEnum == null) throw ParseErrorRPCException.INSTANCE;
+            else return new ResultUnion(pongEnum);
+        }
+        public static ResultUnion wrap(AccountState accountState){
+            if(accountState == null) throw ParseErrorRPCException.INSTANCE;
+            else return new ResultUnion(accountState);
+        }
+        public static ResultUnion wrap(opsTransaction opsTransaction){
+            if(opsTransaction == null) throw ParseErrorRPCException.INSTANCE;
+            else return new ResultUnion(opsTransaction);
+        }
+        public static ResultUnion wrap(List<AionAddress> addressArray){
+            if(addressArray == null) throw ParseErrorRPCException.INSTANCE;
+            else return new ResultUnion(addressArray);
+        }
 
         public Object encode(){
             if(this.blockDetails != null) return BlockDetailsConverter.encode(blockDetails);
@@ -248,6 +288,10 @@ public class RPCTypes{
             if(this.validateAddressResult != null) return ValidateAddressResultConverter.encode(validateAddressResult);
             if(this.bigInt != null) return BigIntegerHexStringConverter.encode(bigInt);
             if(this.minerStats != null) return MinerStatsConverter.encode(minerStats);
+            if(this.pongEnum != null) return PongEnumConverter.encode(pongEnum);
+            if(this.accountState != null) return AccountStateConverter.encode(accountState);
+            if(this.opsTransaction != null) return opsTransactionConverter.encode(opsTransaction);
+            if(this.addressArray != null) return AionAddressListConverter.encode(addressArray);
             throw ParseErrorRPCException.INSTANCE;
         }
 
@@ -279,6 +323,18 @@ public class RPCTypes{
             try{
                 return new ResultUnion(MinerStatsConverter.decode(object));
             }catch(Exception e){}
+            try{
+                return new ResultUnion(PongEnumConverter.decode(object));
+            }catch(Exception e){}
+            try{
+                return new ResultUnion(AccountStateConverter.decode(object));
+            }catch(Exception e){}
+            try{
+                return new ResultUnion(opsTransactionConverter.decode(object));
+            }catch(Exception e){}
+            try{
+                return new ResultUnion(AionAddressListConverter.decode(object));
+            }catch(Exception e){}
             throw ParseErrorRPCException.INSTANCE;
         }
     }
@@ -294,7 +350,13 @@ public class RPCTypes{
         public final SubmitBlockParams submitBlockParams;
         public final AddressParams addressParams;
         public final BlockSpecifier blockSpecifier;
-        private ParamUnion(VoidParams voidParams ,EcRecoverParams ecRecoverParams ,SubmitSeedParams submitSeedParams ,SubmitSignatureParams submitSignatureParams ,SubmitBlockParams submitBlockParams ,AddressParams addressParams ,BlockSpecifier blockSpecifier ){
+        public final TransactionHashParams transactionHashParams;
+        public final BlockNumberParams blockNumberParams;
+        public final BlockHashParams blockHashParams;
+        public final UnlockAccountParams unlockAccountParams;
+        public final LockAccountParams lockAccountParams;
+        public final PasswordParams passwordParams;
+        private ParamUnion(VoidParams voidParams ,EcRecoverParams ecRecoverParams ,SubmitSeedParams submitSeedParams ,SubmitSignatureParams submitSignatureParams ,SubmitBlockParams submitBlockParams ,AddressParams addressParams ,BlockSpecifier blockSpecifier ,TransactionHashParams transactionHashParams ,BlockNumberParams blockNumberParams ,BlockHashParams blockHashParams ,UnlockAccountParams unlockAccountParams ,LockAccountParams lockAccountParams ,PasswordParams passwordParams ){
             this.voidParams=voidParams;
             this.ecRecoverParams=ecRecoverParams;
             this.submitSeedParams=submitSeedParams;
@@ -302,35 +364,65 @@ public class RPCTypes{
             this.submitBlockParams=submitBlockParams;
             this.addressParams=addressParams;
             this.blockSpecifier=blockSpecifier;
+            this.transactionHashParams=transactionHashParams;
+            this.blockNumberParams=blockNumberParams;
+            this.blockHashParams=blockHashParams;
+            this.unlockAccountParams=unlockAccountParams;
+            this.lockAccountParams=lockAccountParams;
+            this.passwordParams=passwordParams;
         }
 
         public ParamUnion(VoidParams voidParams){
-            this(voidParams,null,null,null,null,null,null);
+            this(voidParams,null,null,null,null,null,null,null,null,null,null,null,null);
             if(voidParams == null) throw ParseErrorRPCException.INSTANCE;
         }
         public ParamUnion(EcRecoverParams ecRecoverParams){
-            this(null,ecRecoverParams,null,null,null,null,null);
+            this(null,ecRecoverParams,null,null,null,null,null,null,null,null,null,null,null);
             if(ecRecoverParams == null) throw ParseErrorRPCException.INSTANCE;
         }
         public ParamUnion(SubmitSeedParams submitSeedParams){
-            this(null,null,submitSeedParams,null,null,null,null);
+            this(null,null,submitSeedParams,null,null,null,null,null,null,null,null,null,null);
             if(submitSeedParams == null) throw ParseErrorRPCException.INSTANCE;
         }
         public ParamUnion(SubmitSignatureParams submitSignatureParams){
-            this(null,null,null,submitSignatureParams,null,null,null);
+            this(null,null,null,submitSignatureParams,null,null,null,null,null,null,null,null,null);
             if(submitSignatureParams == null) throw ParseErrorRPCException.INSTANCE;
         }
         public ParamUnion(SubmitBlockParams submitBlockParams){
-            this(null,null,null,null,submitBlockParams,null,null);
+            this(null,null,null,null,submitBlockParams,null,null,null,null,null,null,null,null);
             if(submitBlockParams == null) throw ParseErrorRPCException.INSTANCE;
         }
         public ParamUnion(AddressParams addressParams){
-            this(null,null,null,null,null,addressParams,null);
+            this(null,null,null,null,null,addressParams,null,null,null,null,null,null,null);
             if(addressParams == null) throw ParseErrorRPCException.INSTANCE;
         }
         public ParamUnion(BlockSpecifier blockSpecifier){
-            this(null,null,null,null,null,null,blockSpecifier);
+            this(null,null,null,null,null,null,blockSpecifier,null,null,null,null,null,null);
             if(blockSpecifier == null) throw ParseErrorRPCException.INSTANCE;
+        }
+        public ParamUnion(TransactionHashParams transactionHashParams){
+            this(null,null,null,null,null,null,null,transactionHashParams,null,null,null,null,null);
+            if(transactionHashParams == null) throw ParseErrorRPCException.INSTANCE;
+        }
+        public ParamUnion(BlockNumberParams blockNumberParams){
+            this(null,null,null,null,null,null,null,null,blockNumberParams,null,null,null,null);
+            if(blockNumberParams == null) throw ParseErrorRPCException.INSTANCE;
+        }
+        public ParamUnion(BlockHashParams blockHashParams){
+            this(null,null,null,null,null,null,null,null,null,blockHashParams,null,null,null);
+            if(blockHashParams == null) throw ParseErrorRPCException.INSTANCE;
+        }
+        public ParamUnion(UnlockAccountParams unlockAccountParams){
+            this(null,null,null,null,null,null,null,null,null,null,unlockAccountParams,null,null);
+            if(unlockAccountParams == null) throw ParseErrorRPCException.INSTANCE;
+        }
+        public ParamUnion(LockAccountParams lockAccountParams){
+            this(null,null,null,null,null,null,null,null,null,null,null,lockAccountParams,null);
+            if(lockAccountParams == null) throw ParseErrorRPCException.INSTANCE;
+        }
+        public ParamUnion(PasswordParams passwordParams){
+            this(null,null,null,null,null,null,null,null,null,null,null,null,passwordParams);
+            if(passwordParams == null) throw ParseErrorRPCException.INSTANCE;
         }
 
         public static ParamUnion wrap(VoidParams voidParams){
@@ -361,6 +453,30 @@ public class RPCTypes{
             if(blockSpecifier == null) throw ParseErrorRPCException.INSTANCE;
             else return new ParamUnion(blockSpecifier);
         }
+        public static ParamUnion wrap(TransactionHashParams transactionHashParams){
+            if(transactionHashParams == null) throw ParseErrorRPCException.INSTANCE;
+            else return new ParamUnion(transactionHashParams);
+        }
+        public static ParamUnion wrap(BlockNumberParams blockNumberParams){
+            if(blockNumberParams == null) throw ParseErrorRPCException.INSTANCE;
+            else return new ParamUnion(blockNumberParams);
+        }
+        public static ParamUnion wrap(BlockHashParams blockHashParams){
+            if(blockHashParams == null) throw ParseErrorRPCException.INSTANCE;
+            else return new ParamUnion(blockHashParams);
+        }
+        public static ParamUnion wrap(UnlockAccountParams unlockAccountParams){
+            if(unlockAccountParams == null) throw ParseErrorRPCException.INSTANCE;
+            else return new ParamUnion(unlockAccountParams);
+        }
+        public static ParamUnion wrap(LockAccountParams lockAccountParams){
+            if(lockAccountParams == null) throw ParseErrorRPCException.INSTANCE;
+            else return new ParamUnion(lockAccountParams);
+        }
+        public static ParamUnion wrap(PasswordParams passwordParams){
+            if(passwordParams == null) throw ParseErrorRPCException.INSTANCE;
+            else return new ParamUnion(passwordParams);
+        }
 
         public Object encode(){
             if(this.voidParams != null) return VoidParamsConverter.encode(voidParams);
@@ -370,6 +486,12 @@ public class RPCTypes{
             if(this.submitBlockParams != null) return SubmitBlockParamsConverter.encode(submitBlockParams);
             if(this.addressParams != null) return AddressParamsConverter.encode(addressParams);
             if(this.blockSpecifier != null) return BlockSpecifierConverter.encode(blockSpecifier);
+            if(this.transactionHashParams != null) return TransactionHashParamsConverter.encode(transactionHashParams);
+            if(this.blockNumberParams != null) return BlockNumberParamsConverter.encode(blockNumberParams);
+            if(this.blockHashParams != null) return BlockHashParamsConverter.encode(blockHashParams);
+            if(this.unlockAccountParams != null) return UnlockAccountParamsConverter.encode(unlockAccountParams);
+            if(this.lockAccountParams != null) return LockAccountParamsConverter.encode(lockAccountParams);
+            if(this.passwordParams != null) return PasswordParamsConverter.encode(passwordParams);
             throw ParseErrorRPCException.INSTANCE;
         }
 
@@ -394,6 +516,24 @@ public class RPCTypes{
             }catch(Exception e){}
             try{
                 return new ParamUnion(BlockSpecifierConverter.decode(object));
+            }catch(Exception e){}
+            try{
+                return new ParamUnion(TransactionHashParamsConverter.decode(object));
+            }catch(Exception e){}
+            try{
+                return new ParamUnion(BlockNumberParamsConverter.decode(object));
+            }catch(Exception e){}
+            try{
+                return new ParamUnion(BlockHashParamsConverter.decode(object));
+            }catch(Exception e){}
+            try{
+                return new ParamUnion(UnlockAccountParamsConverter.decode(object));
+            }catch(Exception e){}
+            try{
+                return new ParamUnion(LockAccountParamsConverter.decode(object));
+            }catch(Exception e){}
+            try{
+                return new ParamUnion(PasswordParamsConverter.decode(object));
             }catch(Exception e){}
             throw ParseErrorRPCException.INSTANCE;
         }
@@ -683,6 +823,87 @@ public class RPCTypes{
             this.minerHashrateShare=minerHashrateShare;
         }
     }
+    public static final class TxLog {
+        public final AionAddress address;
+        public final Integer transactionIndex;
+        public final ByteArray data;
+        public final List<ByteArray> topics;
+
+        public TxLog(AionAddress address ,Integer transactionIndex ,ByteArray data ,List<ByteArray> topics ){
+            if(address==null) throw ParseErrorRPCException.INSTANCE;
+            this.address=address;
+            if(transactionIndex==null) throw ParseErrorRPCException.INSTANCE;
+            this.transactionIndex=transactionIndex;
+            if(data==null) throw ParseErrorRPCException.INSTANCE;
+            this.data=data;
+            if(topics==null) throw ParseErrorRPCException.INSTANCE;
+            this.topics=topics;
+        }
+    }
+    public static final class AccountState {
+        public final AionAddress address;
+        public final Long blockNumber;
+        public final BigInteger balance;
+        public final BigInteger nonce;
+
+        public AccountState(AionAddress address ,Long blockNumber ,BigInteger balance ,BigInteger nonce ){
+            if(address==null) throw ParseErrorRPCException.INSTANCE;
+            this.address=address;
+            if(blockNumber==null) throw ParseErrorRPCException.INSTANCE;
+            this.blockNumber=blockNumber;
+            if(balance==null) throw ParseErrorRPCException.INSTANCE;
+            this.balance=balance;
+            if(nonce==null) throw ParseErrorRPCException.INSTANCE;
+            this.nonce=nonce;
+        }
+    }
+    public static final class opsTransaction {
+        public final Long timestampVal;
+        public final ByteArray transactionHash;
+        public final Long blockNumber;
+        public final ByteArray blockHash;
+        public final BigInteger nonce;
+        public final AionAddress fromAddr;
+        public final AionAddress toAddr;
+        public final BigInteger value;
+        public final Long nrgPrice;
+        public final Long nrgConsumed;
+        public final ByteArray data;
+        public final Integer transactionIndex;
+        public final ByteArray beaconHash;
+        public final List<TxLog> logs;
+
+        public opsTransaction(Long timestampVal ,ByteArray transactionHash ,Long blockNumber ,ByteArray blockHash ,BigInteger nonce ,AionAddress fromAddr ,AionAddress toAddr ,BigInteger value ,Long nrgPrice ,Long nrgConsumed ,ByteArray data ,Integer transactionIndex ,ByteArray beaconHash ,List<TxLog> logs ){
+            if(timestampVal==null) throw ParseErrorRPCException.INSTANCE;
+            this.timestampVal=timestampVal;
+            if(transactionHash==null) throw ParseErrorRPCException.INSTANCE;
+            this.transactionHash=transactionHash;
+            if(blockNumber==null) throw ParseErrorRPCException.INSTANCE;
+            this.blockNumber=blockNumber;
+            if(blockHash==null) throw ParseErrorRPCException.INSTANCE;
+            this.blockHash=blockHash;
+            if(nonce==null) throw ParseErrorRPCException.INSTANCE;
+            this.nonce=nonce;
+            if(fromAddr==null) throw ParseErrorRPCException.INSTANCE;
+            this.fromAddr=fromAddr;
+            if(toAddr==null) throw ParseErrorRPCException.INSTANCE;
+            this.toAddr=toAddr;
+            if(value==null) throw ParseErrorRPCException.INSTANCE;
+            this.value=value;
+            if(nrgPrice==null) throw ParseErrorRPCException.INSTANCE;
+            this.nrgPrice=nrgPrice;
+            if(nrgConsumed==null) throw ParseErrorRPCException.INSTANCE;
+            this.nrgConsumed=nrgConsumed;
+            if(data==null) throw ParseErrorRPCException.INSTANCE;
+            this.data=data;
+            if(transactionIndex==null) throw ParseErrorRPCException.INSTANCE;
+            this.transactionIndex=transactionIndex;
+            if(beaconHash==null) throw ParseErrorRPCException.INSTANCE;
+            this.beaconHash=beaconHash;
+            if(logs==null) throw ParseErrorRPCException.INSTANCE;
+            this.logs=logs;
+        }
+    }
 
     public enum VersionType{
         Version2("2.0");
@@ -710,6 +931,21 @@ public class RPCTypes{
             if(x==null) throw ParseErrorRPCException.INSTANCE;
             if(x.equals("latest")){
                 return LATEST;
+            }else
+                throw ParseErrorRPCException.INSTANCE;
+        }
+    }
+    public enum PongEnum{
+        PONG("pong");
+        public final String x;
+        PongEnum(String x){
+            this.x = x;
+        }
+
+        public static PongEnum fromString(String x){
+            if(x==null) throw ParseErrorRPCException.INSTANCE;
+            if(x.equals("pong")){
+                return PONG;
             }else
                 throw ParseErrorRPCException.INSTANCE;
         }
@@ -804,6 +1040,71 @@ public class RPCTypes{
         public AddressParams(AionAddress address ){
             if(address==null) throw ParseErrorRPCException.INSTANCE;
             this.address= address;
+        }
+    }
+    public static final class UnlockAccountParams {
+        public final AionAddress address;
+        
+        public final String password;
+        
+        public final Integer duration;
+        public final Integer durationDefaultValue=IntegerConverter.decode("300");
+
+        public UnlockAccountParams(AionAddress address ,String password ,Integer duration ){
+            if(address==null) throw ParseErrorRPCException.INSTANCE;
+            this.address= address;
+            if(password==null) throw ParseErrorRPCException.INSTANCE;
+            this.password= password;
+            this.duration= duration==null? durationDefaultValue: duration;
+        }
+    }
+    public static final class LockAccountParams {
+        public final AionAddress address;
+        
+        public final String password;
+        
+
+        public LockAccountParams(AionAddress address ,String password ){
+            if(address==null) throw ParseErrorRPCException.INSTANCE;
+            this.address= address;
+            if(password==null) throw ParseErrorRPCException.INSTANCE;
+            this.password= password;
+        }
+    }
+    public static final class BlockHashParams {
+        public final ByteArray block;
+        
+
+        public BlockHashParams(ByteArray block ){
+            if(block==null) throw ParseErrorRPCException.INSTANCE;
+            this.block= block;
+        }
+    }
+    public static final class TransactionHashParams {
+        public final ByteArray hash;
+        
+
+        public TransactionHashParams(ByteArray hash ){
+            if(hash==null) throw ParseErrorRPCException.INSTANCE;
+            this.hash= hash;
+        }
+    }
+    public static final class PasswordParams {
+        public final String password;
+        
+
+        public PasswordParams(String password ){
+            if(password==null) throw ParseErrorRPCException.INSTANCE;
+            this.password= password;
+        }
+    }
+    public static final class BlockNumberParams {
+        public final Long block;
+        
+
+        public BlockNumberParams(Long block ){
+            if(block==null) throw ParseErrorRPCException.INSTANCE;
+            this.block= block;
         }
     }
 }

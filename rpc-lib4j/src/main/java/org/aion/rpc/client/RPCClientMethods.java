@@ -6,13 +6,14 @@ import java.util.function.BiFunction;
 import org.aion.rpc.types.RPCTypes.*;
 import org.aion.rpc.types.RPCTypesConverter.*;
 import org.aion.types.AionAddress;
+import java.util.*;
 import org.aion.util.types.ByteArrayWrapper;
 
 /******************************************************************************
 *
 * AUTO-GENERATED SOURCE FILE.  DO NOT EDIT MANUALLY -- YOUR CHANGES WILL
 * BE WIPED OUT WHEN THIS FILE GETS RE-GENERATED OR UPDATED.
-* GENERATED: 2019-11-21
+* GENERATED: 2019-11-22
 *
 *****************************************************************************/
 public class RPCClientMethods{
@@ -155,6 +156,120 @@ public class RPCClientMethods{
         Request request = new Request(generator.generateID(), "getMinerStats", AddressParamsConverter.encode(params), VersionType.Version2);
 
         return provider.execute(request, MinerStatsConverter::decode);
+    }
+    /**
+    * 
+    * @return 
+    */
+    public final PongEnum ping(){
+        VoidParams params= new VoidParams();
+        Request request = new Request(generator.generateID(), "ping", VoidParamsConverter.encode(params), VersionType.Version2);
+
+        return provider.execute(request, PongEnumConverter::decode);
+    }
+    /**
+    * 
+    * @param address 
+
+
+    * @return 
+    */
+    public final AccountState ops_getAccountState(AionAddress address){
+        AddressParams params= new AddressParams(address);
+        Request request = new Request(generator.generateID(), "ops_getAccountState", AddressParamsConverter.encode(params), VersionType.Version2);
+
+        return provider.execute(request, AccountStateConverter::decode);
+    }
+    /**
+    * 
+    * @param hash 
+
+
+    * @return 
+    */
+    public final opsTransaction ops_getTransaction(ByteArray hash){
+        TransactionHashParams params= new TransactionHashParams(hash);
+        Request request = new Request(generator.generateID(), "ops_getTransaction", TransactionHashParamsConverter.encode(params), VersionType.Version2);
+
+        return provider.execute(request, opsTransactionConverter::decode);
+    }
+    /**
+    * 
+    * @param block 
+
+
+    * @return 
+    */
+    public final BlockDetails ops_getBlockDetailsByNumber(Long block){
+        BlockNumberParams params= new BlockNumberParams(block);
+        Request request = new Request(generator.generateID(), "ops_getBlockDetailsByNumber", BlockNumberParamsConverter.encode(params), VersionType.Version2);
+
+        return provider.execute(request, BlockDetailsConverter::decode);
+    }
+    /**
+    * 
+    * @param block 
+
+
+    * @return 
+    */
+    public final BlockDetails ops_getBlockDetailsByHash(ByteArray block){
+        BlockHashParams params= new BlockHashParams(block);
+        Request request = new Request(generator.generateID(), "ops_getBlockDetailsByHash", BlockHashParamsConverter.encode(params), VersionType.Version2);
+
+        return provider.execute(request, BlockDetailsConverter::decode);
+    }
+    /**
+    * 
+    * @param address 
+    * @param password 
+    * @param duration 
+
+
+    * @return 
+    */
+    public final Boolean personal_unlockAccount(AionAddress address,String password,Integer duration){
+        UnlockAccountParams params= new UnlockAccountParams(address ,password ,duration);
+        Request request = new Request(generator.generateID(), "personal_unlockAccount", UnlockAccountParamsConverter.encode(params), VersionType.Version2);
+
+        return provider.execute(request, BooleanConverter::decode);
+    }
+    /**
+    * 
+    * @param address 
+    * @param password 
+
+
+    * @return 
+    */
+    public final Boolean personal_lockAccount(AionAddress address,String password){
+        LockAccountParams params= new LockAccountParams(address ,password);
+        Request request = new Request(generator.generateID(), "personal_lockAccount", LockAccountParamsConverter.encode(params), VersionType.Version2);
+
+        return provider.execute(request, BooleanConverter::decode);
+    }
+    /**
+    * 
+    * @param password 
+
+
+    * @return 
+    */
+    public final AionAddress personal_newAccount(String password){
+        PasswordParams params= new PasswordParams(password);
+        Request request = new Request(generator.generateID(), "personal_newAccount", PasswordParamsConverter.encode(params), VersionType.Version2);
+
+        return provider.execute(request, AionAddressConverter::decode);
+    }
+    /**
+    * 
+    * @return 
+    */
+    public final List<AionAddress> personal_listAccounts(){
+        VoidParams params= new VoidParams();
+        Request request = new Request(generator.generateID(), "personal_listAccounts", VoidParamsConverter.encode(params), VersionType.Version2);
+
+        return provider.execute(request, AionAddressListConverter::decode);
     }
     /**
     * Returns the key used to sign an input string.
@@ -307,5 +422,137 @@ public class RPCClientMethods{
         Request request = new Request(generator.generateID(), "getMinerStats", AddressParamsConverter.encode(params), VersionType.Version2);
 
         return provider.executeAsync(request, MinerStatsConverter::decode, asyncTask);
+    }
+    /**
+    * 
+    * @param asyncTask The task to be executed upon successfuly or exceptional completion of this RPC request.
+    * @param <O> the result type of the async task.
+    * @return The result of this asynchronous request
+    */
+    public final <O> CompletableFuture<O> ping( BiFunction<PongEnum, RPCError, O> asyncTask){
+        VoidParams params= new VoidParams();
+        Request request = new Request(generator.generateID(), "ping", VoidParamsConverter.encode(params), VersionType.Version2);
+
+        return provider.executeAsync(request, PongEnumConverter::decode, asyncTask);
+    }
+    /**
+    * 
+    * @param address 
+
+
+    * @param asyncTask The task to be executed upon successfuly or exceptional completion of this RPC request.
+    * @param <O> the result type of the async task.
+    * @return The result of this asynchronous request
+    */
+    public final <O> CompletableFuture<O> ops_getAccountState(AionAddress address, BiFunction<AccountState, RPCError, O> asyncTask){
+        AddressParams params= new AddressParams(address);
+        Request request = new Request(generator.generateID(), "ops_getAccountState", AddressParamsConverter.encode(params), VersionType.Version2);
+
+        return provider.executeAsync(request, AccountStateConverter::decode, asyncTask);
+    }
+    /**
+    * 
+    * @param hash 
+
+
+    * @param asyncTask The task to be executed upon successfuly or exceptional completion of this RPC request.
+    * @param <O> the result type of the async task.
+    * @return The result of this asynchronous request
+    */
+    public final <O> CompletableFuture<O> ops_getTransaction(ByteArray hash, BiFunction<opsTransaction, RPCError, O> asyncTask){
+        TransactionHashParams params= new TransactionHashParams(hash);
+        Request request = new Request(generator.generateID(), "ops_getTransaction", TransactionHashParamsConverter.encode(params), VersionType.Version2);
+
+        return provider.executeAsync(request, opsTransactionConverter::decode, asyncTask);
+    }
+    /**
+    * 
+    * @param block 
+
+
+    * @param asyncTask The task to be executed upon successfuly or exceptional completion of this RPC request.
+    * @param <O> the result type of the async task.
+    * @return The result of this asynchronous request
+    */
+    public final <O> CompletableFuture<O> ops_getBlockDetailsByNumber(Long block, BiFunction<BlockDetails, RPCError, O> asyncTask){
+        BlockNumberParams params= new BlockNumberParams(block);
+        Request request = new Request(generator.generateID(), "ops_getBlockDetailsByNumber", BlockNumberParamsConverter.encode(params), VersionType.Version2);
+
+        return provider.executeAsync(request, BlockDetailsConverter::decode, asyncTask);
+    }
+    /**
+    * 
+    * @param block 
+
+
+    * @param asyncTask The task to be executed upon successfuly or exceptional completion of this RPC request.
+    * @param <O> the result type of the async task.
+    * @return The result of this asynchronous request
+    */
+    public final <O> CompletableFuture<O> ops_getBlockDetailsByHash(ByteArray block, BiFunction<BlockDetails, RPCError, O> asyncTask){
+        BlockHashParams params= new BlockHashParams(block);
+        Request request = new Request(generator.generateID(), "ops_getBlockDetailsByHash", BlockHashParamsConverter.encode(params), VersionType.Version2);
+
+        return provider.executeAsync(request, BlockDetailsConverter::decode, asyncTask);
+    }
+    /**
+    * 
+    * @param address 
+    * @param password 
+    * @param duration 
+
+
+    * @param asyncTask The task to be executed upon successfuly or exceptional completion of this RPC request.
+    * @param <O> the result type of the async task.
+    * @return The result of this asynchronous request
+    */
+    public final <O> CompletableFuture<O> personal_unlockAccount(AionAddress address,String password,Integer duration, BiFunction<Boolean, RPCError, O> asyncTask){
+        UnlockAccountParams params= new UnlockAccountParams(address ,password ,duration);
+        Request request = new Request(generator.generateID(), "personal_unlockAccount", UnlockAccountParamsConverter.encode(params), VersionType.Version2);
+
+        return provider.executeAsync(request, BooleanConverter::decode, asyncTask);
+    }
+    /**
+    * 
+    * @param address 
+    * @param password 
+
+
+    * @param asyncTask The task to be executed upon successfuly or exceptional completion of this RPC request.
+    * @param <O> the result type of the async task.
+    * @return The result of this asynchronous request
+    */
+    public final <O> CompletableFuture<O> personal_lockAccount(AionAddress address,String password, BiFunction<Boolean, RPCError, O> asyncTask){
+        LockAccountParams params= new LockAccountParams(address ,password);
+        Request request = new Request(generator.generateID(), "personal_lockAccount", LockAccountParamsConverter.encode(params), VersionType.Version2);
+
+        return provider.executeAsync(request, BooleanConverter::decode, asyncTask);
+    }
+    /**
+    * 
+    * @param password 
+
+
+    * @param asyncTask The task to be executed upon successfuly or exceptional completion of this RPC request.
+    * @param <O> the result type of the async task.
+    * @return The result of this asynchronous request
+    */
+    public final <O> CompletableFuture<O> personal_newAccount(String password, BiFunction<AionAddress, RPCError, O> asyncTask){
+        PasswordParams params= new PasswordParams(password);
+        Request request = new Request(generator.generateID(), "personal_newAccount", PasswordParamsConverter.encode(params), VersionType.Version2);
+
+        return provider.executeAsync(request, AionAddressConverter::decode, asyncTask);
+    }
+    /**
+    * 
+    * @param asyncTask The task to be executed upon successfuly or exceptional completion of this RPC request.
+    * @param <O> the result type of the async task.
+    * @return The result of this asynchronous request
+    */
+    public final <O> CompletableFuture<O> personal_listAccounts( BiFunction<List<AionAddress>, RPCError, O> asyncTask){
+        VoidParams params= new VoidParams();
+        Request request = new Request(generator.generateID(), "personal_listAccounts", VoidParamsConverter.encode(params), VersionType.Version2);
+
+        return provider.executeAsync(request, AionAddressListConverter::decode, asyncTask);
     }
 }

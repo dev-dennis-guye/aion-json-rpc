@@ -79,7 +79,7 @@ import org.junit.Test;
 *
 * AUTO-GENERATED SOURCE FILE.  DO NOT EDIT MANUALLY -- YOUR CHANGES WILL
 * BE WIPED OUT WHEN THIS FILE GETS RE-GENERATED OR UPDATED.
-* GENERATED: 2019-11-21
+* GENERATED: 2019-11-22
 *
 *****************************************************************************/
 public class RPCMethodsTest{
@@ -214,6 +214,69 @@ public class RPCMethodsTest{
         String method = "getMinerStats";
         Request successfulRequest = testUtils.getMinerStats_succeeds();
         ResultUnion resultUnion = testUtils.getMinerStatsRPC().execute(request);
+        assertNotNull(resultUnion);
+        resultUnion.encode();
+    }
+    public void pingTest(){
+        String method = "ping";
+        Request successfulRequest = testUtils.ping_succeeds();
+        ResultUnion resultUnion = testUtils.pingRPC().execute(request);
+        assertNotNull(resultUnion);
+        resultUnion.encode();
+    }
+    public void ops_getAccountStateTest(){
+        String method = "ops_getAccountState";
+        Request successfulRequest = testUtils.ops_getAccountState_succeeds();
+        ResultUnion resultUnion = testUtils.ops_getAccountStateRPC().execute(request);
+        assertNotNull(resultUnion);
+        resultUnion.encode();
+    }
+    public void ops_getTransactionTest(){
+        String method = "ops_getTransaction";
+        Request successfulRequest = testUtils.ops_getTransaction_succeeds();
+        ResultUnion resultUnion = testUtils.ops_getTransactionRPC().execute(request);
+        assertNotNull(resultUnion);
+        resultUnion.encode();
+    }
+    public void ops_getBlockDetailsByNumberTest(){
+        String method = "ops_getBlockDetailsByNumber";
+        Request successfulRequest = testUtils.ops_getBlockDetailsByNumber_succeeds();
+        ResultUnion resultUnion = testUtils.ops_getBlockDetailsByNumberRPC().execute(request);
+        assertNotNull(resultUnion);
+        resultUnion.encode();
+    }
+    public void ops_getBlockDetailsByHashTest(){
+        String method = "ops_getBlockDetailsByHash";
+        Request successfulRequest = testUtils.ops_getBlockDetailsByHash_succeeds();
+        ResultUnion resultUnion = testUtils.ops_getBlockDetailsByHashRPC().execute(request);
+        assertNotNull(resultUnion);
+        resultUnion.encode();
+    }
+    public void personal_unlockAccountTest(){
+        String method = "personal_unlockAccount";
+        Request successfulRequest = testUtils.personal_unlockAccount_succeeds();
+        ResultUnion resultUnion = testUtils.personal_unlockAccountRPC().execute(request);
+        assertNotNull(resultUnion);
+        resultUnion.encode();
+    }
+    public void personal_lockAccountTest(){
+        String method = "personal_lockAccount";
+        Request successfulRequest = testUtils.personal_lockAccount_succeeds();
+        ResultUnion resultUnion = testUtils.personal_lockAccountRPC().execute(request);
+        assertNotNull(resultUnion);
+        resultUnion.encode();
+    }
+    public void personal_newAccountTest(){
+        String method = "personal_newAccount";
+        Request successfulRequest = testUtils.personal_newAccount_succeeds();
+        ResultUnion resultUnion = testUtils.personal_newAccountRPC().execute(request);
+        assertNotNull(resultUnion);
+        resultUnion.encode();
+    }
+    public void personal_listAccountsTest(){
+        String method = "personal_listAccounts";
+        Request successfulRequest = testUtils.personal_listAccounts_succeeds();
+        ResultUnion resultUnion = testUtils.personal_listAccountsRPC().execute(request);
         assertNotNull(resultUnion);
         resultUnion.encode();
     }
