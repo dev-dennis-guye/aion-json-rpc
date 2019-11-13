@@ -5,10 +5,12 @@ def javaTemplatePath = "${workingDir}/rpc-lib4j/templates"
 def specPath = "${workingDir}/spec/"
 def javaLibraryPath = "${workingDir}/rpc-lib4j/src/main/java/org/aion/rpc"
 def javaGeneratedTestsPath = "${workingDir}/rpc-lib4j/tests"
+def buildRoot = "${rootDir.absolutePath}/build"
+
 allprojects{
     apply plugin: 'java'
     apply plugin: 'idea'
-    buildDir="${rootDir.absolutePath}/build/${project.name}"
+    buildDir="${buildRoot}/${project.name}"
 }
 
 wrapper{
@@ -20,13 +22,18 @@ subprojects {
     sourceCompatibility = 1.11
 }
 
-task cleanGenerated {
+task cleanGenerated(type:Delete) {
     delete ("${generatorPath}")
     delete ("${generatedFolderPath}")
 }
 
+task cleanOut(type: Delete){
+    delete ("${buildRoot}")
+}
+
 clean{
     dependsOn 'cleanGenerated'
+    dependsOn 'cleanOut'
 }
 
 task createGenerator(type: Copy){
