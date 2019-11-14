@@ -18,7 +18,7 @@ import org.json.JSONObject;
 *
 * AUTO-GENERATED SOURCE FILE.  DO NOT EDIT MANUALLY -- YOUR CHANGES WILL
 * BE WIPED OUT WHEN THIS FILE GETS RE-GENERATED OR UPDATED.
-* GENERATED: 2019-11-08
+* GENERATED: 2019-11-14
 *
 *****************************************************************************/
 public class RPCTypesConverter{
@@ -53,7 +53,8 @@ public class RPCTypesConverter{
 
     public static class BooleanConverter{
         public static Boolean decode(Object s){
-            if ( s!=null && !s.equals(JSONObject.NULL) && booleanPattern.matcher(s.toString()).find()) return Boolean.parseBoolean(s.toString());
+            if(s==null || s == JSONObject.NULL) return null;
+            if ( booleanPattern.matcher(s.toString()).find()) return Boolean.parseBoolean(s.toString());
             else throw ParseErrorRPCException.INSTANCE;
         }
 
@@ -311,10 +312,10 @@ public class RPCTypesConverter{
             try{
                 if(obj==null) return null;
                 JSONObject jsonObject = new JSONObject();
-                jsonObject.put("id", obj.id==null? JSONObject.NULL:IntegerConverter.encode(obj.id));
-                jsonObject.put("method", obj.method==null? JSONObject.NULL:StringConverter.encode(obj.method));
-                jsonObject.put("params", obj.params==null? JSONObject.NULL:ParamUnionConverter.encode(obj.params));
-                jsonObject.put("jsonrpc", obj.jsonrpc==null? JSONObject.NULL:VersionTypeConverter.encode(obj.jsonrpc));
+                jsonObject.put("id", IntegerConverter.encode(obj.id));
+                jsonObject.put("method", StringConverter.encode(obj.method));
+                jsonObject.put("params", ParamUnionConverter.encode(obj.params));
+                jsonObject.put("jsonrpc", VersionTypeConverter.encode(obj.jsonrpc));
                 return jsonObject.toString();
             }
             catch (Exception e){
@@ -352,10 +353,10 @@ public class RPCTypesConverter{
             try{
                 if(obj==null) return null;
                 JSONObject jsonObject = new JSONObject();
-                jsonObject.put("id", obj.id==null? JSONObject.NULL:IntegerConverter.encode(obj.id));
-                jsonObject.put("result", obj.result==null? JSONObject.NULL:ResultUnionConverter.encode(obj.result));
-                jsonObject.put("error", obj.error==null? JSONObject.NULL:RPCErrorConverter.encode(obj.error));
-                jsonObject.put("jsonrpc", obj.jsonrpc==null? JSONObject.NULL:VersionTypeConverter.encode(obj.jsonrpc));
+                jsonObject.put("id", IntegerConverter.encode(obj.id));
+                jsonObject.put("result", ResultUnionConverter.encode(obj.result));
+                jsonObject.put("error", RPCErrorConverter.encode(obj.error));
+                jsonObject.put("jsonrpc", VersionTypeConverter.encode(obj.jsonrpc));
                 return jsonObject.toString();
             }
             catch (Exception e){
@@ -393,8 +394,8 @@ public class RPCTypesConverter{
             try{
                 if(obj==null) return null;
                 JSONObject jsonObject = new JSONObject();
-                jsonObject.put("code", obj.code==null? JSONObject.NULL:IntegerConverter.encode(obj.code));
-                jsonObject.put("message", obj.message==null? JSONObject.NULL:StringConverter.encode(obj.message));
+                jsonObject.put("code", IntegerConverter.encode(obj.code));
+                jsonObject.put("message", StringConverter.encode(obj.message));
                 return jsonObject.toString();
             }
             catch (Exception e){
@@ -430,11 +431,11 @@ public class RPCTypesConverter{
             try{
                 if(obj==null) return null;
                 JSONObject jsonObject = new JSONObject();
-                jsonObject.put("address", obj.address==null? JSONObject.NULL:AionAddressConverter.encode(obj.address));
-                jsonObject.put("transactionIndex", obj.transactionIndex==null? JSONObject.NULL:IntegerConverter.encode(obj.transactionIndex));
-                jsonObject.put("data", obj.data==null? JSONObject.NULL:DataHexStringConverter.encode(obj.data));
-                jsonObject.put("topics", obj.topics==null? JSONObject.NULL:DataHexStringListConverter.encode(obj.topics));
-                jsonObject.put("blockNumber", obj.blockNumber==null? JSONObject.NULL:LongConverter.encode(obj.blockNumber));
+                jsonObject.put("address", AionAddressConverter.encode(obj.address));
+                jsonObject.put("transactionIndex", IntegerConverter.encode(obj.transactionIndex));
+                jsonObject.put("data", DataHexStringConverter.encode(obj.data));
+                jsonObject.put("topics", DataHexStringListConverter.encode(obj.topics));
+                jsonObject.put("blockNumber", LongConverter.encode(obj.blockNumber));
                 return jsonObject.toString();
             }
             catch (Exception e){
@@ -473,28 +474,28 @@ public class RPCTypesConverter{
             try{
                 if(obj==null) return null;
                 JSONObject jsonObject = new JSONObject();
-                jsonObject.put("contractAddress", obj.contractAddress==null? JSONObject.NULL:AionAddressConverter.encode(obj.contractAddress));
-                jsonObject.put("hash", obj.hash==null? JSONObject.NULL:Byte32StringConverter.encode(obj.hash));
-                jsonObject.put("transactionIndex", obj.transactionIndex==null? JSONObject.NULL:IntegerConverter.encode(obj.transactionIndex));
-                jsonObject.put("value", obj.value==null? JSONObject.NULL:BigIntegerHexStringConverter.encode(obj.value));
-                jsonObject.put("nrg", obj.nrg==null? JSONObject.NULL:LongHexStringConverter.encode(obj.nrg));
-                jsonObject.put("nrgPrice", obj.nrgPrice==null? JSONObject.NULL:LongHexStringConverter.encode(obj.nrgPrice));
-                jsonObject.put("gas", obj.gas==null? JSONObject.NULL:LongHexStringConverter.encode(obj.gas));
-                jsonObject.put("gasPrice", obj.gasPrice==null? JSONObject.NULL:LongHexStringConverter.encode(obj.gasPrice));
-                jsonObject.put("nonce", obj.nonce==null? JSONObject.NULL:DataHexStringConverter.encode(obj.nonce));
-                jsonObject.put("from", obj.from==null? JSONObject.NULL:AionAddressConverter.encode(obj.from));
-                jsonObject.put("to", obj.to==null? JSONObject.NULL:AionAddressConverter.encode(obj.to));
-                jsonObject.put("timestamp", obj.timestamp==null? JSONObject.NULL:LongConverter.encode(obj.timestamp));
-                jsonObject.put("input", obj.input==null? JSONObject.NULL:DataHexStringConverter.encode(obj.input));
-                jsonObject.put("blockNumber", obj.blockNumber==null? JSONObject.NULL:LongHexStringConverter.encode(obj.blockNumber));
-                jsonObject.put("blockHash", obj.blockHash==null? JSONObject.NULL:Byte32StringConverter.encode(obj.blockHash));
-                jsonObject.put("error", obj.error==null? JSONObject.NULL:StringConverter.encode(obj.error));
-                jsonObject.put("type", obj.type==null? JSONObject.NULL:ByteHexStringConverter.encode(obj.type));
-                jsonObject.put("nrgUsed", obj.nrgUsed==null? JSONObject.NULL:LongHexStringConverter.encode(obj.nrgUsed));
-                jsonObject.put("gasUsed", obj.gasUsed==null? JSONObject.NULL:LongHexStringConverter.encode(obj.gasUsed));
-                jsonObject.put("hasInternalTransactions", obj.hasInternalTransactions==null? JSONObject.NULL:BooleanConverter.encode(obj.hasInternalTransactions));
-                jsonObject.put("logs", obj.logs==null? JSONObject.NULL:TxLogDetailsListConverter.encode(obj.logs));
-                jsonObject.put("beaconHash", obj.beaconHash==null? JSONObject.NULL:Byte32StringConverter.encode(obj.beaconHash));
+                jsonObject.put("contractAddress", AionAddressConverter.encode(obj.contractAddress));
+                jsonObject.put("hash", Byte32StringConverter.encode(obj.hash));
+                jsonObject.put("transactionIndex", IntegerConverter.encode(obj.transactionIndex));
+                jsonObject.put("value", BigIntegerHexStringConverter.encode(obj.value));
+                jsonObject.put("nrg", LongHexStringConverter.encode(obj.nrg));
+                jsonObject.put("nrgPrice", LongHexStringConverter.encode(obj.nrgPrice));
+                jsonObject.put("gas", LongHexStringConverter.encode(obj.gas));
+                jsonObject.put("gasPrice", LongHexStringConverter.encode(obj.gasPrice));
+                jsonObject.put("nonce", DataHexStringConverter.encode(obj.nonce));
+                jsonObject.put("from", AionAddressConverter.encode(obj.from));
+                jsonObject.put("to", AionAddressConverter.encode(obj.to));
+                jsonObject.put("timestamp", LongConverter.encode(obj.timestamp));
+                jsonObject.put("input", DataHexStringConverter.encode(obj.input));
+                jsonObject.put("blockNumber", LongHexStringConverter.encode(obj.blockNumber));
+                jsonObject.put("blockHash", Byte32StringConverter.encode(obj.blockHash));
+                jsonObject.put("error", StringConverter.encode(obj.error));
+                jsonObject.put("type", ByteHexStringConverter.encode(obj.type));
+                jsonObject.put("nrgUsed", LongHexStringConverter.encode(obj.nrgUsed));
+                jsonObject.put("gasUsed", LongHexStringConverter.encode(obj.gasUsed));
+                jsonObject.put("hasInternalTransactions", BooleanConverter.encode(obj.hasInternalTransactions));
+                jsonObject.put("logs", TxLogDetailsListConverter.encode(obj.logs));
+                jsonObject.put("beaconHash", Byte32StringConverter.encode(obj.beaconHash));
                 return jsonObject.toString();
             }
             catch (Exception e){
@@ -550,35 +551,35 @@ public class RPCTypesConverter{
             try{
                 if(obj==null) return null;
                 JSONObject jsonObject = new JSONObject();
-                jsonObject.put("number", obj.number==null? JSONObject.NULL:LongConverter.encode(obj.number));
-                jsonObject.put("hash", obj.hash==null? JSONObject.NULL:Byte32StringConverter.encode(obj.hash));
-                jsonObject.put("parentHash", obj.parentHash==null? JSONObject.NULL:Byte32StringConverter.encode(obj.parentHash));
-                jsonObject.put("logsBloom", obj.logsBloom==null? JSONObject.NULL:ByteArrayConverter.encode(obj.logsBloom));
-                jsonObject.put("transactionsRoot", obj.transactionsRoot==null? JSONObject.NULL:DataHexStringConverter.encode(obj.transactionsRoot));
-                jsonObject.put("statesRoot", obj.statesRoot==null? JSONObject.NULL:DataHexStringConverter.encode(obj.statesRoot));
-                jsonObject.put("receiptsRoot", obj.receiptsRoot==null? JSONObject.NULL:DataHexStringConverter.encode(obj.receiptsRoot));
-                jsonObject.put("difficulty", obj.difficulty==null? JSONObject.NULL:BigIntegerHexStringConverter.encode(obj.difficulty));
-                jsonObject.put("totalDifficulty", obj.totalDifficulty==null? JSONObject.NULL:BigIntegerHexStringConverter.encode(obj.totalDifficulty));
-                jsonObject.put("miner", obj.miner==null? JSONObject.NULL:AionAddressConverter.encode(obj.miner));
-                jsonObject.put("timestamp", obj.timestamp==null? JSONObject.NULL:LongHexStringConverter.encode(obj.timestamp));
-                jsonObject.put("gasUsed", obj.gasUsed==null? JSONObject.NULL:LongHexStringConverter.encode(obj.gasUsed));
-                jsonObject.put("gasLimit", obj.gasLimit==null? JSONObject.NULL:LongHexStringConverter.encode(obj.gasLimit));
-                jsonObject.put("nrgUsed", obj.nrgUsed==null? JSONObject.NULL:LongHexStringConverter.encode(obj.nrgUsed));
-                jsonObject.put("nrgLimit", obj.nrgLimit==null? JSONObject.NULL:LongHexStringConverter.encode(obj.nrgLimit));
-                jsonObject.put("sealType", obj.sealType==null? JSONObject.NULL:ByteHexStringConverter.encode(obj.sealType));
-                jsonObject.put("mainChain", obj.mainChain==null? JSONObject.NULL:BooleanConverter.encode(obj.mainChain));
-                jsonObject.put("extraData", obj.extraData==null? JSONObject.NULL:DataHexStringConverter.encode(obj.extraData));
-                jsonObject.put("size", obj.size==null? JSONObject.NULL:IntegerConverter.encode(obj.size));
-                jsonObject.put("numTransactions", obj.numTransactions==null? JSONObject.NULL:IntegerConverter.encode(obj.numTransactions));
-                jsonObject.put("txTrieRoot", obj.txTrieRoot==null? JSONObject.NULL:DataHexStringConverter.encode(obj.txTrieRoot));
-                jsonObject.put("blockReward", obj.blockReward==null? JSONObject.NULL:BigIntegerHexStringConverter.encode(obj.blockReward));
-                jsonObject.put("transactions", obj.transactions==null? JSONObject.NULL:TransactionDetailsListConverter.encode(obj.transactions));
-                jsonObject.put("nonce", obj.nonce==null? JSONObject.NULL:DataHexStringConverter.encode(obj.nonce));
-                jsonObject.put("solution", obj.solution==null? JSONObject.NULL:DataHexStringConverter.encode(obj.solution));
-                jsonObject.put("seed", obj.seed==null? JSONObject.NULL:DataHexStringConverter.encode(obj.seed));
-                jsonObject.put("signature", obj.signature==null? JSONObject.NULL:DataHexStringConverter.encode(obj.signature));
-                jsonObject.put("publicKey", obj.publicKey==null? JSONObject.NULL:DataHexStringConverter.encode(obj.publicKey));
-                jsonObject.put("blockTime", obj.blockTime==null? JSONObject.NULL:IntegerConverter.encode(obj.blockTime));
+                jsonObject.put("number", LongConverter.encode(obj.number));
+                jsonObject.put("hash", Byte32StringConverter.encode(obj.hash));
+                jsonObject.put("parentHash", Byte32StringConverter.encode(obj.parentHash));
+                jsonObject.put("logsBloom", ByteArrayConverter.encode(obj.logsBloom));
+                jsonObject.put("transactionsRoot", DataHexStringConverter.encode(obj.transactionsRoot));
+                jsonObject.put("statesRoot", DataHexStringConverter.encode(obj.statesRoot));
+                jsonObject.put("receiptsRoot", DataHexStringConverter.encode(obj.receiptsRoot));
+                jsonObject.put("difficulty", BigIntegerHexStringConverter.encode(obj.difficulty));
+                jsonObject.put("totalDifficulty", BigIntegerHexStringConverter.encode(obj.totalDifficulty));
+                jsonObject.put("miner", AionAddressConverter.encode(obj.miner));
+                jsonObject.put("timestamp", LongHexStringConverter.encode(obj.timestamp));
+                jsonObject.put("gasUsed", LongHexStringConverter.encode(obj.gasUsed));
+                jsonObject.put("gasLimit", LongHexStringConverter.encode(obj.gasLimit));
+                jsonObject.put("nrgUsed", LongHexStringConverter.encode(obj.nrgUsed));
+                jsonObject.put("nrgLimit", LongHexStringConverter.encode(obj.nrgLimit));
+                jsonObject.put("sealType", ByteHexStringConverter.encode(obj.sealType));
+                jsonObject.put("mainChain", BooleanConverter.encode(obj.mainChain));
+                jsonObject.put("extraData", DataHexStringConverter.encode(obj.extraData));
+                jsonObject.put("size", IntegerConverter.encode(obj.size));
+                jsonObject.put("numTransactions", IntegerConverter.encode(obj.numTransactions));
+                jsonObject.put("txTrieRoot", DataHexStringConverter.encode(obj.txTrieRoot));
+                jsonObject.put("blockReward", BigIntegerHexStringConverter.encode(obj.blockReward));
+                jsonObject.put("transactions", TransactionDetailsListConverter.encode(obj.transactions));
+                jsonObject.put("nonce", DataHexStringConverter.encode(obj.nonce));
+                jsonObject.put("solution", DataHexStringConverter.encode(obj.solution));
+                jsonObject.put("seed", DataHexStringConverter.encode(obj.seed));
+                jsonObject.put("signature", DataHexStringConverter.encode(obj.signature));
+                jsonObject.put("publicKey", DataHexStringConverter.encode(obj.publicKey));
+                jsonObject.put("blockTime", IntegerConverter.encode(obj.blockTime));
                 return jsonObject.toString();
             }
             catch (Exception e){
@@ -631,7 +632,7 @@ public class RPCTypesConverter{
             try{
                 if(str==null || str.equals(JSONObject.NULL)) return null;
                 JSONObject jsonObject = str instanceof JSONObject? (JSONObject)str :new JSONObject(str.toString());
-                return new BlockTemplate( Byte32StringConverter.decode(jsonObject.opt("previousblockhash")) , LongConverter.decode(jsonObject.opt("height")) , BigIntegerHexStringConverter.decode(jsonObject.opt("target")) , Byte32StringConverter.decode(jsonObject.opt("headerHash")) , BigIntegerHexStringConverter.decode(jsonObject.opt("blockBaseReward")) , BigIntegerHexStringConverter.decode(jsonObject.opt("blockTxFee")) );
+                return new BlockTemplate( Byte32StringConverter.decode(jsonObject.opt("previousblockhash")) , LongConverter.decode(jsonObject.opt("height")) , ByteArrayConverter.decode(jsonObject.opt("target")) , Byte32StringConverter.decode(jsonObject.opt("headerHash")) , BigIntegerHexStringConverter.decode(jsonObject.opt("blockBaseReward")) , BigIntegerHexStringConverter.decode(jsonObject.opt("blockTxFee")) );
             } catch (Exception e){
                 throw ParseErrorRPCException.INSTANCE;
             }
@@ -641,12 +642,12 @@ public class RPCTypesConverter{
             try{
                 if(obj==null) return null;
                 JSONObject jsonObject = new JSONObject();
-                jsonObject.put("previousblockhash", obj.previousblockhash==null? JSONObject.NULL:Byte32StringConverter.encode(obj.previousblockhash));
-                jsonObject.put("height", obj.height==null? JSONObject.NULL:LongConverter.encode(obj.height));
-                jsonObject.put("target", obj.target==null? JSONObject.NULL:BigIntegerHexStringConverter.encode(obj.target));
-                jsonObject.put("headerHash", obj.headerHash==null? JSONObject.NULL:Byte32StringConverter.encode(obj.headerHash));
-                jsonObject.put("blockBaseReward", obj.blockBaseReward==null? JSONObject.NULL:BigIntegerHexStringConverter.encode(obj.blockBaseReward));
-                jsonObject.put("blockTxFee", obj.blockTxFee==null? JSONObject.NULL:BigIntegerHexStringConverter.encode(obj.blockTxFee));
+                jsonObject.put("previousblockhash", Byte32StringConverter.encode(obj.previousblockhash));
+                jsonObject.put("height", LongConverter.encode(obj.height));
+                jsonObject.put("target", ByteArrayConverter.encode(obj.target));
+                jsonObject.put("headerHash", Byte32StringConverter.encode(obj.headerHash));
+                jsonObject.put("blockBaseReward", BigIntegerHexStringConverter.encode(obj.blockBaseReward));
+                jsonObject.put("blockTxFee", BigIntegerHexStringConverter.encode(obj.blockTxFee));
                 return jsonObject.toString();
             }
             catch (Exception e){
@@ -660,7 +661,7 @@ public class RPCTypesConverter{
                 JSONObject jsonObject = new JSONObject();
                 jsonObject.put("previousblockhash", Byte32StringConverter.encode(obj.previousblockhash));
                 jsonObject.put("height", LongConverter.encode(obj.height));
-                jsonObject.put("target", BigIntegerHexStringConverter.encode(obj.target));
+                jsonObject.put("target", ByteArrayConverter.encode(obj.target));
                 jsonObject.put("headerHash", Byte32StringConverter.encode(obj.headerHash));
                 jsonObject.put("blockBaseReward", BigIntegerHexStringConverter.encode(obj.blockBaseReward));
                 jsonObject.put("blockTxFee", BigIntegerHexStringConverter.encode(obj.blockTxFee));
@@ -686,7 +687,7 @@ public class RPCTypesConverter{
             try{
                 if(obj==null) return null;
                 JSONObject jsonObject = new JSONObject();
-                jsonObject.put("result", obj.result==null? JSONObject.NULL:BooleanConverter.encode(obj.result));
+                jsonObject.put("result", BooleanConverter.encode(obj.result));
                 return jsonObject.toString();
             }
             catch (Exception e){
@@ -721,9 +722,9 @@ public class RPCTypesConverter{
             try{
                 if(obj==null) return null;
                 JSONObject jsonObject = new JSONObject();
-                jsonObject.put("isvalid", obj.isvalid==null? JSONObject.NULL:BooleanConverter.encode(obj.isvalid));
-                jsonObject.put("address", obj.address==null? JSONObject.NULL:AionAddressConverter.encode(obj.address));
-                jsonObject.put("ismine", obj.ismine==null? JSONObject.NULL:BooleanConverter.encode(obj.ismine));
+                jsonObject.put("isvalid", BooleanConverter.encode(obj.isvalid));
+                jsonObject.put("address", AionAddressConverter.encode(obj.address));
+                jsonObject.put("ismine", BooleanConverter.encode(obj.ismine));
                 return jsonObject.toString();
             }
             catch (Exception e){
@@ -760,9 +761,9 @@ public class RPCTypesConverter{
             try{
                 if(obj==null) return null;
                 JSONObject jsonObject = new JSONObject();
-                jsonObject.put("networkHashRate", obj.networkHashRate==null? JSONObject.NULL:DecimalStringConverter.encode(obj.networkHashRate));
-                jsonObject.put("minerHashrate", obj.minerHashrate==null? JSONObject.NULL:DecimalStringConverter.encode(obj.minerHashrate));
-                jsonObject.put("minerHashrateShare", obj.minerHashrateShare==null? JSONObject.NULL:DecimalStringConverter.encode(obj.minerHashrateShare));
+                jsonObject.put("networkHashRate", DecimalStringConverter.encode(obj.networkHashRate));
+                jsonObject.put("minerHashrate", DecimalStringConverter.encode(obj.minerHashrate));
+                jsonObject.put("minerHashrateShare", DecimalStringConverter.encode(obj.minerHashrateShare));
                 return jsonObject.toString();
             }
             catch (Exception e){
@@ -885,7 +886,7 @@ public class RPCTypesConverter{
         }
 
         private static boolean checkConstraints(String s){
-            return regex.matcher(s).find() && s.length() >= 3 && s.length() <= 19;
+            return regex.matcher(s).find() && s.length() >= 3 && s.length() <= 18;
         }
     }
 
@@ -920,7 +921,7 @@ public class RPCTypesConverter{
         }
 
         private static boolean checkConstraints(String s){
-            return regex.matcher(s).find() && s.length() >= 3 && s.length() <= 11;
+            return regex.matcher(s).find() && s.length() >= 3 && s.length() <= 10;
         }
     }
 
@@ -1093,8 +1094,8 @@ public class RPCTypesConverter{
         public static Object encode(EcRecoverParams obj){
             try{
                 JSONArray arr = new JSONArray();
-                arr.put(0, obj.dataThatWasSigned==null? JSONObject.NULL : DataHexStringConverter.encode(obj.dataThatWasSigned));
-                arr.put(1, obj.signature==null? JSONObject.NULL : DataHexStringConverter.encode(obj.signature));
+                arr.put(0, DataHexStringConverter.encode(obj.dataThatWasSigned));
+                arr.put(1, DataHexStringConverter.encode(obj.signature));
                 return arr;
             }catch(Exception e){
                 throw ParseErrorRPCException.INSTANCE;
@@ -1131,7 +1132,7 @@ public class RPCTypesConverter{
         public static Object encode(BlockSpecifier obj){
             try{
                 JSONArray arr = new JSONArray();
-                arr.put(0, obj.block==null? JSONObject.NULL : BlockSpecifierUnionConverter.encode(obj.block));
+                arr.put(0, BlockSpecifierUnionConverter.encode(obj.block));
                 return arr;
             }catch(Exception e){
                 throw ParseErrorRPCException.INSTANCE;
@@ -1168,9 +1169,9 @@ public class RPCTypesConverter{
         public static Object encode(SubmitSeedParams obj){
             try{
                 JSONArray arr = new JSONArray();
-                arr.put(0, obj.newSeed==null? JSONObject.NULL : Byte64StringConverter.encode(obj.newSeed));
-                arr.put(1, obj.signingPublicKey==null? JSONObject.NULL : Byte32StringConverter.encode(obj.signingPublicKey));
-                arr.put(2, obj.coinbase==null? JSONObject.NULL : AionAddressConverter.encode(obj.coinbase));
+                arr.put(0, Byte64StringConverter.encode(obj.newSeed));
+                arr.put(1, Byte32StringConverter.encode(obj.signingPublicKey));
+                arr.put(2, AionAddressConverter.encode(obj.coinbase));
                 return arr;
             }catch(Exception e){
                 throw ParseErrorRPCException.INSTANCE;
@@ -1207,8 +1208,8 @@ public class RPCTypesConverter{
         public static Object encode(SubmitSignatureParams obj){
             try{
                 JSONArray arr = new JSONArray();
-                arr.put(0, obj.signature==null? JSONObject.NULL : Byte64StringConverter.encode(obj.signature));
-                arr.put(1, obj.sealHash==null? JSONObject.NULL : Byte32StringConverter.encode(obj.sealHash));
+                arr.put(0, Byte64StringConverter.encode(obj.signature));
+                arr.put(1, Byte32StringConverter.encode(obj.sealHash));
                 return arr;
             }catch(Exception e){
                 throw ParseErrorRPCException.INSTANCE;
@@ -1271,9 +1272,9 @@ public class RPCTypesConverter{
         public static Object encode(SubmitBlockParams obj){
             try{
                 JSONArray arr = new JSONArray();
-                arr.put(0, obj.nonce==null? JSONObject.NULL : DataHexStringConverter.encode(obj.nonce));
-                arr.put(1, obj.solution==null? JSONObject.NULL : DataHexStringConverter.encode(obj.solution));
-                arr.put(2, obj.headerHash==null? JSONObject.NULL : Byte32StringConverter.encode(obj.headerHash));
+                arr.put(0, DataHexStringConverter.encode(obj.nonce));
+                arr.put(1, DataHexStringConverter.encode(obj.solution));
+                arr.put(2, Byte32StringConverter.encode(obj.headerHash));
                 return arr;
             }catch(Exception e){
                 throw ParseErrorRPCException.INSTANCE;
@@ -1310,7 +1311,7 @@ public class RPCTypesConverter{
         public static Object encode(AddressParams obj){
             try{
                 JSONArray arr = new JSONArray();
-                arr.put(0, obj.address==null? JSONObject.NULL : AionAddressConverter.encode(obj.address));
+                arr.put(0, AionAddressConverter.encode(obj.address));
                 return arr;
             }catch(Exception e){
                 throw ParseErrorRPCException.INSTANCE;

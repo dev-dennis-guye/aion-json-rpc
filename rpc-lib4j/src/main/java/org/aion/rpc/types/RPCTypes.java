@@ -11,7 +11,7 @@ import org.aion.util.bytes.ByteUtil;
 *
 * AUTO-GENERATED SOURCE FILE.  DO NOT EDIT MANUALLY -- YOUR CHANGES WILL
 * BE WIPED OUT WHEN THIS FILE GETS RE-GENERATED OR UPDATED.
-* GENERATED: 2019-11-08
+* GENERATED: 2019-11-14
 *
 *****************************************************************************/
 public class RPCTypes{
@@ -604,12 +604,12 @@ public class RPCTypes{
     public static final class BlockTemplate {
         public final ByteArray previousblockhash;
         public final Long height;
-        public final BigInteger target;
+        public final ByteArray target;
         public final ByteArray headerHash;
         public final BigInteger blockBaseReward;
         public final BigInteger blockTxFee;
 
-        public BlockTemplate(ByteArray previousblockhash ,Long height ,BigInteger target ,ByteArray headerHash ,BigInteger blockBaseReward ,BigInteger blockTxFee ){
+        public BlockTemplate(ByteArray previousblockhash ,Long height ,ByteArray target ,ByteArray headerHash ,BigInteger blockBaseReward ,BigInteger blockTxFee ){
             if(previousblockhash==null) throw ParseErrorRPCException.INSTANCE;
             this.previousblockhash=previousblockhash;
             if(height==null) throw ParseErrorRPCException.INSTANCE;
@@ -694,46 +694,54 @@ public class RPCTypes{
 
     public static final class EcRecoverParams {
         public final ByteArray dataThatWasSigned;
+        
         public final ByteArray signature;
+        
 
         public EcRecoverParams(ByteArray dataThatWasSigned ,ByteArray signature ){
             if(dataThatWasSigned==null) throw ParseErrorRPCException.INSTANCE;
-            this.dataThatWasSigned=dataThatWasSigned;
+            this.dataThatWasSigned= dataThatWasSigned;
             if(signature==null) throw ParseErrorRPCException.INSTANCE;
-            this.signature=signature;
+            this.signature= signature;
         }
     }
     public static final class BlockSpecifier {
         public final BlockSpecifierUnion block;
+        
 
         public BlockSpecifier(BlockSpecifierUnion block ){
             if(block==null) throw ParseErrorRPCException.INSTANCE;
-            this.block=block;
+            this.block= block;
         }
     }
     public static final class SubmitSeedParams {
         public final ByteArray newSeed;
+        
         public final ByteArray signingPublicKey;
+        
         public final AionAddress coinbase;
+        
 
         public SubmitSeedParams(ByteArray newSeed ,ByteArray signingPublicKey ,AionAddress coinbase ){
             if(newSeed==null) throw ParseErrorRPCException.INSTANCE;
-            this.newSeed=newSeed;
+            this.newSeed= newSeed;
             if(signingPublicKey==null) throw ParseErrorRPCException.INSTANCE;
-            this.signingPublicKey=signingPublicKey;
+            this.signingPublicKey= signingPublicKey;
             if(coinbase==null) throw ParseErrorRPCException.INSTANCE;
-            this.coinbase=coinbase;
+            this.coinbase= coinbase;
         }
     }
     public static final class SubmitSignatureParams {
         public final ByteArray signature;
+        
         public final ByteArray sealHash;
+        
 
         public SubmitSignatureParams(ByteArray signature ,ByteArray sealHash ){
             if(signature==null) throw ParseErrorRPCException.INSTANCE;
-            this.signature=signature;
+            this.signature= signature;
             if(sealHash==null) throw ParseErrorRPCException.INSTANCE;
-            this.sealHash=sealHash;
+            this.sealHash= sealHash;
         }
     }
     public static final class VoidParams {
@@ -743,24 +751,28 @@ public class RPCTypes{
     }
     public static final class SubmitBlockParams {
         public final ByteArray nonce;
+        
         public final ByteArray solution;
+        
         public final ByteArray headerHash;
+        
 
         public SubmitBlockParams(ByteArray nonce ,ByteArray solution ,ByteArray headerHash ){
             if(nonce==null) throw ParseErrorRPCException.INSTANCE;
-            this.nonce=nonce;
+            this.nonce= nonce;
             if(solution==null) throw ParseErrorRPCException.INSTANCE;
-            this.solution=solution;
+            this.solution= solution;
             if(headerHash==null) throw ParseErrorRPCException.INSTANCE;
-            this.headerHash=headerHash;
+            this.headerHash= headerHash;
         }
     }
     public static final class AddressParams {
         public final AionAddress address;
+        
 
         public AddressParams(AionAddress address ){
             if(address==null) throw ParseErrorRPCException.INSTANCE;
-            this.address=address;
+            this.address= address;
         }
     }
 }

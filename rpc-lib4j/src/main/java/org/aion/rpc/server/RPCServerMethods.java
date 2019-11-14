@@ -12,7 +12,7 @@ import org.aion.util.types.ByteArrayWrapper;
 *
 * AUTO-GENERATED SOURCE FILE.  DO NOT EDIT MANUALLY -- YOUR CHANGES WILL
 * BE WIPED OUT WHEN THIS FILE GETS RE-GENERATED OR UPDATED.
-* GENERATED: 2019-11-08
+* GENERATED: 2019-11-14
 *
 *****************************************************************************/
 public interface RPCServerMethods extends RPC{
@@ -88,13 +88,13 @@ public interface RPCServerMethods extends RPC{
         return Set.of( "personal_ecRecover", "getseed", "submitseed", "submitsignature", "ops_getBlockDetails", "getblocktemplate", "submitblock", "validateaddress", "getDifficulty", "getMinerStats");
     }
 
-    AionAddress personal_ecRecover(ByteArray dataThatWasSigned, ByteArray signature);
+    AionAddress personal_ecRecover(ByteArray dataThatWasSigned,ByteArray signature);
     ByteArray getseed();
-    ByteArray submitseed(ByteArray newSeed, ByteArray signingPublicKey, AionAddress coinbase);
-    Boolean submitsignature(ByteArray signature, ByteArray sealHash);
+    ByteArray submitseed(ByteArray newSeed,ByteArray signingPublicKey,AionAddress coinbase);
+    Boolean submitsignature(ByteArray signature,ByteArray sealHash);
     BlockDetails ops_getBlockDetails(BlockSpecifierUnion block);
     BlockTemplate getblocktemplate();
-    SubmissionResult submitblock(ByteArray nonce, ByteArray solution, ByteArray headerHash);
+    SubmissionResult submitblock(ByteArray nonce,ByteArray solution,ByteArray headerHash);
     ValidateAddressResult validateaddress(AionAddress address);
     BigInteger getDifficulty();
     MinerStats getMinerStats(AionAddress address);

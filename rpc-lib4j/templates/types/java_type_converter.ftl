@@ -53,7 +53,8 @@ public class RPCTypesConverter{
 
     public static class ${macros.toJavaConverterFromName("bool")}{
         public static Boolean decode(Object s){
-            if ( s!=null && !s.equals(JSONObject.NULL) && booleanPattern.matcher(s.toString()).find()) return Boolean.parseBoolean(s.toString());
+            if(s==null || s == JSONObject.NULL) return null;
+            if ( booleanPattern.matcher(s.toString()).find()) return Boolean.parseBoolean(s.toString());
             else throw ParseErrorRPCException.INSTANCE;
         }
 
@@ -281,7 +282,7 @@ public class RPCTypesConverter{
                 if(obj==null) return null;
                 JSONObject jsonObject = new JSONObject();
                 <#list compositeType.fields as field>
-                jsonObject.put("${field.fieldName}", obj.${field.fieldName}==null? JSONObject.NULL:${macros.toJavaConverter(field.type)}.encode(obj.${field.fieldName}));
+                jsonObject.put("${field.fieldName}", ${macros.toJavaConverter(field.type)}.encode(obj.${field.fieldName}));
                 </#list>
                 return jsonObject.toString();
             }
@@ -384,7 +385,7 @@ public class RPCTypesConverter{
                <#if paramType.fields?has_content>
                 JSONArray arr = new JSONArray();
                 <#list paramType.fields as param>
-                arr.put(${param.index}, obj.${param.fieldName}==null? JSONObject.NULL : ${macros.toJavaConverter(param.type)}.encode(obj.${param.fieldName}));
+                arr.put(${param.index}, ${macros.toJavaConverter(param.type)}.encode(obj.${param.fieldName}));
                 </#list>
                 return arr;
                 <#else >
