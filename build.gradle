@@ -19,7 +19,7 @@ wrapper{
 }
 
 subprojects {
-    sourceCompatibility = 1.11
+    sourceCompatibility = 1.10
 }
 
 task cleanGenerated(type:Delete) {
