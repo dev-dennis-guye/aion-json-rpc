@@ -133,12 +133,14 @@ public class RPCTypesConverter{
 
     public static class UnsignedInteger16Converter{
         public static String encodeHex(Integer integer){
+            TypeUtils.checkUnsigned(integer);
             if (integer == null) {
                 return null;
             } else return TypeUtils.encodeIntegerToHex(integer);
         }
 
         public static Integer encode(Integer integer){
+            TypeUtils.checkUnsigned(integer);
             return integer;
         }
 
@@ -147,25 +149,30 @@ public class RPCTypesConverter{
                 return null;
             } else {
                 String string = object.toString();
+                Integer  integer;
                 if (unsignedDecPattern.matcher(string).find()){
-                    return Integer.parseInt(string);
+                    integer = Integer.parseInt(string);
                 } else if (unsignedHexPattern.matcher(string).find()){
-                    return TypeUtils.decodeIntFromHex(string);
+                    integer = TypeUtils.decodeIntFromHex(string);
                 } else{
                     throw ParseErrorRPCException.INSTANCE;
                 }
+                TypeUtils.checkUnsigned(integer);
+                return integer;
             }
         }
     }
 
     public static class UnsignedInteger32Converter{
         public static String encodeHex(Long integer){
+            TypeUtils.checkUnsigned(integer);
             if (integer == null) {
                 return null;
             } else return TypeUtils.encodeLongToHex(integer);
         }
 
         public static Long encode(Long integer){
+            TypeUtils.checkUnsigned(integer);
             return integer;
         }
 
@@ -174,25 +181,31 @@ public class RPCTypesConverter{
                 return null;
             } else {
                 String string = object.toString();
-            if (unsignedDecPattern.matcher(string).find()){
-                    return Long.parseLong(string);
+                Long integer;
+                if (unsignedDecPattern.matcher(string).find()){
+                    integer= Long.parseLong(string);
                 }else if (unsignedHexPattern.matcher(string).find()){
-                    return TypeUtils.decodeLongFromHex(string);
+                    integer= TypeUtils.decodeLongFromHex(string);
                 } else{
                     throw ParseErrorRPCException.INSTANCE;
                 }
+                TypeUtils.checkUnsigned(integer);
+                return integer;
             }
         }
     }
 
     public static class UnsignedInteger64Converter{
         public static String encodeHex(BigInteger integer){
+            TypeUtils.checkUnsigned(integer);
             if (integer == null) {
                 return null;
             } else return TypeUtils.encodeBigIntegerToHex(integer,8);
         }
 
         public static String encode(BigInteger integer){
+            TypeUtils.checkUnsigned(integer);
+            if(integer==null) return null;
             return integer.toString();
         }
 
@@ -201,25 +214,31 @@ public class RPCTypesConverter{
                 return null;
             } else {
                 String string = object.toString();
+                BigInteger integer;
                 if (unsignedDecPattern.matcher(string).find()){
-                        return new BigInteger(string);
+                    integer = new BigInteger(string);
                 } else if (unsignedHexPattern.matcher(string).find()){
-                    return TypeUtils.decodeBigIntFromHex(string);
+                    integer= TypeUtils.decodeBigIntFromHex(string);
                 } else{
                     throw ParseErrorRPCException.INSTANCE;
                 }
+                TypeUtils.checkUnsigned(integer);
+                return integer;
             }
         }
     }
 
     public static class UnsignedInteger128Converter{
         public static String encodeHex(BigInteger integer){
+            TypeUtils.checkUnsigned(integer);
             if (integer == null) {
                 return null;
             } else return TypeUtils.encodeBigIntegerToHex(integer,16);
         }
 
         public static String encode(BigInteger integer){
+            TypeUtils.checkUnsigned(integer);
+            if(integer==null) return null;
             return integer.toString();
         }
 
@@ -228,25 +247,31 @@ public class RPCTypesConverter{
                 return null;
             } else {
                 String string = object.toString();
+                BigInteger integer;
                 if (unsignedDecPattern.matcher(string).find()){
-                    return new BigInteger(string);
+                    integer= new BigInteger(string);
                 } else if (unsignedHexPattern.matcher(string).find()){
-                    return TypeUtils.decodeBigIntFromHex(string);
+                    integer= TypeUtils.decodeBigIntFromHex(string);
                 } else{
                     throw ParseErrorRPCException.INSTANCE;
                 }
+                TypeUtils.checkUnsigned(integer);
+                return integer;
             }
         }
     }
 
     public static class UnsignedInteger256Converter{
         public static String encodeHex(BigInteger integer){
+            TypeUtils.checkUnsigned(integer);
             if (integer == null) {
                 return null;
             } else return TypeUtils.encodeBigIntegerToHex(integer, 32);
         }
 
         public static String encode(BigInteger integer){
+            TypeUtils.checkUnsigned(integer);
+            if(integer==null) return null;
             return integer.toString();
         }
 
@@ -255,13 +280,16 @@ public class RPCTypesConverter{
                 return null;
             } else {
                 String string = object.toString();
+                BigInteger returnValue;
                 if (unsignedDecPattern.matcher(string).find()){
-                    return new BigInteger(string);
+                    returnValue= new BigInteger(string);
                 } else if (unsignedHexPattern.matcher(string).find()){
-                    return TypeUtils.decodeBigIntFromHex(string);
+                    returnValue= TypeUtils.decodeBigIntFromHex(string);
                 } else{
                     throw ParseErrorRPCException.INSTANCE;
                 }
+                TypeUtils.checkUnsigned(returnValue);
+                return returnValue;
             }
         }
     }
