@@ -129,6 +129,143 @@ public class RPCTypesConverter{
 
     }
 
+    public static class ${macros.toJavaConverterFromName("uint16")}{
+        public static String encodeHex(Integer integer){
+            if (integer == null) {
+                return null;
+            } else return TypeUtils.encodeIntegerToHex(integer);
+        }
+
+        public static Integer encode(Integer integer){
+            return integer;
+        }
+
+        public static Integer decode(Object object){
+            if (object == null) {
+                return null;
+            } else {
+                String string = object.toString();
+                if (unsignedDecPattern.matcher(string).find()){
+                    return Integer.parseInt(string);
+                } else if (unsignedHexPattern.matcher(string).find()){
+                    return TypeUtils.decodeIntFromHex(string);
+                } else{
+                    throw ${macros.toJavaException(decodeError.error_class)}.INSTANCE;
+                }
+            }
+        }
+    }
+
+    public static class ${macros.toJavaConverterFromName("uint32")}{
+        public static String encodeHex(Long integer){
+            if (integer == null) {
+                return null;
+            } else return TypeUtils.encodeLongToHex(integer);
+        }
+
+        public static Long encode(Long integer){
+            return integer;
+        }
+
+        public static Long decode(Object object){
+            if (object == null) {
+                return null;
+            } else {
+                String string = object.toString();
+            if (unsignedDecPattern.matcher(string).find()){
+                    return Long.parseLong(string);
+                }else if (unsignedHexPattern.matcher(string).find()){
+                    return TypeUtils.decodeLongFromHex(string);
+                } else{
+                    throw ${macros.toJavaException(decodeError.error_class)}.INSTANCE;
+                }
+            }
+        }
+    }
+
+    public static class ${macros.toJavaConverterFromName("uint64")}{
+        public static String encodeHex(BigInteger integer){
+            if (integer == null) {
+                return null;
+            } else return TypeUtils.encodeBigIntegerToHex(integer,8);
+        }
+
+        public static String encode(BigInteger integer){
+            if(integer==null) return null;
+            return integer.toString();
+        }
+
+        public static BigInteger decode(Object object){
+            if (object == null) {
+                return null;
+            } else {
+                String string = object.toString();
+                if (unsignedDecPattern.matcher(string).find()){
+                        return new BigInteger(string);
+                } else if (unsignedHexPattern.matcher(string).find()){
+                    return TypeUtils.decodeBigIntFromHex(string);
+                } else{
+                    throw ${macros.toJavaException(decodeError.error_class)}.INSTANCE;
+                }
+            }
+        }
+    }
+
+    public static class ${macros.toJavaConverterFromName("uint128")}{
+        public static String encodeHex(BigInteger integer){
+            if (integer == null) {
+                return null;
+            } else return TypeUtils.encodeBigIntegerToHex(integer,16);
+        }
+
+        public static String encode(BigInteger integer){
+            if(integer==null) return null;
+            return integer.toString();
+        }
+
+        public static BigInteger decode(Object object){
+            if (object == null) {
+                return null;
+            } else {
+                String string = object.toString();
+                if (unsignedDecPattern.matcher(string).find()){
+                    return new BigInteger(string);
+                } else if (unsignedHexPattern.matcher(string).find()){
+                    return TypeUtils.decodeBigIntFromHex(string);
+                } else{
+                    throw ${macros.toJavaException(decodeError.error_class)}.INSTANCE;
+                }
+            }
+        }
+    }
+
+    public static class ${macros.toJavaConverterFromName("uint256")}{
+        public static String encodeHex(BigInteger integer){
+            if (integer == null) {
+                return null;
+            } else return TypeUtils.encodeBigIntegerToHex(integer, 32);
+        }
+
+        public static String encode(BigInteger integer){
+            if(integer==null) return null;
+            return integer.toString();
+        }
+
+        public static BigInteger decode(Object object){
+            if (object == null) {
+                return null;
+            } else {
+                String string = object.toString();
+                if (unsignedDecPattern.matcher(string).find()){
+                    return new BigInteger(string);
+                } else if (unsignedHexPattern.matcher(string).find()){
+                    return TypeUtils.decodeBigIntFromHex(string);
+                } else{
+                    throw ParseErrorRPCException.INSTANCE;
+                }
+            }
+        }
+    }
 
     public static class ${macros.toJavaConverterFromName("int")}{
 

@@ -11,7 +11,7 @@ import org.aion.util.bytes.ByteUtil;
 *
 * AUTO-GENERATED SOURCE FILE.  DO NOT EDIT MANUALLY -- YOUR CHANGES WILL
 * BE WIPED OUT WHEN THIS FILE GETS RE-GENERATED OR UPDATED.
-* GENERATED: 2019-11-14
+* GENERATED: 2019-11-15
 *
 *****************************************************************************/
 public class RPCTypes{
@@ -604,12 +604,12 @@ public class RPCTypes{
     public static final class BlockTemplate {
         public final ByteArray previousblockhash;
         public final Long height;
-        public final ByteArray target;
+        public final BigInteger target;
         public final ByteArray headerHash;
         public final BigInteger blockBaseReward;
         public final BigInteger blockTxFee;
 
-        public BlockTemplate(ByteArray previousblockhash ,Long height ,ByteArray target ,ByteArray headerHash ,BigInteger blockBaseReward ,BigInteger blockTxFee ){
+        public BlockTemplate(ByteArray previousblockhash ,Long height ,BigInteger target ,ByteArray headerHash ,BigInteger blockBaseReward ,BigInteger blockTxFee ){
             if(previousblockhash==null) throw ParseErrorRPCException.INSTANCE;
             this.previousblockhash=previousblockhash;
             if(height==null) throw ParseErrorRPCException.INSTANCE;

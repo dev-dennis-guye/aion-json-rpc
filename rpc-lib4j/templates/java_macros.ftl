@@ -2,6 +2,16 @@
     <#local typeName = type.name>
     <#if type.baseType?has_content>
         <#return toJavaType(type.baseType)>
+    <#elseif typeName=="uint16">
+        <#return "Integer">
+    <#elseif typeName=="uint32">
+        <#return "Long">
+    <#elseif typeName=="uint64">
+        <#return "BigInteger">
+    <#elseif typeName=="uint128">
+        <#return "BigInteger">
+    <#elseif typeName=="uint256">
+        <#return "BigInteger">
     <#elseif typeName == "string">
         <#return "String">
     <#elseif typeName == "error">
@@ -111,6 +121,16 @@
         <#return "HexString">
     <#elseif typeName == "byte">
         <#return "Byte">
+    <#elseif typeName=="uint16">
+        <#return "UnsignedInteger16">
+    <#elseif typeName=="uint32">
+        <#return "UnsignedInteger32">
+    <#elseif typeName=="uint64">
+        <#return "UnsignedInteger64">
+    <#elseif typeName=="uint128">
+        <#return "UnsignedInteger128">
+    <#elseif typeName=="uint256">
+        <#return "UnsignedInteger256">
     <#elseif typeName == "bool">
         <#return "Boolean">
     <#elseif typeName == "byte-array">
@@ -135,6 +155,8 @@
         <#return "LongHexString">
     <#elseif typeName == "int_hex_string">
         <#return "IntHexString">
+    <#elseif typeName == "uint256_hex_string">
+        <#return "Uint256IntHexString">
     <#elseif typeName=="decimal_string">
         <#return "DecimalString">
     <#elseif typeName=="blockTemplate">

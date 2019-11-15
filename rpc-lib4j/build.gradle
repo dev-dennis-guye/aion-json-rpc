@@ -12,11 +12,18 @@ repositories {
     mavenCentral()
 }
 
+test {
+    useJUnitPlatform()
+}
+
 dependencies {
-    testCompile group: 'junit', name: 'junit', version: '4.12'
     compile files("lib/util4j-cc9c754dd.jar")
     compile files("lib/aion-types-22a3be9.jar")
     compile group: 'org.json', name: 'json', version: '20180130'
     compile group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5.10'
     compile group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.3'
+    testImplementation('org.junit.jupiter:junit-jupiter:5.5.2')
+    testCompile("org.junit.jupiter:junit-jupiter-params:5.4.2")
+    testRuntime('org.junit.jupiter:junit-jupiter-engine:5.4.2')
 }
+

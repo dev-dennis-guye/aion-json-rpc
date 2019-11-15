@@ -18,14 +18,16 @@ import org.json.JSONObject;
 *
 * AUTO-GENERATED SOURCE FILE.  DO NOT EDIT MANUALLY -- YOUR CHANGES WILL
 * BE WIPED OUT WHEN THIS FILE GETS RE-GENERATED OR UPDATED.
-* GENERATED: 2019-11-14
+* GENERATED: 2019-11-15
 *
 *****************************************************************************/
 public class RPCTypesConverter{
     private static final Pattern hexPattern = Pattern.compile("^0x[0-9a-fA-F]+$");
-    private static final Pattern decPattern = Pattern.compile("^-?[0-9]+$");
+    private static final Pattern unsignedDecPattern = Pattern.compile("^[0-9]+$");
+    private static final Pattern unsignedHexPattern = Pattern.compile("^0x([0-9a-fA-F]{2})+$");
+    private static final Pattern decPattern = Pattern.compile("^[-+]?[0-9]+$");
     private static final Pattern booleanPattern = Pattern.compile("^([Tt]rue|[Ff]alse)$");
-    private static final Pattern byteArrayPattern = Pattern.compile("^0x[0-9a-fA-F]*$");
+    private static final Pattern byteArrayPattern = Pattern.compile("^0x([0-9a-fA-F][0-9a-fA-F])*$");
 
     public static class ObjectConverter{
 
@@ -129,6 +131,140 @@ public class RPCTypesConverter{
 
     }
 
+    public static class UnsignedInteger16Converter{
+        public static String encodeHex(Integer integer){
+            if (integer == null) {
+                return null;
+            } else return TypeUtils.encodeIntegerToHex(integer);
+        }
+
+        public static Integer encode(Integer integer){
+            return integer;
+        }
+
+        public static Integer decode(Object object){
+            if (object == null) {
+                return null;
+            } else {
+                String string = object.toString();
+                if (unsignedDecPattern.matcher(string).find()){
+                    return Integer.parseInt(string);
+                } else if (unsignedHexPattern.matcher(string).find()){
+                    return TypeUtils.decodeIntFromHex(string);
+                } else{
+                    throw ParseErrorRPCException.INSTANCE;
+                }
+            }
+        }
+    }
+
+    public static class UnsignedInteger32Converter{
+        public static String encodeHex(Long integer){
+            if (integer == null) {
+                return null;
+            } else return TypeUtils.encodeLongToHex(integer);
+        }
+
+        public static Long encode(Long integer){
+            return integer;
+        }
+
+        public static Long decode(Object object){
+            if (object == null) {
+                return null;
+            } else {
+                String string = object.toString();
+            if (unsignedDecPattern.matcher(string).find()){
+                    return Long.parseLong(string);
+                }else if (unsignedHexPattern.matcher(string).find()){
+                    return TypeUtils.decodeLongFromHex(string);
+                } else{
+                    throw ParseErrorRPCException.INSTANCE;
+                }
+            }
+        }
+    }
+
+    public static class UnsignedInteger64Converter{
+        public static String encodeHex(BigInteger integer){
+            if (integer == null) {
+                return null;
+            } else return TypeUtils.encodeBigIntegerToHex(integer,8);
+        }
+
+        public static String encode(BigInteger integer){
+            return integer.toString();
+        }
+
+        public static BigInteger decode(Object object){
+            if (object == null) {
+                return null;
+            } else {
+                String string = object.toString();
+                if (unsignedDecPattern.matcher(string).find()){
+                        return new BigInteger(string);
+                } else if (unsignedHexPattern.matcher(string).find()){
+                    return TypeUtils.decodeBigIntFromHex(string);
+                } else{
+                    throw ParseErrorRPCException.INSTANCE;
+                }
+            }
+        }
+    }
+
+    public static class UnsignedInteger128Converter{
+        public static String encodeHex(BigInteger integer){
+            if (integer == null) {
+                return null;
+            } else return TypeUtils.encodeBigIntegerToHex(integer,16);
+        }
+
+        public static String encode(BigInteger integer){
+            return integer.toString();
+        }
+
+        public static BigInteger decode(Object object){
+            if (object == null) {
+                return null;
+            } else {
+                String string = object.toString();
+                if (unsignedDecPattern.matcher(string).find()){
+                    return new BigInteger(string);
+                } else if (unsignedHexPattern.matcher(string).find()){
+                    return TypeUtils.decodeBigIntFromHex(string);
+                } else{
+                    throw ParseErrorRPCException.INSTANCE;
+                }
+            }
+        }
+    }
+
+    public static class UnsignedInteger256Converter{
+        public static String encodeHex(BigInteger integer){
+            if (integer == null) {
+                return null;
+            } else return TypeUtils.encodeBigIntegerToHex(integer, 32);
+        }
+
+        public static String encode(BigInteger integer){
+            return integer.toString();
+        }
+
+        public static BigInteger decode(Object object){
+            if (object == null) {
+                return null;
+            } else {
+                String string = object.toString();
+                if (unsignedDecPattern.matcher(string).find()){
+                    return new BigInteger(string);
+                } else if (unsignedHexPattern.matcher(string).find()){
+                    return TypeUtils.decodeBigIntFromHex(string);
+                } else{
+                    throw ParseErrorRPCException.INSTANCE;
+                }
+            }
+        }
+    }
 
     public static class IntegerConverter{
 
@@ -632,7 +768,7 @@ public class RPCTypesConverter{
             try{
                 if(str==null || str.equals(JSONObject.NULL)) return null;
                 JSONObject jsonObject = str instanceof JSONObject? (JSONObject)str :new JSONObject(str.toString());
-                return new BlockTemplate( Byte32StringConverter.decode(jsonObject.opt("previousblockhash")) , LongConverter.decode(jsonObject.opt("height")) , ByteArrayConverter.decode(jsonObject.opt("target")) , Byte32StringConverter.decode(jsonObject.opt("headerHash")) , BigIntegerHexStringConverter.decode(jsonObject.opt("blockBaseReward")) , BigIntegerHexStringConverter.decode(jsonObject.opt("blockTxFee")) );
+                return new BlockTemplate( Byte32StringConverter.decode(jsonObject.opt("previousblockhash")) , LongConverter.decode(jsonObject.opt("height")) , Uint256IntHexStringConverter.decode(jsonObject.opt("target")) , Byte32StringConverter.decode(jsonObject.opt("headerHash")) , BigIntegerHexStringConverter.decode(jsonObject.opt("blockBaseReward")) , BigIntegerHexStringConverter.decode(jsonObject.opt("blockTxFee")) );
             } catch (Exception e){
                 throw ParseErrorRPCException.INSTANCE;
             }
@@ -644,7 +780,7 @@ public class RPCTypesConverter{
                 JSONObject jsonObject = new JSONObject();
                 jsonObject.put("previousblockhash", Byte32StringConverter.encode(obj.previousblockhash));
                 jsonObject.put("height", LongConverter.encode(obj.height));
-                jsonObject.put("target", ByteArrayConverter.encode(obj.target));
+                jsonObject.put("target", Uint256IntHexStringConverter.encode(obj.target));
                 jsonObject.put("headerHash", Byte32StringConverter.encode(obj.headerHash));
                 jsonObject.put("blockBaseReward", BigIntegerHexStringConverter.encode(obj.blockBaseReward));
                 jsonObject.put("blockTxFee", BigIntegerHexStringConverter.encode(obj.blockTxFee));
@@ -661,7 +797,7 @@ public class RPCTypesConverter{
                 JSONObject jsonObject = new JSONObject();
                 jsonObject.put("previousblockhash", Byte32StringConverter.encode(obj.previousblockhash));
                 jsonObject.put("height", LongConverter.encode(obj.height));
-                jsonObject.put("target", ByteArrayConverter.encode(obj.target));
+                jsonObject.put("target", Uint256IntHexStringConverter.encode(obj.target));
                 jsonObject.put("headerHash", Byte32StringConverter.encode(obj.headerHash));
                 jsonObject.put("blockBaseReward", BigIntegerHexStringConverter.encode(obj.blockBaseReward));
                 jsonObject.put("blockTxFee", BigIntegerHexStringConverter.encode(obj.blockTxFee));
@@ -840,6 +976,41 @@ public class RPCTypesConverter{
         public static String encode(BigInteger obj){
             if (obj != null){
                 String result = BigIntegerConverter.encodeHex(obj);
+                if(checkConstraints(result))
+                    return result;
+                else
+                    throw ParseErrorRPCException.INSTANCE;
+            }
+            else{
+                return null;
+            }
+        }
+
+        private static boolean checkConstraints(String s){
+            return regex.matcher(s).find() && s.length() >= 3 && s.length() <= 2147483647;
+        }
+    }
+
+    public static class Uint256IntHexStringConverter{
+        private static final Pattern regex = Pattern.compile("^0x[0-9a-fA-F]+$");
+
+        public static BigInteger decode(Object object){
+            try{
+                if(object==null || object.equals(JSONObject.NULL)) return null;
+                else if (checkConstraints(object.toString())){
+                    return UnsignedInteger256Converter.decode(object);
+                }
+                else{
+                    throw ParseErrorRPCException.INSTANCE;
+                }
+            } catch(Exception e){
+                throw ParseErrorRPCException.INSTANCE;
+            }
+        }
+
+        public static String encode(BigInteger obj){
+            if (obj != null){
+                String result = UnsignedInteger256Converter.encodeHex(obj);
                 if(checkConstraints(result))
                     return result;
                 else

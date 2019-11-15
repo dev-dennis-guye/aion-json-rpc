@@ -3,3 +3,4 @@
 build
 /generator/bin/
 /generator/lib/
+/out/
