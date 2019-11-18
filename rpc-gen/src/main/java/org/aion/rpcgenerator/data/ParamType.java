@@ -1,13 +1,16 @@
 package org.aion.rpcgenerator.data;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 import org.aion.rpcgenerator.Mappable;
+import org.aion.rpcgenerator.util.SchemaUtils;
 import org.aion.rpcgenerator.util.XMLUtils;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 public class ParamType extends Type {
@@ -25,7 +28,8 @@ public class ParamType extends Type {
                     XMLUtils.valueFromAttribute(fieldNode, "fieldName"),
                     XMLUtils.valueFromAttribute(fieldNode, "type"),
                     XMLUtils.valueFromAttribute(fieldNode, "required"),
-                    XMLUtils.optionalValueFromAttribute(fieldNode, "defaultValue").orElse("")));
+                    XMLUtils.optionalValueFromAttribute(fieldNode, "defaultValue").orElse(""),
+                    SchemaUtils.getComments(fieldNode.getChildNodes())));
             }
         }
     }
@@ -62,9 +66,11 @@ public class ParamType extends Type {
         private final String required;
         private Type type;
         private final String defaultValue;
+        private final List<String> comments;
 
         public Field(Integer index, String fieldName, String typeName, String required,
-            String defaultValue) {
+            String defaultValue, List<String> comments) {
+            this.comments = comments;
             if (required.equalsIgnoreCase("true") && !defaultValue.isEmpty())
                 throw new IllegalStateException("Cannot give a default value to a required field");
             else {
@@ -82,15 +88,16 @@ public class ParamType extends Type {
                     Map.entry("fieldName", fieldName),
                     Map.entry("type", type.toMap()),
                     Map.entry("required", required),
-                    Map.entry("index", index.toString()));
+                    Map.entry("index", index.toString()),
+                    Map.entry("comments", comments));
             } else {
                 return Map.ofEntries(
                     Map.entry("fieldName", fieldName),
                     Map.entry("type", type.toMap()),
                     Map.entry("required", required),
                     Map.entry("index", index.toString()),
-                    Map.entry("defaultValue", defaultValue)
-                );
+                    Map.entry("defaultValue", defaultValue),
+                    Map.entry("comments", comments));
             }
         }
 

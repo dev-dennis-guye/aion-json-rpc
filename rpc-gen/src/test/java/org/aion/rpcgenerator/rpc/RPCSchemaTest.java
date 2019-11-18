@@ -269,7 +269,8 @@ public class RPCSchemaTest {
         PrimitiveType intType = new PrimitiveType("int", Collections.emptyList());
         PrimitiveType stringType = new PrimitiveType("string", Collections.emptyList());
         EnumType.EnumValues enumValue = new EnumValues("Version2",  "2.0");
-        CompositeType.Field compositeField = new CompositeType.Field("id", "int", "true");
+        CompositeType.Field compositeField = new CompositeType.Field("id", "int", "true",
+            Collections.emptyList());
         compositeField.setTypeDef(Collections.singletonList(intType));
         ConstrainedType hexType = new ConstrainedType("data_hex_string", Collections.emptyList(),
             "^0x([0-9a-fA-F][0-9a-fA-F])+", 4, Integer.MAX_VALUE, "string");
@@ -278,8 +279,10 @@ public class RPCSchemaTest {
 
         ParamType paramTypeEcRecover = new ParamType("ecRecoverParams", Collections.emptyList(),
             List.of(
-                new ParamType.Field(0, "dataThatWasSigned", "string", "true", ""),
-                new ParamType.Field(1, "signature", "data_hex_string", "true", "")
+                new ParamType.Field(0, "dataThatWasSigned", "string", "true", "",
+                    Collections.emptyList()),
+                new ParamType.Field(1, "signature", "data_hex_string", "true", "",
+                    Collections.emptyList())
             ));
         paramTypeEcRecover.setFieldTypeDef(List.of(hexType, stringType));
 

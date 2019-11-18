@@ -1,13 +1,16 @@
 package org.aion.rpcgenerator.data;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 import org.aion.rpcgenerator.Mappable;
+import org.aion.rpcgenerator.util.SchemaUtils;
 import org.aion.rpcgenerator.util.XMLUtils;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 public class CompositeType extends Type {
@@ -24,8 +27,8 @@ public class CompositeType extends Type {
                 fieldList.add(new Field(
                     XMLUtils.valueFromAttribute(fieldNode, "fieldName"),
                     XMLUtils.valueFromAttribute(fieldNode, "type"),
-                    XMLUtils.valueFromAttribute(fieldNode, "required")
-                ));
+                    XMLUtils.valueFromAttribute(fieldNode, "required"),
+                    SchemaUtils.getComments(fieldNode.getChildNodes())));
             }
         }
     }
@@ -58,18 +61,22 @@ public class CompositeType extends Type {
         private String typeName;
         private String required;
         private Type type;
+        private List<String> comments;
 
-        public Field(String fieldName, String typeName, String required) {
+        public Field(String fieldName, String typeName, String required,
+            List<String> comment) {
             this.fieldName = fieldName;
             this.typeName = typeName;
             this.required = required;
+            this.comments = comment;
         }
 
         public Map<String, Object> toMap() {
             return Map.ofEntries(
                 Map.entry("fieldName", fieldName),
                 Map.entry("type", type.toMap()),
-                Map.entry("required", required)
+                Map.entry("required", required),
+                Map.entry("comments", comments)
             );
         }
 

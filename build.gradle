@@ -10,6 +10,7 @@ def buildRoot = "${rootDir.absolutePath}/build"
 allprojects{
     apply plugin: 'java'
     apply plugin: 'idea'
+    apply plugin: 'base'
     buildDir="${buildRoot}/${project.name}"
 }
 
@@ -77,9 +78,18 @@ task copyAllGeneratedJava(type:Copy){
     dependsOn  'copyJavaExceptions', 'copyJavaClientMethods', 'copyJavaServerMethods', 'copyJavaTypes', 'copyJavaTests'
 }
 
+task docs4J(type: Zip){
+    dependsOn ':rpc-lib4j:javadoc'
+    def rpcPath ="$buildRoot/rpc-lib4j/docs"
+    archiveFileName = "rpc-docs.zip"
+    destinationDirectory = file("$rpcPath")
+    from "$rpcPath/javadoc"
+}
+
 task packageGeneratedFiles4J(){
     dependsOn 'copyAllGeneratedJava'
     dependsOn ':rpc-lib4j:build', ':rpc-lib4j:shadowJar'
+    dependsOn 'docs4J'
     doFirst{
         println("Compiling jars")
     }

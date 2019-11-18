@@ -11,14 +11,15 @@
     <!ELEMENT regex (#PCDATA)>
     <!ATTLIST regex
         name CDATA #REQUIRED
-        value CDATA #REQUIRED>
+        value CDATA #REQUIRED
+        comment CDATA #REQUIRED>
     <!ELEMENT union (type-union)*>
     <!ELEMENT type-union (comment|union-element)*>
     <!ATTLIST type-union
         nullable CDATA #REQUIRED
         typeName CDATA #REQUIRED>
     <!ELEMENT comment (#PCDATA)>
-    <!ELEMENT union-element (#PCDATA)>
+    <!ELEMENT union-element (comment)*>
     <!ATTLIST union-element
         name CDATA #REQUIRED
         type CDATA #REQUIRED>
@@ -26,7 +27,7 @@
     <!ELEMENT type-composite (comment|field)*>
     <!ATTLIST type-composite
         typeName CDATA #REQUIRED>
-    <!ELEMENT field (#PCDATA)>
+    <!ELEMENT field (comment)*>
     <!ATTLIST field
         fieldName CDATA #REQUIRED
         index CDATA #IMPLIED
@@ -67,12 +68,12 @@
     <encode-error error_class="ParseError"/>
     <decode-error error_class="ParseError"/>
     <regexes>
-        <regex name="hexPattern" value="^0x[0-9a-fA-F]+$"/>
-        <regex name="unsignedDecPattern" value="^[0-9]+$"/>
-        <regex name="unsignedHexPattern" value="^0x([0-9a-fA-F]{2})+$"/>
-        <regex name="decPattern" value="^[-+]?[0-9]+$"/>
-        <regex name="booleanPattern" value="^([Tt]rue|[Ff]alse)$"/>
-        <regex name="byteArrayPattern" value="^0x([0-9a-fA-F][0-9a-fA-F])*$"/>
+        <regex name="hexPattern" value="^0x[0-9a-fA-F]+$" comment="Validates that a hex string."/>
+        <regex name="unsignedDecPattern" value="^[0-9]+$" comment="Validates an unsigned decimal string."/>
+        <regex name="unsignedHexPattern" value="^0x([0-9a-fA-F]{2})+$" comment="Validates that a number is encoded as a hex string. This is different from hex pattern since this validates that the string correctly encodes a byte array."/>
+        <regex name="decPattern" value="^[-+]?[0-9]+$" comment="Validates a signed decimal string."/>
+        <regex name="booleanPattern" value="^([Tt]rue|[Ff]alse)$" comment="Validates a boolean string."/>
+        <regex name="byteArrayPattern" value="^0x([0-9a-fA-F]{2})*$" comment="Validates a byte hex string. This is different from unsignedHexPattern since empty byte arrays are allowed here."/>
     </regexes>
     <union>
         <!--Unions are to be used anywhere multiple types are valid but only one should be used.-->
@@ -80,8 +81,12 @@
         and so we avoid using language specific features like overloading or universal types. -->
         <type-union typeName="blockSpecifierUnion" nullable="true">
             <comment>Specifies a block</comment>
-            <union-element type="byte-array" name="hash"/>
-            <union-element type="long" name="blockNumber"/>
+            <union-element type="byte-array" name="hash">
+                <comment>A block hash</comment>
+            </union-element>
+            <union-element type="long" name="blockNumber">
+                <comment>The block number</comment>
+            </union-element>
             <union-element type="blockEnum" name="blockEnum"/>
         </type-union>
         <type-union typeName="resultUnion" nullable="true">
@@ -113,7 +118,9 @@
         <!--Composite types are used to define struct like data structures-->
         <type-composite typeName="request">
             <comment>This is the standard request body for a JSON RPC Request</comment>
-            <field fieldName="id" required="false" type="int"/>
+            <field fieldName="id" required="false" type="int">
+                <comment>The id of the request</comment>
+            </field>
             <field fieldName="method" required="true" type="string"/>
             <field fieldName="params" required="false" type="paramUnion"/>
             <field fieldName="jsonrpc" required="false" type="version_string"/>
@@ -238,10 +245,13 @@
             typeName="int_hex_string"/>
         <type-constrained baseType="byte" min="3" max="4" regex="^0x[0-9a-fA-F]+$"
             typeName="byte_hex_string"/>
-        <type-constrained baseType="data_hex_string" typeName="byte_32_string" max="66" min="66" regex=".*"/>
-        <type-constrained baseType="data_hex_string" typeName="byte_64_string" max="130" min="130" regex=".*"/>
+        <type-constrained baseType="data_hex_string" typeName="byte_32_string" max="66" min="66"
+            regex=".*"/>
+        <type-constrained baseType="data_hex_string" typeName="byte_64_string" max="130" min="130"
+            regex=".*"/>
         <type-constrained baseType="string" typeName="decimal_string"
-            regex="^([+-]([1-9][0-9]*|[0-9]+[.][0-9])|[0-9]+([.][0-9])?)[0-9]*$" min="1" max="infinity"/>
+            regex="^([+-]([1-9][0-9]*|[0-9]+[.][0-9])|[0-9]+([.][0-9])?)[0-9]*$" min="1"
+            max="infinity"/>
         <!--The regex constraint for decimal string was implemented above to minimize differences between languages.
         The java compiler complains with any string that contains a / that is not used to escape a literal.-->
     </constrained>
@@ -261,7 +271,11 @@
             <field fieldName="signature" index="1" required="true" type="data_hex_string"/>
         </type-params-wrapper>
         <type-params-wrapper typeName="blockSpecifier">
-            <field fieldName="block" index="0" required="true" type="blockSpecifierUnion"/>
+            <field fieldName="block" index="0" required="true" type="blockSpecifierUnion">
+                <comment>Specifies the block to be returned with either a block hash, number or
+                    enum.
+                </comment>
+            </field>
         </type-params-wrapper>
         <type-params-wrapper typeName="submitSeedParams">
             <field fieldName="newSeed" index="0" required="true" type="byte_64_string"/>
