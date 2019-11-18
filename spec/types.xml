@@ -74,6 +74,8 @@
         <regex name="decPattern" value="^[-+]?[0-9]+$" comment="Validates a signed decimal string."/>
         <regex name="booleanPattern" value="^([Tt]rue|[Ff]alse)$" comment="Validates a boolean string."/>
         <regex name="byteArrayPattern" value="^0x([0-9a-fA-F]{2})*$" comment="Validates a byte hex string. This is different from unsignedHexPattern since empty byte arrays are allowed here."/>
+        <regex name="aionAddressPattern" value="^0x([Aa]0[a-fA-F0-9]{62}|0{64}|0{61}200)$"
+            comment="Validates that an aion address is valid"/>
     </regexes>
     <union>
         <!--Unions are to be used anywhere multiple types are valid but only one should be used.-->

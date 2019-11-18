@@ -46,6 +46,10 @@ public class RPCTypesConverter{
     * Validates a byte hex string. This is different from unsignedHexPattern since empty byte arrays are allowed here.
     */
     public static final Pattern byteArrayPattern = Pattern.compile("^0x([0-9a-fA-F]{2})*$");
+    /**
+    * Validates that an aion address is valid
+    */
+    public static final Pattern aionAddressPattern = Pattern.compile("^0x([Aa]0[a-fA-F0-9]{62}|0{64}|0{61}200)$");
 
     public static class ObjectConverter{
 
@@ -409,7 +413,7 @@ public class RPCTypesConverter{
                 if (obj == null){
                     return null;
                 }
-                else if (obj instanceof String && hexPattern.matcher(((String)obj)).find()){
+                else if (obj instanceof String && aionAddressPattern.matcher(((String)obj)).find()){
                     return new AionAddress(ByteUtil.hexStringToBytes(((String) obj)));
                 }
                 else if (obj instanceof byte[]){

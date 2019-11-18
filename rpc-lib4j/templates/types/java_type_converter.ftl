@@ -392,7 +392,7 @@ public class RPCTypesConverter{
                 if (obj == null){
                     return null;
                 }
-                else if (obj instanceof String && hexPattern.matcher(((String)obj)).find()){
+                else if (obj instanceof String && aionAddressPattern.matcher(((String)obj)).find()){
                     return new AionAddress(ByteUtil.hexStringToBytes(((String) obj)));
                 }
                 else if (obj instanceof byte[]){
