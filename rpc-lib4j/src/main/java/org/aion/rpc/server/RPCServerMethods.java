@@ -12,11 +12,16 @@ import org.aion.util.types.ByteArrayWrapper;
 *
 * AUTO-GENERATED SOURCE FILE.  DO NOT EDIT MANUALLY -- YOUR CHANGES WILL
 * BE WIPED OUT WHEN THIS FILE GETS RE-GENERATED OR UPDATED.
-* GENERATED: 2019-11-15
+* GENERATED: 2019-11-18
 *
 *****************************************************************************/
 public interface RPCServerMethods extends RPC{
-
+    /**
+    *
+    * @param request the client request
+    * @param rpc the rpc implementation to be used in fulfilling this request.
+    * @return the result of this request
+    */
     static ResultUnion execute(Request request, RPCServerMethods rpc){
         ResultUnion res;
             //check that the request can be fulfilled by this class
@@ -88,14 +93,86 @@ public interface RPCServerMethods extends RPC{
         return Set.of( "personal_ecRecover", "getseed", "submitseed", "submitsignature", "ops_getBlockDetails", "getblocktemplate", "submitblock", "validateaddress", "getDifficulty", "getMinerStats");
     }
 
+    /**
+    * Returns the key used to sign an input string.
+    * 
+    * @param dataThatWasSigned 
+    * @param signature 
+
+
+    * @return 
+    */
     AionAddress personal_ecRecover(ByteArray dataThatWasSigned,ByteArray signature);
+    /**
+    * 
+    * @return 
+    */
     ByteArray getseed();
+    /**
+    * 
+    * @param newSeed 
+    * @param signingPublicKey 
+    * @param coinbase 
+
+
+    * @return 
+    */
     ByteArray submitseed(ByteArray newSeed,ByteArray signingPublicKey,AionAddress coinbase);
+    /**
+    * 
+    * @param signature 
+    * @param sealHash 
+
+
+    * @return 
+    */
     Boolean submitsignature(ByteArray signature,ByteArray sealHash);
+    /**
+    * Returns the details of the specified block.
+    * 
+    * @param block Specifies the block to be returned with either a block hash, number or
+                    enum.
+                
+
+
+
+    * @return 
+    */
     BlockDetails ops_getBlockDetails(BlockSpecifierUnion block);
+    /**
+    * 
+    * @return 
+    */
     BlockTemplate getblocktemplate();
+    /**
+    * 
+    * @param nonce 
+    * @param solution 
+    * @param headerHash 
+
+
+    * @return 
+    */
     SubmissionResult submitblock(ByteArray nonce,ByteArray solution,ByteArray headerHash);
+    /**
+    * 
+    * @param address 
+
+
+    * @return 
+    */
     ValidateAddressResult validateaddress(AionAddress address);
+    /**
+    * 
+    * @return 
+    */
     BigInteger getDifficulty();
+    /**
+    * 
+    * @param address 
+
+
+    * @return 
+    */
     MinerStats getMinerStats(AionAddress address);
 }

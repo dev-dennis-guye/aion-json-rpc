@@ -26,7 +26,26 @@ public class RPCClientMethods{
         this.generator = generator;
     }
 <#list methods as method>
+    /**
+    <#if method.comments?has_content>
+    <#list method.comments as comment>
+    * ${comment}
+    </#list>
+    </#if>
+    * <#if method.param.fields?has_content>
+    <#list method.param.fields as parameter>
+    * @param ${parameter.fieldName} <#list parameter.comments as comment>${comment}
+    </#list>
 
+    </#list>
+
+    </#if>
+
+    * @return <#if method.returnType.comments?has_content><#list method.returnType.comments as comment>${comment}
+    </#list>
+    </#if>
+
+    */
     public final ${macros.toJavaType(method.returnType)} ${method.name}(<#list method.param.fields as parameter>${macros.toJavaType(parameter.type)} ${parameter.fieldName}<#if parameter_has_next>,</#if></#list>){
         ${macros.toJavaType(method.param)} params= new ${macros.toJavaType(method.param)}(<#list method.param.fields as parameter>${parameter.fieldName}<#if parameter_has_next> ,</#if></#list>);
         Request request = new Request(generator.generateID(), "${method.name}", new ParamUnion(params), VersionType.Version2);
@@ -35,7 +54,25 @@ public class RPCClientMethods{
     }
 </#list>
 <#list methods as method>
+    /**
+    <#if method.comments?has_content>
+    <#list method.comments as comment>
+    * ${comment}
+    </#list>
+    </#if>
+    * <#if method.param.fields?has_content>
+    <#list method.param.fields as parameter>
+    * @param ${parameter.fieldName} <#list parameter.comments as comment>${comment}
+    </#list>
 
+    </#list>
+
+    </#if>
+
+    * @param asyncTask The task to be executed upon successfuly or exceptional completion of this RPC request.
+    * @param <O> the result type of the async task.
+    * @return The result of this asynchronous request
+    */
     public final <O> CompletableFuture<O> ${method.name}(<#list method.param.fields as parameter>${macros.toJavaType(parameter.type)} ${parameter.fieldName},</#list> BiFunction<${macros.toJavaType(method.returnType)}, RPCError, O> asyncTask){
         ${macros.toJavaType(method.param)} params= new ${macros.toJavaType(method.param)}(<#list method.param.fields as parameter>${parameter.fieldName}<#if parameter_has_next> ,</#if></#list>);
         Request request = new Request(generator.generateID(), "${method.name}", new ParamUnion(params), VersionType.Version2);

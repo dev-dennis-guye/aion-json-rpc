@@ -17,6 +17,9 @@ import org.aion.util.bytes.ByteUtil;
 *****************************************************************************/
 public class RPCTypes{
 
+    /**
+    * An immutable class that wraps a byte array.
+    */
     public static final class ByteArray{
         private final byte[] bytes;
 
@@ -26,16 +29,24 @@ public class RPCTypes{
             }
             this.bytes = bytes;
         }
-
+        /**
+        * @param hexString a hexadecimal string that encodes a byte array.
+        */
         public ByteArray(String hexString){
             if (hexString == null) throw new NullPointerException("Hex String is null");
             this.bytes = ByteUtil.hexStringToBytes(hexString);
         }
 
+        /**
+        * @return a copy of the byte array wrapped by this class.
+        */
         public byte[] toBytes(){
             return Arrays.copyOf(bytes, bytes.length);
         }
 
+        /**
+        * @return the byte array encoded as a hex string
+        */
         @Override
         public String toString() {
             return "0x"+ ByteUtil.toHexString(bytes);
@@ -70,6 +81,12 @@ public class RPCTypes{
     </#if>
     public static final class ${macros.toJavaType(unionType)}{
         <#list unionType.unionElements as unionElement >
+        <#if unionElement.comments?has_content>
+        /**<#list unionElement.comments as comment>
+        * ${comment}
+        </#list>*
+        */
+        </#if>
         public final ${macros.toJavaType(unionElement.type)} ${unionElement.name};
         </#list>
         private ${macros.toJavaType(unionType)}(<#list unionType.unionElements as unionElement >${macros.toJavaType(unionElement.type)} ${unionElement.name} <#if unionElement_has_next>,</#if></#list>){
@@ -120,6 +137,13 @@ public class RPCTypes{
     </#if>
     public static final class ${macros.toJavaType(composite_type)} {
     <#list composite_type.fields as field>
+        <#if field.comments?has_content>
+        /**
+        <#list field.comments as comment>
+        * ${comment}
+        </#list>
+        */
+        </#if>
         public final ${macros.toJavaType(field.type)} ${field.fieldName};
     </#list>
 
@@ -136,7 +160,7 @@ public class RPCTypes{
 <#list enumTypes as enum >
     <#if enum.comments?has_content>
         /**
-        <#list composite_type.comments as comment>* ${comment}</#list>
+        <#list enum.comments as comment>* ${comment}</#list>
         */
     </#if>
     public enum ${macros.toJavaType(enum)}{
@@ -166,8 +190,16 @@ public class RPCTypes{
     </#if>
     public static final class ${macros.toJavaType(paramType)} {
     <#list paramType.fields as field>
+        <#if field.comments?has_content>
+        /**
+        <p><#list field.comments as comment>
+        * ${comment}
+        </#list></p>
+        <#if field.defaulValue?has_content>* default value = ${field.defaultValue}</#if>
+        */
+        </#if>
         public final ${macros.toJavaType(field.type)} ${field.fieldName};
-        <#if field.defaultValue?has_content>private final ${macros.toJavaType(field.type)} ${field.fieldName}DefaultValue=${macros.toJavaConverter(field.type)}.decode("${field.defaulValue}");</#if>
+        <#if field.defaultValue?has_content>public final ${macros.toJavaType(field.type)} ${field.fieldName}DefaultValue=${macros.toJavaConverter(field.type)}.decode("${field.defaulValue}");</#if>
     </#list>
 
         public ${macros.toJavaType(paramType)}(<#list paramType.fields as field>${macros.toJavaType(field.type)} ${field.fieldName} <#if field_has_next>,</#if></#list>){

@@ -11,11 +11,14 @@ import org.aion.util.bytes.ByteUtil;
 *
 * AUTO-GENERATED SOURCE FILE.  DO NOT EDIT MANUALLY -- YOUR CHANGES WILL
 * BE WIPED OUT WHEN THIS FILE GETS RE-GENERATED OR UPDATED.
-* GENERATED: 2019-11-15
+* GENERATED: 2019-11-18
 *
 *****************************************************************************/
 public class RPCTypes{
 
+    /**
+    * An immutable class that wraps a byte array.
+    */
     public static final class ByteArray{
         private final byte[] bytes;
 
@@ -25,16 +28,24 @@ public class RPCTypes{
             }
             this.bytes = bytes;
         }
-
+        /**
+        * @param hexString a hexadecimal string that encodes a byte array.
+        */
         public ByteArray(String hexString){
             if (hexString == null) throw new NullPointerException("Hex String is null");
             this.bytes = ByteUtil.hexStringToBytes(hexString);
         }
 
+        /**
+        * @return a copy of the byte array wrapped by this class.
+        */
         public byte[] toBytes(){
             return Arrays.copyOf(bytes, bytes.length);
         }
 
+        /**
+        * @return the byte array encoded as a hex string
+        */
         @Override
         public String toString() {
             return "0x"+ ByteUtil.toHexString(bytes);
@@ -63,7 +74,15 @@ public class RPCTypes{
     * Specifies a block
     */
     public static final class BlockSpecifierUnion{
+        /**
+        * A block hash
+        *
+        */
         public final ByteArray hash;
+        /**
+        * The block number
+        *
+        */
         public final Long blockNumber;
         public final BlockEnum blockEnum;
         private BlockSpecifierUnion(ByteArray hash ,Long blockNumber ,BlockEnum blockEnum ){
@@ -383,6 +402,9 @@ public class RPCTypes{
     * This is the standard request body for a JSON RPC Request
     */
     public static final class Request {
+        /**
+        * The id of the request
+        */
         public final Integer id;
         public final String method;
         public final ParamUnion params;
@@ -706,6 +728,14 @@ public class RPCTypes{
         }
     }
     public static final class BlockSpecifier {
+        /**
+        <p>
+        * Specifies the block to be returned with either a block hash, number or
+                    enum.
+                
+        </p>
+        
+        */
         public final BlockSpecifierUnion block;
         
 

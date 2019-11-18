@@ -11,6 +11,10 @@ import org.aion.rpc.types.RPCTypesConverter.RPCErrorConverter;
 *
 *****************************************************************************/
 public class RPCExceptions{
+    /**
+    * @param code the rpc error code
+    * @return the RPCException which maps to the supplied code. Otherwise an instance of InternalErrorRPCException.
+    */
     public static RPCException fromCode(int code){
         <#list errors as error>if(code == ${error.code}){
             return ${macros.toJavaException(error.error_class)}.INSTANCE;
@@ -19,6 +23,11 @@ public class RPCExceptions{
             return ${macros.toJavaException("InternalError")}.INSTANCE;
     }
 
+    /**
+    * @param code the rpc error code
+    * @param message the rpc message
+    * @return the RPCException which contains the specified code and message if it can be created. Otherwise an instance of InternalErrorRPCException.
+    */
     public static RPCException fromCodeAndMessage(int code, String message){
         <#list errors as error><#if error.modifiable=="true"> if(code == ${error.code}){
             return new ${macros.toJavaException(error.error_class)}(code, message);
@@ -38,12 +47,20 @@ public class RPCExceptions{
             this("{\"code\":"+code+",\"message\":\""+message+"\"}");
         }
 
+        /**
+        * @return The rpc error that this class represents
+        */
         public RPCError getError(){
             return error;
         }
     }
 
     <#list errors as error>
+    /**
+    * <p>Contains errors of the form {"code":${error.code},"message":"${error.message}"}.</p>
+    <p><#list error.comments as comment>* ${comment}
+    </#list></p>
+    */
     public static class ${macros.toJavaException(error.error_class)} extends RPCException{
         public static final ${macros.toJavaException(error.error_class)} INSTANCE = new ${macros.toJavaException(error.error_class)}();
         private ${macros.toJavaException(error.error_class)}(){

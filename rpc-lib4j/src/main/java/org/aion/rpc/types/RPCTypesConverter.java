@@ -18,16 +18,34 @@ import org.json.JSONObject;
 *
 * AUTO-GENERATED SOURCE FILE.  DO NOT EDIT MANUALLY -- YOUR CHANGES WILL
 * BE WIPED OUT WHEN THIS FILE GETS RE-GENERATED OR UPDATED.
-* GENERATED: 2019-11-15
+* GENERATED: 2019-11-18
 *
 *****************************************************************************/
 public class RPCTypesConverter{
-    private static final Pattern hexPattern = Pattern.compile("^0x[0-9a-fA-F]+$");
-    private static final Pattern unsignedDecPattern = Pattern.compile("^[0-9]+$");
-    private static final Pattern unsignedHexPattern = Pattern.compile("^0x([0-9a-fA-F]{2})+$");
-    private static final Pattern decPattern = Pattern.compile("^[-+]?[0-9]+$");
-    private static final Pattern booleanPattern = Pattern.compile("^([Tt]rue|[Ff]alse)$");
-    private static final Pattern byteArrayPattern = Pattern.compile("^0x([0-9a-fA-F][0-9a-fA-F])*$");
+    /**
+    * Validates that a hex string.
+    */
+    public static final Pattern hexPattern = Pattern.compile("^0x[0-9a-fA-F]+$");
+    /**
+    * Validates an unsigned decimal string.
+    */
+    public static final Pattern unsignedDecPattern = Pattern.compile("^[0-9]+$");
+    /**
+    * Validates that a number is encoded as a hex string. This is different from hex pattern since this validates that the string correctly encodes a byte array.
+    */
+    public static final Pattern unsignedHexPattern = Pattern.compile("^0x([0-9a-fA-F]{2})+$");
+    /**
+    * Validates a signed decimal string.
+    */
+    public static final Pattern decPattern = Pattern.compile("^[-+]?[0-9]+$");
+    /**
+    * Validates a boolean string.
+    */
+    public static final Pattern booleanPattern = Pattern.compile("^([Tt]rue|[Ff]alse)$");
+    /**
+    * Validates a byte hex string. This is different from unsignedHexPattern since empty byte arrays are allowed here.
+    */
+    public static final Pattern byteArrayPattern = Pattern.compile("^0x([0-9a-fA-F]{2})*$");
 
     public static class ObjectConverter{
 

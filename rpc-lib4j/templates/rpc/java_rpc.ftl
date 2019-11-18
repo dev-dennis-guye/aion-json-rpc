@@ -17,7 +17,12 @@ import org.aion.util.types.ByteArrayWrapper;
 *
 *****************************************************************************/
 public interface RPCServerMethods extends RPC{
-
+    /**
+    *
+    * @param request the client request
+    * @param rpc the rpc implementation to be used in fulfilling this request.
+    * @return the result of this request
+    */
     static ResultUnion execute(Request request, RPCServerMethods rpc){
         ResultUnion res;
     <#if errors?has_content>
@@ -50,6 +55,26 @@ public interface RPCServerMethods extends RPC{
     }
 
     <#list methods as method>
+    /**
+        <#if method.comments?has_content>
+            <#list method.comments as comment>
+    * ${comment}
+            </#list>
+        </#if>
+    * <#if method.param.fields?has_content>
+        <#list method.param.fields as parameter>
+    * @param ${parameter.fieldName} <#list parameter.comments as comment>${comment}
+    </#list>
+
+    </#list>
+
+    </#if>
+
+    * @return <#if method.returnType.comments?has_content><#list method.returnType.comments as comment>${comment}
+    </#list>
+    </#if>
+
+    */
     ${macros.toJavaType(method.returnType)} ${method.name}(<#list method.param.fields as parameter>${macros.toJavaType(parameter.type)} ${parameter.fieldName}<#if parameter_has_next>,</#if></#list>);
     </#list>
 }

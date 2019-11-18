@@ -24,7 +24,10 @@ import org.json.JSONObject;
 *****************************************************************************/
 public class RPCTypesConverter{
     <#list patterns as pattern >
-    private static final Pattern ${pattern.name} = Pattern.compile("${pattern.regex}");
+    /**
+    * ${pattern.comment}
+    */
+    public static final Pattern ${pattern.name} = Pattern.compile("${pattern.regex}");
     </#list>
 
     public static class ${macros.toJavaConverterFromName("any")}{
@@ -55,7 +58,7 @@ public class RPCTypesConverter{
         public static Boolean decode(Object s){
             if(s==null || s == JSONObject.NULL) return null;
             if ( booleanPattern.matcher(s.toString()).find()) return Boolean.parseBoolean(s.toString());
-            else throw ParseErrorRPCException.INSTANCE;
+            else throw ${macros.toJavaException(decodeError.error_class)}.INSTANCE;
         }
 
         public static Boolean encode(Boolean b){

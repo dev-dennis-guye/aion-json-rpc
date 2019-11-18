@@ -31,6 +31,10 @@ import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * This is a sample implementation of {@link Provider}. The underlying HTTP library is
+ * {@link CloseableHttpClient} which has not been benchmarked to determine performance.
+ */
 public class Web3Provider implements Provider {
 
     private static final Web3Provider WEB_3_PROVIDER = new Web3Provider();
@@ -45,14 +49,26 @@ public class Web3Provider implements Provider {
             .setConnectionManager(new PoolingHttpClientConnectionManager()).build();
     }
 
+    /**
+     * @return a singleton instance of Web3Provider
+     */
     public static Web3Provider getInstance() {
         return WEB_3_PROVIDER;
     }
 
+    /**
+     * Sets the http server for use with the class. Access to the underlying variable is thread safe.
+     * However this should only be set by one thread for predicable behaviour.
+     * @param provider an http uri.
+     */
     public void setProvider(String provider) {
         this.provider.set(provider);
     }
 
+    /**
+     *
+     * @param logger an instance of {@link org.slf4j.Logger}
+     */
     public void setLogger(Logger logger){
         this.logger=logger;
         info("Logging is enabled");

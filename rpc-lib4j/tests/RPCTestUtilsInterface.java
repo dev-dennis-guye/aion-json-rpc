@@ -3,7 +3,7 @@ package org.aion.api.server.rpc3;
 *
 * AUTO-GENERATED SOURCE FILE.  DO NOT EDIT MANUALLY -- YOUR CHANGES WILL
 * BE WIPED OUT WHEN THIS FILE GETS RE-GENERATED OR UPDATED.
-* GENERATED: 2019-11-15
+* GENERATED: 2019-11-18
 *
 *****************************************************************************/
 public interface RPCTestUtilsInterface{
