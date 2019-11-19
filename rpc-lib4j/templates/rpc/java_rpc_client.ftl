@@ -48,9 +48,9 @@ public class RPCClientMethods{
     */
     public final ${macros.toJavaType(method.returnType)} ${method.name}(<#list method.param.fields as parameter>${macros.toJavaType(parameter.type)} ${parameter.fieldName}<#if parameter_has_next>,</#if></#list>){
         ${macros.toJavaType(method.param)} params= new ${macros.toJavaType(method.param)}(<#list method.param.fields as parameter>${parameter.fieldName}<#if parameter_has_next> ,</#if></#list>);
-        Request request = new Request(generator.generateID(), "${method.name}", new ParamUnion(params), VersionType.Version2);
+        Request request = new Request(generator.generateID(), "${method.name}", ${macros.toJavaConverter(method.param)}.encode(params), VersionType.Version2);
 
-        return provider.execute(request, ${macros.resultExtractorFromName(method.returnType)});
+        return provider.execute(request, ${macros.toJavaConverter(method.returnType)}::decode);
     }
 </#list>
 <#list methods as method>
@@ -75,9 +75,9 @@ public class RPCClientMethods{
     */
     public final <O> CompletableFuture<O> ${method.name}(<#list method.param.fields as parameter>${macros.toJavaType(parameter.type)} ${parameter.fieldName},</#list> BiFunction<${macros.toJavaType(method.returnType)}, RPCError, O> asyncTask){
         ${macros.toJavaType(method.param)} params= new ${macros.toJavaType(method.param)}(<#list method.param.fields as parameter>${parameter.fieldName}<#if parameter_has_next> ,</#if></#list>);
-        Request request = new Request(generator.generateID(), "${method.name}", new ParamUnion(params), VersionType.Version2);
+        Request request = new Request(generator.generateID(), "${method.name}", ${macros.toJavaConverter(method.param)}.encode(params), VersionType.Version2);
 
-        return provider.executeAsync(request, ${macros.resultExtractorFromName(method.returnType)}, asyncTask);
+        return provider.executeAsync(request, ${macros.toJavaConverter(method.returnType)}::decode, asyncTask);
     }
 </#list>
 }

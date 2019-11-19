@@ -8,6 +8,7 @@ import org.aion.rpc.errors.RPCExceptions.*;
 import org.aion.rpc.types.RPCTypesConverter.*;
 import org.aion.types.AionAddress;
 import org.aion.util.bytes.ByteUtil;
+import org.json.JSONObject;
 /******************************************************************************
 *
 * AUTO-GENERATED SOURCE FILE.  DO NOT EDIT MANUALLY -- YOUR CHANGES WILL

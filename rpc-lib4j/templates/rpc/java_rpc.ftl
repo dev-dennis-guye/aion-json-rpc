@@ -23,18 +23,18 @@ public interface RPCServerMethods extends RPC{
     * @param rpc the rpc implementation to be used in fulfilling this request.
     * @return the result of this request
     */
-    static ResultUnion execute(Request request, RPCServerMethods rpc){
-        ResultUnion res;
+    static Object execute(Request request, RPCServerMethods rpc){
+        Object res;
     <#if errors?has_content>
         try{
     </#if>
             //check that the request can be fulfilled by this class
             <#list methods as method>
             if(request.method.equals("${method.name}")){
-                ${macros.toJavaType(method.param)} params= ${macros.toJavaConverter(method.param)}.decode(request.params.encode());
+                ${macros.toJavaType(method.param)} params= ${macros.toJavaConverter(method.param)}.decode(request.params);
                 if (params==null) throw ${macros.toJavaException("InvalidParams")}.INSTANCE;
                 ${macros.toJavaType(method.returnType)} result = rpc.${method.name}(<#list method.param.fields as parameter>params.${parameter.fieldName}<#if parameter_has_next>,</#if></#list>);
-                res = result == null ? null : new ResultUnion(result);
+                res = ${macros.toJavaConverter(method.returnType)}.encode(result);
             }else
             </#list>
                 throw ${macros.toJavaException("MethodNotFound")}.INSTANCE;

@@ -124,13 +124,13 @@
                 <comment>The id of the request</comment>
             </field>
             <field fieldName="method" required="true" type="string"/>
-            <field fieldName="params" required="false" type="paramUnion"/>
+            <field fieldName="params" required="false" type="any"/>
             <field fieldName="jsonrpc" required="false" type="version_string"/>
         </type-composite>
         <type-composite typeName="response">
             <comment>This is the standard response body for a JSON RPC Request</comment>
             <field fieldName="id" required="false" type="int"/>
-            <field fieldName="result" required="false" type="resultUnion"/>
+            <field fieldName="result" required="false" type="any"/>
             <field fieldName="error" required="false" type="error"/>
             <field fieldName="jsonrpc" required="true" type="version_string"/>
         </type-composite>

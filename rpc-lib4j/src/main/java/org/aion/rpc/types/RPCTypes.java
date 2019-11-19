@@ -7,11 +7,12 @@ import org.aion.rpc.errors.RPCExceptions.*;
 import org.aion.rpc.types.RPCTypesConverter.*;
 import org.aion.types.AionAddress;
 import org.aion.util.bytes.ByteUtil;
+import org.json.JSONObject;
 /******************************************************************************
 *
 * AUTO-GENERATED SOURCE FILE.  DO NOT EDIT MANUALLY -- YOUR CHANGES WILL
 * BE WIPED OUT WHEN THIS FILE GETS RE-GENERATED OR UPDATED.
-* GENERATED: 2019-11-18
+* GENERATED: 2019-11-19
 *
 *****************************************************************************/
 public class RPCTypes{
@@ -407,10 +408,10 @@ public class RPCTypes{
         */
         public final Integer id;
         public final String method;
-        public final ParamUnion params;
+        public final Object params;
         public final VersionType jsonrpc;
 
-        public Request(Integer id ,String method ,ParamUnion params ,VersionType jsonrpc ){
+        public Request(Integer id ,String method ,Object params ,VersionType jsonrpc ){
             this.id=id;
             if(method==null) throw ParseErrorRPCException.INSTANCE;
             this.method=method;
@@ -423,11 +424,11 @@ public class RPCTypes{
     */
     public static final class Response {
         public final Integer id;
-        public final ResultUnion result;
+        public final Object result;
         public final RPCError error;
         public final VersionType jsonrpc;
 
-        public Response(Integer id ,ResultUnion result ,RPCError error ,VersionType jsonrpc ){
+        public Response(Integer id ,Object result ,RPCError error ,VersionType jsonrpc ){
             this.id=id;
             this.result=result;
             this.error=error;

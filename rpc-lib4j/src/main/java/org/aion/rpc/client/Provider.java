@@ -19,7 +19,7 @@ public interface Provider {
      * @throws org.aion.rpc.errors.RPCExceptions.RPCException
      * @return the RPC result
      */
-    <R> R execute(Request request, Function<ResultUnion, R> resultConverter);
+    <R> R execute(Request request, Function<Object, R> resultConverter);
 
     /**
      * Allows a client application to asynchronously execute tasks on the result or error of a remote procedure call.
@@ -32,6 +32,6 @@ public interface Provider {
      * @return the result of the async task
      */
     <R, O> CompletableFuture<O> executeAsync(Request request,
-        Function<ResultUnion, R> resultConverter,
+        Function<Object, R> resultConverter,
         BiFunction<R, RPCError, O> asyncTask);
 }

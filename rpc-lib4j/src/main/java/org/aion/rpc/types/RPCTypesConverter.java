@@ -18,7 +18,7 @@ import org.json.JSONObject;
 *
 * AUTO-GENERATED SOURCE FILE.  DO NOT EDIT MANUALLY -- YOUR CHANGES WILL
 * BE WIPED OUT WHEN THIS FILE GETS RE-GENERATED OR UPDATED.
-* GENERATED: 2019-11-18
+* GENERATED: 2019-11-19
 *
 *****************************************************************************/
 public class RPCTypesConverter{
@@ -488,7 +488,7 @@ public class RPCTypesConverter{
             try{
                 if(str==null || str.equals(JSONObject.NULL)) return null;
                 JSONObject jsonObject = str instanceof JSONObject? (JSONObject)str :new JSONObject(str.toString());
-                return new Request( IntegerConverter.decode(jsonObject.opt("id")) , StringConverter.decode(jsonObject.opt("method")) , ParamUnionConverter.decode(jsonObject.opt("params")) , VersionTypeConverter.decode(jsonObject.opt("jsonrpc")) );
+                return new Request( IntegerConverter.decode(jsonObject.opt("id")) , StringConverter.decode(jsonObject.opt("method")) , ObjectConverter.decode(jsonObject.opt("params")) , VersionTypeConverter.decode(jsonObject.opt("jsonrpc")) );
             } catch (Exception e){
                 throw ParseErrorRPCException.INSTANCE;
             }
@@ -500,7 +500,7 @@ public class RPCTypesConverter{
                 JSONObject jsonObject = new JSONObject();
                 jsonObject.put("id", IntegerConverter.encode(obj.id));
                 jsonObject.put("method", StringConverter.encode(obj.method));
-                jsonObject.put("params", ParamUnionConverter.encode(obj.params));
+                jsonObject.put("params", ObjectConverter.encode(obj.params));
                 jsonObject.put("jsonrpc", VersionTypeConverter.encode(obj.jsonrpc));
                 return jsonObject.toString();
             }
@@ -515,7 +515,7 @@ public class RPCTypesConverter{
                 JSONObject jsonObject = new JSONObject();
                 jsonObject.put("id", IntegerConverter.encode(obj.id));
                 jsonObject.put("method", StringConverter.encode(obj.method));
-                jsonObject.put("params", ParamUnionConverter.encode(obj.params));
+                jsonObject.put("params", ObjectConverter.encode(obj.params));
                 jsonObject.put("jsonrpc", VersionTypeConverter.encode(obj.jsonrpc));
                 return jsonObject;
             }catch (Exception e){
@@ -529,7 +529,7 @@ public class RPCTypesConverter{
             try{
                 if(str==null || str.equals(JSONObject.NULL)) return null;
                 JSONObject jsonObject = str instanceof JSONObject? (JSONObject)str :new JSONObject(str.toString());
-                return new Response( IntegerConverter.decode(jsonObject.opt("id")) , ResultUnionConverter.decode(jsonObject.opt("result")) , RPCErrorConverter.decode(jsonObject.opt("error")) , VersionTypeConverter.decode(jsonObject.opt("jsonrpc")) );
+                return new Response( IntegerConverter.decode(jsonObject.opt("id")) , ObjectConverter.decode(jsonObject.opt("result")) , RPCErrorConverter.decode(jsonObject.opt("error")) , VersionTypeConverter.decode(jsonObject.opt("jsonrpc")) );
             } catch (Exception e){
                 throw ParseErrorRPCException.INSTANCE;
             }
@@ -540,7 +540,7 @@ public class RPCTypesConverter{
                 if(obj==null) return null;
                 JSONObject jsonObject = new JSONObject();
                 jsonObject.put("id", IntegerConverter.encode(obj.id));
-                jsonObject.put("result", ResultUnionConverter.encode(obj.result));
+                jsonObject.put("result", ObjectConverter.encode(obj.result));
                 jsonObject.put("error", RPCErrorConverter.encode(obj.error));
                 jsonObject.put("jsonrpc", VersionTypeConverter.encode(obj.jsonrpc));
                 return jsonObject.toString();
@@ -555,7 +555,7 @@ public class RPCTypesConverter{
                 if(obj==null) return null;
                 JSONObject jsonObject = new JSONObject();
                 jsonObject.put("id", IntegerConverter.encode(obj.id));
-                jsonObject.put("result", ResultUnionConverter.encode(obj.result));
+                jsonObject.put("result", ObjectConverter.encode(obj.result));
                 jsonObject.put("error", RPCErrorConverter.encode(obj.error));
                 jsonObject.put("jsonrpc", VersionTypeConverter.encode(obj.jsonrpc));
                 return jsonObject;

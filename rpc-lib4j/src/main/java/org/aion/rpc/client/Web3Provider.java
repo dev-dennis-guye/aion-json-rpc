@@ -85,7 +85,7 @@ public class Web3Provider implements Provider {
      */
     @Override
     public <R, O> CompletableFuture<O> executeAsync(Request request,
-        Function<ResultUnion, R> resultConverter,
+        Function<Object, R> resultConverter,
         BiFunction<R, RPCError, O> asyncTask) {
         Objects.requireNonNull(request);
         return CompletableFuture
@@ -126,7 +126,7 @@ public class Web3Provider implements Provider {
      * @throws HttpException if the response was not 200
      */
     @SuppressWarnings("ConstantConditions")
-    public <R> R execute(Request request, Function<ResultUnion, R> resultConverter) {
+    public <R> R execute(Request request, Function<Object, R> resultConverter) {
         Response response;
         try {
             String jsonPayload = RequestConverter.encodeStr(request);
@@ -185,7 +185,7 @@ public class Web3Provider implements Provider {
     }
 
     private <R, O> O packageRequest(Request request, BiFunction<R, RPCError, O> asyncTask,
-        Function<ResultUnion, R> resultConverter) {
+        Function<Object, R> resultConverter) {
         RPCError error = null;
         Response response;
         try {
