@@ -41,12 +41,14 @@ public class Web3Provider implements Provider {
     private Logger logger = LoggerFactory.getLogger(Web3Provider.class);
     private final ExecutorService threadPool;
     private CloseableHttpClient httpclient;
-    private final AtomicReference<String> provider = new AtomicReference<>("http://localhost:8545");
+    private final AtomicReference<String> provider;
 
     private Web3Provider() {
-        threadPool = Executors.newCachedThreadPool();
+        threadPool = Executors.newCachedThreadPool();// executor for async tasks
         httpclient = HttpClientBuilder.create()
             .setConnectionManager(new PoolingHttpClientConnectionManager()).build();
+        // http client to hand requests
+        provider = new AtomicReference<>("http://localhost:8545");// the address of the web3 server
     }
 
     /**
@@ -75,7 +77,7 @@ public class Web3Provider implements Provider {
     }
 
     /**
-     *
+     * Executes a request asynchronously and returns the future result.
      * @param request the request to be executed
      * @param resultConverter the decoder to be used on the result
      * @param asyncTask the task to be executed upon completion of the request
@@ -133,32 +135,35 @@ public class Web3Provider implements Provider {
             debug("Executing request: {}", jsonPayload);
 
             HttpPost post = buildHttpPost(provider.get(), jsonPayload);
-            CloseableHttpResponse httpResponse = httpclient.execute(post);
-            if (httpResponse.getStatusLine().getStatusCode() == 200) {
-                debug("Request Succeeded!");
-                HttpEntity responseEntity = httpResponse.getEntity();
-                InputStream inputStream = responseEntity.getContent();
-                int i;
-                StringBuilder responseString = new StringBuilder();
-                while ((i = inputStream.read()) != -1) {
-                    responseString.append((char) i);
-                }
-                if (responseString.length() == 0) {
-                    return null;
-                } else {
-                    trace(responseString.toString());
-
-                    response = ResponseConverter.decode(responseString.toString());
-                    if (response.error != null) {
-                        throw RPCExceptions.fromCode(response.error.code);
-                    } else {
-                        return resultConverter.apply(response.result);
+            try (CloseableHttpResponse httpResponse = httpclient.execute(post)) {// execute the http request
+                if (httpResponse.getStatusLine().getStatusCode() == 200) {
+                    debug("Request Succeeded!");
+                    HttpEntity responseEntity = httpResponse.getEntity();
+                    InputStream inputStream = responseEntity.getContent();
+                    int i;
+                    StringBuilder responseString = new StringBuilder();
+                    while ((i = inputStream.read()) != -1) { // read the contents of the response into an array
+                        responseString.append((char) i);
                     }
+                    if (responseString.length() == 0) {
+                        return null;    // if the response is empty then the request was a notify
+                                        // so return null.
+                    } else {
+                        trace(responseString.toString());
+
+                        response = ResponseConverter.decode(responseString.toString());
+                        // else create response
+                        if (response.error != null) {
+                            throw RPCExceptions.fromCode(response.error.code);
+                        } else {
+                            return resultConverter.apply(response.result);
+                        }
+                    }
+                } else {
+                    warn("Http request failed with: {}",
+                        httpResponse.getStatusLine().getStatusCode());
+                    throw new HttpException(httpResponse.getStatusLine());
                 }
-            } else {
-                warn("Http request failed with: {}",
-                    httpResponse.getStatusLine().getStatusCode());
-                throw new HttpException(httpResponse.getStatusLine());
             }
         } catch (RuntimeException e) {
             throw e;
@@ -184,6 +189,12 @@ public class Web3Provider implements Provider {
         return post;
     }
 
+    /*
+    performs the http request and executes the handler
+    the http request is done in the same way as above
+    except any exceptions are not thrown but passed on the
+    async task
+     */
     private <R, O> O packageRequest(Request request, BiFunction<R, RPCError, O> asyncTask,
         Function<Object, R> resultConverter) {
         RPCError error = null;
@@ -192,23 +203,24 @@ public class Web3Provider implements Provider {
             String jsonPayload = RequestConverter.encodeStr(request);
             trace("Executing request: {}", jsonPayload);
             HttpPost post = buildHttpPost(provider.get(), jsonPayload);
-            CloseableHttpResponse httpResponse = httpclient.execute(post);
-            if (httpResponse.getStatusLine().getStatusCode() == 200) {
-                HttpEntity responseEntity = httpResponse.getEntity();
-                InputStream inputStream = responseEntity.getContent();
-                int i;
-                StringBuilder responseString = new StringBuilder();
-                while ((i = inputStream.read()) != -1) {
-                    responseString.append((char) i);
-                }
-                debug("Received response: {}", responseString);
-                if (responseString.length() == 0) {
-                    return asyncTask.apply(null, null);
-                } else {
-                    response = ResponseConverter.decode(responseString.toString());
-                    //noinspection ConstantConditions
-                    return asyncTask
-                        .apply(resultConverter.apply(response.result), response.error);
+            try (CloseableHttpResponse httpResponse = httpclient.execute(post)) {
+                if (httpResponse.getStatusLine().getStatusCode() == 200) {
+                    HttpEntity responseEntity = httpResponse.getEntity();
+                    InputStream inputStream = responseEntity.getContent();
+                    int i;
+                    StringBuilder responseString = new StringBuilder();
+                    while ((i = inputStream.read()) != -1) {
+                        responseString.append((char) i);
+                    }
+                    debug("Received response: {}", responseString);
+                    if (responseString.length() == 0) {
+                        return asyncTask.apply(null, null);
+                    } else {
+                        response = ResponseConverter.decode(responseString.toString());
+                        //noinspection ConstantConditions
+                        return asyncTask
+                            .apply(resultConverter.apply(response.result), response.error);
+                    }
                 }
             }
         } catch (RPCException e){
