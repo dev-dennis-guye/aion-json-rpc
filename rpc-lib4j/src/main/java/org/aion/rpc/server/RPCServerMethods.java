@@ -3,7 +3,7 @@ package org.aion.rpc.server;
 import static org.aion.rpc.errors.RPCExceptions.*;
 
 import java.math.BigInteger;
-import java.util.Set;
+import java.util.*;
 import org.aion.rpc.types.RPCTypes.*;
 import org.aion.rpc.types.RPCTypesConverter.*;
 import org.aion.types.AionAddress;
@@ -12,7 +12,7 @@ import org.aion.util.types.ByteArrayWrapper;
 *
 * AUTO-GENERATED SOURCE FILE.  DO NOT EDIT MANUALLY -- YOUR CHANGES WILL
 * BE WIPED OUT WHEN THIS FILE GETS RE-GENERATED OR UPDATED.
-* GENERATED: 2019-11-19
+* GENERATED: 2019-11-21
 *
 *****************************************************************************/
 public interface RPCServerMethods extends RPC{
@@ -175,4 +175,21 @@ public interface RPCServerMethods extends RPC{
     * @return 
     */
     MinerStats getMinerStats(AionAddress address);
+
+
+    static Map<String, String> methodInterfaceMap(){
+        return Map.ofEntries(
+            Map.entry("personal_ecRecover", "personal"),
+            Map.entry("getseed", "stratum"),
+            Map.entry("submitseed", "stratum"),
+            Map.entry("submitsignature", "stratum"),
+            Map.entry("ops_getBlockDetails", "ops"),
+            Map.entry("getblocktemplate", "stratum"),
+            Map.entry("submitblock", "stratum"),
+            Map.entry("validateaddress", "stratum"),
+            Map.entry("getDifficulty", "stratum"),
+            Map.entry("getMinerStats", "stratum")
+        );
+    }
+
 }

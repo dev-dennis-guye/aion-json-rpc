@@ -4,7 +4,7 @@ package org.aion.rpc.server;
 import static org.aion.rpc.errors.RPCExceptions.*;
 
 import java.math.BigInteger;
-import java.util.Set;
+import java.util.*;
 import org.aion.rpc.types.RPCTypes.*;
 import org.aion.rpc.types.RPCTypesConverter.*;
 import org.aion.types.AionAddress;
@@ -77,4 +77,14 @@ public interface RPCServerMethods extends RPC{
     */
     ${macros.toJavaType(method.returnType)} ${method.name}(<#list method.param.fields as parameter>${macros.toJavaType(parameter.type)} ${parameter.fieldName}<#if parameter_has_next>,</#if></#list>);
     </#list>
+
+
+    static Map<String, String> methodInterfaceMap(){
+        return Map.ofEntries(
+    <#list methods as method>
+            Map.entry("${method.name}", "${method.namespace}")<#if method_has_next>,</#if>
+    </#list>
+        );
+    }
+
 }

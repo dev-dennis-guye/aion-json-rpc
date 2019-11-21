@@ -294,7 +294,7 @@ public class RPCSchemaTest {
         MethodSchema methodSchema = new MethodSchema("personal_ecRecover", "ecRecoverParams",
             "data_hex_string", List.of(
             "Allows you to interact with accounts on the aion network and provides a handful of crypto utilities"),
-            Collections.emptyList());
+            Collections.emptyList(), "");
         methodSchema.setReturnType(List.of(hexType));
         methodSchema.setParamType(List.of(paramTypeEcRecover));
         ErrorSchema errorSchema = new ErrorSchema("InvalidRequest", -32600, "Invalid Request",

@@ -5,8 +5,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
-import java.util.stream.Collectors;
-import jdk.jshell.execution.Util;
 import org.aion.rpcgenerator.Mappable;
 import org.aion.rpcgenerator.data.Type;
 import org.aion.rpcgenerator.error.ErrorSchema;
@@ -25,14 +23,16 @@ public class MethodSchema implements Mappable {
     private List<String> comments;
     private final List<String> errors;
     private final List<ErrorSchema> errorSchemas;
+    private final String namespace;
 
     MethodSchema(String name, String paramName, String returnName,
-        List<String> comments, List<String> errors) {
+        List<String> comments, List<String> errors, String namespace) {
         this.name = name;
         this.paramName = paramName;
         this.returnName = returnName;
         this.comments = comments;
         this.errors = errors;
+        this.namespace = namespace;
         errorSchemas = new ArrayList<>();
     }
 
@@ -44,7 +44,9 @@ public class MethodSchema implements Mappable {
             SchemaUtils.getComments(node.getChildNodes()),
             XMLUtils.elementFromTag(node, "errors")
                 .map(e->SchemaUtils.getErrors(e.getChildNodes()))
-                .orElse(Collections.emptyList()));
+                .orElse(Collections.emptyList()),
+            XMLUtils.hasAttribute(node, "namespace") ?
+                XMLUtils.valueFromAttribute(node, "namespace"): "");
     }
 
     public void setParamType(List<Type> types) {
@@ -89,7 +91,8 @@ public class MethodSchema implements Mappable {
             Map.entry("param", paramType.toMap()),
             Map.entry("returnType", returnType.toMap()),
             Map.entry("comments", comments),
-            Map.entry("errors", Utils.toListOfMaps(errorSchemas))
+            Map.entry("errors", Utils.toListOfMaps(errorSchemas)),
+            Map.entry("namespace", namespace)
         );
     }
 }
