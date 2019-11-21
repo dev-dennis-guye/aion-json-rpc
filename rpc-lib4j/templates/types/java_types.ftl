@@ -196,11 +196,11 @@ public class RPCTypes{
         <p><#list field.comments as comment>
         * ${comment}
         </#list></p>
-        <#if field.defaulValue?has_content>* default value = ${field.defaultValue}</#if>
+        <#if field.defaultValue?has_content>* default value = ${field.defaultValue}</#if>
         */
         </#if>
         public final ${macros.toJavaType(field.type)} ${field.fieldName};
-        <#if field.defaultValue?has_content>public final ${macros.toJavaType(field.type)} ${field.fieldName}DefaultValue=${macros.toJavaConverter(field.type)}.decode("${field.defaulValue}");</#if>
+        <#if field.defaultValue?has_content>public final ${macros.toJavaType(field.type)} ${field.fieldName}DefaultValue=${macros.toJavaConverter(field.type)}.decode("${field.defaultValue}");</#if>
     </#list>
 
         public ${macros.toJavaType(paramType)}(<#list paramType.fields as field>${macros.toJavaType(field.type)} ${field.fieldName} <#if field_has_next>,</#if></#list>){
