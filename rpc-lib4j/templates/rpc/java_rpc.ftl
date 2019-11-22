@@ -50,6 +50,9 @@ public interface RPCServerMethods extends RPC{
         return res;
     }
 
+    /**
+    * @return a set containing all the methods supported by this interface
+    */
     static Set<String> listMethods(){
         return Set.of(<#list methods as method> "${method.name}"<#if method_has_next>,</#if></#list>);
     }
@@ -78,7 +81,9 @@ public interface RPCServerMethods extends RPC{
     ${macros.toJavaType(method.returnType)} ${method.name}(<#list method.param.fields as parameter>${macros.toJavaType(parameter.type)} ${parameter.fieldName}<#if parameter_has_next>,</#if></#list>);
     </#list>
 
-
+    /**
+    * @return an map that stores the method names as the key and the interface(namespace) as the value.
+    */
     static Map<String, String> methodInterfaceMap(){
         return Map.ofEntries(
     <#list methods as method>

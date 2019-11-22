@@ -143,6 +143,9 @@ public interface RPCServerMethods extends RPC{
         return res;
     }
 
+    /**
+    * @return a set containing all the methods supported by this interface
+    */
     static Set<String> listMethods(){
         return Set.of( "personal_ecRecover", "getseed", "submitseed", "submitsignature", "ops_getBlockDetails", "getblocktemplate", "submitblock", "validateaddress", "getDifficulty", "getMinerStats", "ping", "ops_getAccountState", "ops_getTransaction", "ops_getBlockDetailsByNumber", "ops_getBlockDetailsByHash", "personal_unlockAccount", "personal_lockAccount", "personal_newAccount", "personal_listAccounts");
     }
@@ -299,7 +302,9 @@ public interface RPCServerMethods extends RPC{
     */
     List<AionAddress> personal_listAccounts();
 
-
+    /**
+    * @return an map that stores the method names as the key and the interface(namespace) as the value.
+    */
     static Map<String, String> methodInterfaceMap(){
         return Map.ofEntries(
             Map.entry("personal_ecRecover", "personal"),
