@@ -33,7 +33,7 @@ import org.slf4j.LoggerFactory;
  * This is a sample implementation of {@link Provider}. The underlying HTTP library is
  * {@link CloseableHttpClient} which has not been benchmarked to determine performance.
  */
-public class Web3Provider implements Provider {
+public final class Web3Provider implements Provider {
 
     private static final Web3Provider WEB_3_PROVIDER = new Web3Provider();
     private Logger logger = LoggerFactory.getLogger(Web3Provider.class);
