@@ -1,8 +1,8 @@
 <#import "../java_macros.ftl" as macros/>
 package org.aion.rpc.errors;
 
-import org.aion.rpc.types.RPCTypes.RPCError;
-import org.aion.rpc.types.RPCTypesConverter.RPCErrorConverter;
+import org.aion.rpc.types.RPCTypes.RpcError;
+import org.aion.rpc.types.RPCTypesConverter.RpcErrorConverter;
 /******************************************************************************
 *
 * AUTO-GENERATED SOURCE FILE.  DO NOT EDIT MANUALLY -- YOUR CHANGES WILL
@@ -37,10 +37,10 @@ public class RPCExceptions{
 
     public static class RPCException extends RuntimeException{
 
-        private final transient RPCError error;
+        private final transient RpcError error;
         RPCException(String message){
             super(message);
-            this.error = RPCErrorConverter.decode(message);
+            this.error = RpcErrorConverter.decode(message);
         }
 
         RPCException(Integer code ,String message){
@@ -50,7 +50,7 @@ public class RPCExceptions{
         /**
         * @return The rpc error that this class represents
         */
-        public RPCError getError(){
+        public RpcError getError(){
             return error;
         }
     }

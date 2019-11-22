@@ -154,9 +154,9 @@ public class RPCTypes{
         public final MinerStats minerStats;
         public final PongEnum pongEnum;
         public final AccountState accountState;
-        public final opsTransaction opsTransaction;
+        public final OpsTransaction opsTransaction;
         public final List<AionAddress> addressArray;
-        private ResultUnion(BlockDetails blockDetails ,AionAddress address ,ByteArray byteArray ,Boolean bool ,BlockTemplate blockTemplate ,SubmissionResult submissionResult ,ValidateAddressResult validateAddressResult ,BigInteger bigInt ,MinerStats minerStats ,PongEnum pongEnum ,AccountState accountState ,opsTransaction opsTransaction ,List<AionAddress> addressArray ){
+        private ResultUnion(BlockDetails blockDetails ,AionAddress address ,ByteArray byteArray ,Boolean bool ,BlockTemplate blockTemplate ,SubmissionResult submissionResult ,ValidateAddressResult validateAddressResult ,BigInteger bigInt ,MinerStats minerStats ,PongEnum pongEnum ,AccountState accountState ,OpsTransaction opsTransaction ,List<AionAddress> addressArray ){
             this.blockDetails=blockDetails;
             this.address=address;
             this.byteArray=byteArray;
@@ -216,7 +216,7 @@ public class RPCTypes{
             this(null,null,null,null,null,null,null,null,null,null,accountState,null,null);
             if(accountState == null) throw ParseErrorRPCException.INSTANCE;
         }
-        public ResultUnion(opsTransaction opsTransaction){
+        public ResultUnion(OpsTransaction opsTransaction){
             this(null,null,null,null,null,null,null,null,null,null,null,opsTransaction,null);
             if(opsTransaction == null) throw ParseErrorRPCException.INSTANCE;
         }
@@ -269,7 +269,7 @@ public class RPCTypes{
             if(accountState == null) throw ParseErrorRPCException.INSTANCE;
             else return new ResultUnion(accountState);
         }
-        public static ResultUnion wrap(opsTransaction opsTransaction){
+        public static ResultUnion wrap(OpsTransaction opsTransaction){
             if(opsTransaction == null) throw ParseErrorRPCException.INSTANCE;
             else return new ResultUnion(opsTransaction);
         }
@@ -280,18 +280,18 @@ public class RPCTypes{
 
         public Object encode(){
             if(this.blockDetails != null) return BlockDetailsConverter.encode(blockDetails);
-            if(this.address != null) return AionAddressConverter.encode(address);
+            if(this.address != null) return AddressConverter.encode(address);
             if(this.byteArray != null) return ByteArrayConverter.encode(byteArray);
-            if(this.bool != null) return BooleanConverter.encode(bool);
+            if(this.bool != null) return BoolConverter.encode(bool);
             if(this.blockTemplate != null) return BlockTemplateConverter.encode(blockTemplate);
             if(this.submissionResult != null) return SubmissionResultConverter.encode(submissionResult);
             if(this.validateAddressResult != null) return ValidateAddressResultConverter.encode(validateAddressResult);
-            if(this.bigInt != null) return BigIntegerHexStringConverter.encode(bigInt);
+            if(this.bigInt != null) return BigIntHexStringConverter.encode(bigInt);
             if(this.minerStats != null) return MinerStatsConverter.encode(minerStats);
             if(this.pongEnum != null) return PongEnumConverter.encode(pongEnum);
             if(this.accountState != null) return AccountStateConverter.encode(accountState);
-            if(this.opsTransaction != null) return opsTransactionConverter.encode(opsTransaction);
-            if(this.addressArray != null) return AionAddressListConverter.encode(addressArray);
+            if(this.opsTransaction != null) return OpsTransactionConverter.encode(opsTransaction);
+            if(this.addressArray != null) return AddressListConverter.encode(addressArray);
             throw ParseErrorRPCException.INSTANCE;
         }
 
@@ -300,13 +300,13 @@ public class RPCTypes{
                 return new ResultUnion(BlockDetailsConverter.decode(object));
             }catch(Exception e){}
             try{
-                return new ResultUnion(AionAddressConverter.decode(object));
+                return new ResultUnion(AddressConverter.decode(object));
             }catch(Exception e){}
             try{
                 return new ResultUnion(ByteArrayConverter.decode(object));
             }catch(Exception e){}
             try{
-                return new ResultUnion(BooleanConverter.decode(object));
+                return new ResultUnion(BoolConverter.decode(object));
             }catch(Exception e){}
             try{
                 return new ResultUnion(BlockTemplateConverter.decode(object));
@@ -318,7 +318,7 @@ public class RPCTypes{
                 return new ResultUnion(ValidateAddressResultConverter.decode(object));
             }catch(Exception e){}
             try{
-                return new ResultUnion(BigIntegerHexStringConverter.decode(object));
+                return new ResultUnion(BigIntHexStringConverter.decode(object));
             }catch(Exception e){}
             try{
                 return new ResultUnion(MinerStatsConverter.decode(object));
@@ -330,10 +330,10 @@ public class RPCTypes{
                 return new ResultUnion(AccountStateConverter.decode(object));
             }catch(Exception e){}
             try{
-                return new ResultUnion(opsTransactionConverter.decode(object));
+                return new ResultUnion(OpsTransactionConverter.decode(object));
             }catch(Exception e){}
             try{
-                return new ResultUnion(AionAddressListConverter.decode(object));
+                return new ResultUnion(AddressListConverter.decode(object));
             }catch(Exception e){}
             throw ParseErrorRPCException.INSTANCE;
         }
@@ -349,21 +349,21 @@ public class RPCTypes{
         public final SubmitSignatureParams submitSignatureParams;
         public final SubmitBlockParams submitBlockParams;
         public final AddressParams addressParams;
-        public final BlockSpecifier blockSpecifier;
+        public final BlockSpecifierParams blockSpecifierParams;
         public final TransactionHashParams transactionHashParams;
         public final BlockNumberParams blockNumberParams;
         public final BlockHashParams blockHashParams;
         public final UnlockAccountParams unlockAccountParams;
         public final LockAccountParams lockAccountParams;
         public final PasswordParams passwordParams;
-        private ParamUnion(VoidParams voidParams ,EcRecoverParams ecRecoverParams ,SubmitSeedParams submitSeedParams ,SubmitSignatureParams submitSignatureParams ,SubmitBlockParams submitBlockParams ,AddressParams addressParams ,BlockSpecifier blockSpecifier ,TransactionHashParams transactionHashParams ,BlockNumberParams blockNumberParams ,BlockHashParams blockHashParams ,UnlockAccountParams unlockAccountParams ,LockAccountParams lockAccountParams ,PasswordParams passwordParams ){
+        private ParamUnion(VoidParams voidParams ,EcRecoverParams ecRecoverParams ,SubmitSeedParams submitSeedParams ,SubmitSignatureParams submitSignatureParams ,SubmitBlockParams submitBlockParams ,AddressParams addressParams ,BlockSpecifierParams blockSpecifierParams ,TransactionHashParams transactionHashParams ,BlockNumberParams blockNumberParams ,BlockHashParams blockHashParams ,UnlockAccountParams unlockAccountParams ,LockAccountParams lockAccountParams ,PasswordParams passwordParams ){
             this.voidParams=voidParams;
             this.ecRecoverParams=ecRecoverParams;
             this.submitSeedParams=submitSeedParams;
             this.submitSignatureParams=submitSignatureParams;
             this.submitBlockParams=submitBlockParams;
             this.addressParams=addressParams;
-            this.blockSpecifier=blockSpecifier;
+            this.blockSpecifierParams=blockSpecifierParams;
             this.transactionHashParams=transactionHashParams;
             this.blockNumberParams=blockNumberParams;
             this.blockHashParams=blockHashParams;
@@ -396,9 +396,9 @@ public class RPCTypes{
             this(null,null,null,null,null,addressParams,null,null,null,null,null,null,null);
             if(addressParams == null) throw ParseErrorRPCException.INSTANCE;
         }
-        public ParamUnion(BlockSpecifier blockSpecifier){
-            this(null,null,null,null,null,null,blockSpecifier,null,null,null,null,null,null);
-            if(blockSpecifier == null) throw ParseErrorRPCException.INSTANCE;
+        public ParamUnion(BlockSpecifierParams blockSpecifierParams){
+            this(null,null,null,null,null,null,blockSpecifierParams,null,null,null,null,null,null);
+            if(blockSpecifierParams == null) throw ParseErrorRPCException.INSTANCE;
         }
         public ParamUnion(TransactionHashParams transactionHashParams){
             this(null,null,null,null,null,null,null,transactionHashParams,null,null,null,null,null);
@@ -449,9 +449,9 @@ public class RPCTypes{
             if(addressParams == null) throw ParseErrorRPCException.INSTANCE;
             else return new ParamUnion(addressParams);
         }
-        public static ParamUnion wrap(BlockSpecifier blockSpecifier){
-            if(blockSpecifier == null) throw ParseErrorRPCException.INSTANCE;
-            else return new ParamUnion(blockSpecifier);
+        public static ParamUnion wrap(BlockSpecifierParams blockSpecifierParams){
+            if(blockSpecifierParams == null) throw ParseErrorRPCException.INSTANCE;
+            else return new ParamUnion(blockSpecifierParams);
         }
         public static ParamUnion wrap(TransactionHashParams transactionHashParams){
             if(transactionHashParams == null) throw ParseErrorRPCException.INSTANCE;
@@ -485,7 +485,7 @@ public class RPCTypes{
             if(this.submitSignatureParams != null) return SubmitSignatureParamsConverter.encode(submitSignatureParams);
             if(this.submitBlockParams != null) return SubmitBlockParamsConverter.encode(submitBlockParams);
             if(this.addressParams != null) return AddressParamsConverter.encode(addressParams);
-            if(this.blockSpecifier != null) return BlockSpecifierConverter.encode(blockSpecifier);
+            if(this.blockSpecifierParams != null) return BlockSpecifierParamsConverter.encode(blockSpecifierParams);
             if(this.transactionHashParams != null) return TransactionHashParamsConverter.encode(transactionHashParams);
             if(this.blockNumberParams != null) return BlockNumberParamsConverter.encode(blockNumberParams);
             if(this.blockHashParams != null) return BlockHashParamsConverter.encode(blockHashParams);
@@ -515,7 +515,7 @@ public class RPCTypes{
                 return new ParamUnion(AddressParamsConverter.decode(object));
             }catch(Exception e){}
             try{
-                return new ParamUnion(BlockSpecifierConverter.decode(object));
+                return new ParamUnion(BlockSpecifierParamsConverter.decode(object));
             }catch(Exception e){}
             try{
                 return new ParamUnion(TransactionHashParamsConverter.decode(object));
@@ -565,10 +565,10 @@ public class RPCTypes{
     public static final class Response {
         public final Integer id;
         public final Object result;
-        public final RPCError error;
+        public final RpcError error;
         public final VersionType jsonrpc;
 
-        public Response(Integer id ,Object result ,RPCError error ,VersionType jsonrpc ){
+        public Response(Integer id ,Object result ,RpcError error ,VersionType jsonrpc ){
             this.id=id;
             this.result=result;
             this.error=error;
@@ -579,11 +579,11 @@ public class RPCTypes{
     /**
     * Contains the error messages for failed JSON RPC Requests
     */
-    public static final class RPCError {
+    public static final class RpcError {
         public final Integer code;
         public final String message;
 
-        public RPCError(Integer code ,String message ){
+        public RpcError(Integer code ,String message ){
             if(code==null) throw ParseErrorRPCException.INSTANCE;
             this.code=code;
             if(message==null) throw ParseErrorRPCException.INSTANCE;
@@ -610,7 +610,7 @@ public class RPCTypes{
             this.blockNumber=blockNumber;
         }
     }
-    public static final class TransactionDetails {
+    public static final class TxDetails {
         public final AionAddress contractAddress;
         public final ByteArray hash;
         public final Integer transactionIndex;
@@ -634,7 +634,7 @@ public class RPCTypes{
         public final List<TxLogDetails> logs;
         public final ByteArray beaconHash;
 
-        public TransactionDetails(AionAddress contractAddress ,ByteArray hash ,Integer transactionIndex ,BigInteger value ,Long nrg ,Long nrgPrice ,Long gas ,Long gasPrice ,ByteArray nonce ,AionAddress from ,AionAddress to ,Long timestamp ,ByteArray input ,Long blockNumber ,ByteArray blockHash ,String error ,Byte type ,Long nrgUsed ,Long gasUsed ,Boolean hasInternalTransactions ,List<TxLogDetails> logs ,ByteArray beaconHash ){
+        public TxDetails(AionAddress contractAddress ,ByteArray hash ,Integer transactionIndex ,BigInteger value ,Long nrg ,Long nrgPrice ,Long gas ,Long gasPrice ,ByteArray nonce ,AionAddress from ,AionAddress to ,Long timestamp ,ByteArray input ,Long blockNumber ,ByteArray blockHash ,String error ,Byte type ,Long nrgUsed ,Long gasUsed ,Boolean hasInternalTransactions ,List<TxLogDetails> logs ,ByteArray beaconHash ){
             this.contractAddress=contractAddress;
             if(hash==null) throw ParseErrorRPCException.INSTANCE;
             this.hash=hash;
@@ -701,7 +701,7 @@ public class RPCTypes{
         public final Integer numTransactions;
         public final ByteArray txTrieRoot;
         public final BigInteger blockReward;
-        public final List<TransactionDetails> transactions;
+        public final List<TxDetails> transactions;
         public final ByteArray nonce;
         public final ByteArray solution;
         public final ByteArray seed;
@@ -709,7 +709,7 @@ public class RPCTypes{
         public final ByteArray publicKey;
         public final Integer blockTime;
 
-        public BlockDetails(Long number ,ByteArray hash ,ByteArray parentHash ,ByteArray logsBloom ,ByteArray transactionsRoot ,ByteArray statesRoot ,ByteArray receiptsRoot ,BigInteger difficulty ,BigInteger totalDifficulty ,AionAddress miner ,Long timestamp ,Long gasUsed ,Long gasLimit ,Long nrgUsed ,Long nrgLimit ,Byte sealType ,Boolean mainChain ,ByteArray extraData ,Integer size ,Integer numTransactions ,ByteArray txTrieRoot ,BigInteger blockReward ,List<TransactionDetails> transactions ,ByteArray nonce ,ByteArray solution ,ByteArray seed ,ByteArray signature ,ByteArray publicKey ,Integer blockTime ){
+        public BlockDetails(Long number ,ByteArray hash ,ByteArray parentHash ,ByteArray logsBloom ,ByteArray transactionsRoot ,ByteArray statesRoot ,ByteArray receiptsRoot ,BigInteger difficulty ,BigInteger totalDifficulty ,AionAddress miner ,Long timestamp ,Long gasUsed ,Long gasLimit ,Long nrgUsed ,Long nrgLimit ,Byte sealType ,Boolean mainChain ,ByteArray extraData ,Integer size ,Integer numTransactions ,ByteArray txTrieRoot ,BigInteger blockReward ,List<TxDetails> transactions ,ByteArray nonce ,ByteArray solution ,ByteArray seed ,ByteArray signature ,ByteArray publicKey ,Integer blockTime ){
             if(number==null) throw ParseErrorRPCException.INSTANCE;
             this.number=number;
             if(hash==null) throw ParseErrorRPCException.INSTANCE;
@@ -857,7 +857,7 @@ public class RPCTypes{
             this.nonce=nonce;
         }
     }
-    public static final class opsTransaction {
+    public static final class OpsTransaction {
         public final Long timestampVal;
         public final ByteArray transactionHash;
         public final Long blockNumber;
@@ -873,7 +873,7 @@ public class RPCTypes{
         public final ByteArray beaconHash;
         public final List<TxLog> logs;
 
-        public opsTransaction(Long timestampVal ,ByteArray transactionHash ,Long blockNumber ,ByteArray blockHash ,BigInteger nonce ,AionAddress fromAddr ,AionAddress toAddr ,BigInteger value ,Long nrgPrice ,Long nrgConsumed ,ByteArray data ,Integer transactionIndex ,ByteArray beaconHash ,List<TxLog> logs ){
+        public OpsTransaction(Long timestampVal ,ByteArray transactionHash ,Long blockNumber ,ByteArray blockHash ,BigInteger nonce ,AionAddress fromAddr ,AionAddress toAddr ,BigInteger value ,Long nrgPrice ,Long nrgConsumed ,ByteArray data ,Integer transactionIndex ,ByteArray beaconHash ,List<TxLog> logs ){
             if(timestampVal==null) throw ParseErrorRPCException.INSTANCE;
             this.timestampVal=timestampVal;
             if(transactionHash==null) throw ParseErrorRPCException.INSTANCE;
@@ -964,7 +964,7 @@ public class RPCTypes{
             this.signature= signature;
         }
     }
-    public static final class BlockSpecifier {
+    public static final class BlockSpecifierParams {
         /**
         <p>
         * Specifies the block to be returned with either a block hash, number or
@@ -976,7 +976,7 @@ public class RPCTypes{
         public final BlockSpecifierUnion block;
         
 
-        public BlockSpecifier(BlockSpecifierUnion block ){
+        public BlockSpecifierParams(BlockSpecifierUnion block ){
             if(block==null) throw ParseErrorRPCException.INSTANCE;
             this.block= block;
         }
@@ -1048,7 +1048,7 @@ public class RPCTypes{
         public final String password;
         
         public final Integer duration;
-        public final Integer durationDefaultValue=IntegerConverter.decode("300");
+        public final Integer durationDefaultValue=IntConverter.decode("300");
 
         public UnlockAccountParams(AionAddress address ,String password ,Integer duration ){
             if(address==null) throw ParseErrorRPCException.INSTANCE;

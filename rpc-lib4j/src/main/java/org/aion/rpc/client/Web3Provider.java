@@ -13,10 +13,9 @@ import org.aion.rpc.errors.HttpException;
 import org.aion.rpc.errors.RPCExceptions;
 import org.aion.rpc.errors.RPCExceptions.InvalidRequestRPCException;
 import org.aion.rpc.errors.RPCExceptions.RPCException;
-import org.aion.rpc.types.RPCTypes.RPCError;
 import org.aion.rpc.types.RPCTypes.Request;
 import org.aion.rpc.types.RPCTypes.Response;
-import org.aion.rpc.types.RPCTypes.ResultUnion;
+import org.aion.rpc.types.RPCTypes.RpcError;
 import org.aion.rpc.types.RPCTypesConverter.RequestConverter;
 import org.aion.rpc.types.RPCTypesConverter.ResponseConverter;
 import org.apache.http.HttpEntity;
@@ -26,7 +25,6 @@ import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
-import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -88,7 +86,7 @@ public class Web3Provider implements Provider {
     @Override
     public <R, O> CompletableFuture<O> executeAsync(Request request,
         Function<Object, R> resultConverter,
-        BiFunction<R, RPCError, O> asyncTask) {
+        BiFunction<R, RpcError, O> asyncTask) {
         Objects.requireNonNull(request);
         return CompletableFuture
             .supplyAsync(() -> packageRequest(request, asyncTask, resultConverter), threadPool);
@@ -195,9 +193,9 @@ public class Web3Provider implements Provider {
     except any exceptions are not thrown but passed on the
     async task
      */
-    private <R, O> O packageRequest(Request request, BiFunction<R, RPCError, O> asyncTask,
+    private <R, O> O packageRequest(Request request, BiFunction<R, RpcError, O> asyncTask,
         Function<Object, R> resultConverter) {
-        RPCError error = null;
+        RpcError error = null;
         Response response;
         try {
             String jsonPayload = RequestConverter.encodeStr(request);

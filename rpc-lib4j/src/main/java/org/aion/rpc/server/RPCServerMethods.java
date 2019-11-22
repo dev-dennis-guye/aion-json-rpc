@@ -29,7 +29,7 @@ public interface RPCServerMethods extends RPC{
                 EcRecoverParams params= EcRecoverParamsConverter.decode(request.params);
                 if (params==null) throw InvalidParamsRPCException.INSTANCE;
                 AionAddress result = rpc.personal_ecRecover(params.dataThatWasSigned,params.signature);
-                res = AionAddressConverter.encode(result);
+                res = AddressConverter.encode(result);
             }else
             if(request.method.equals("getseed")){
                 VoidParams params= VoidParamsConverter.decode(request.params);
@@ -47,10 +47,10 @@ public interface RPCServerMethods extends RPC{
                 SubmitSignatureParams params= SubmitSignatureParamsConverter.decode(request.params);
                 if (params==null) throw InvalidParamsRPCException.INSTANCE;
                 Boolean result = rpc.submitsignature(params.signature,params.sealHash);
-                res = BooleanConverter.encode(result);
+                res = BoolConverter.encode(result);
             }else
             if(request.method.equals("ops_getBlockDetails")){
-                BlockSpecifier params= BlockSpecifierConverter.decode(request.params);
+                BlockSpecifierParams params= BlockSpecifierParamsConverter.decode(request.params);
                 if (params==null) throw InvalidParamsRPCException.INSTANCE;
                 BlockDetails result = rpc.ops_getBlockDetails(params.block);
                 res = BlockDetailsConverter.encode(result);
@@ -77,7 +77,7 @@ public interface RPCServerMethods extends RPC{
                 VoidParams params= VoidParamsConverter.decode(request.params);
                 if (params==null) throw InvalidParamsRPCException.INSTANCE;
                 BigInteger result = rpc.getDifficulty();
-                res = BigIntegerHexStringConverter.encode(result);
+                res = BigIntHexStringConverter.encode(result);
             }else
             if(request.method.equals("getMinerStats")){
                 AddressParams params= AddressParamsConverter.decode(request.params);
@@ -100,8 +100,8 @@ public interface RPCServerMethods extends RPC{
             if(request.method.equals("ops_getTransaction")){
                 TransactionHashParams params= TransactionHashParamsConverter.decode(request.params);
                 if (params==null) throw InvalidParamsRPCException.INSTANCE;
-                opsTransaction result = rpc.ops_getTransaction(params.hash);
-                res = opsTransactionConverter.encode(result);
+                OpsTransaction result = rpc.ops_getTransaction(params.hash);
+                res = OpsTransactionConverter.encode(result);
             }else
             if(request.method.equals("ops_getBlockDetailsByNumber")){
                 BlockNumberParams params= BlockNumberParamsConverter.decode(request.params);
@@ -119,25 +119,25 @@ public interface RPCServerMethods extends RPC{
                 UnlockAccountParams params= UnlockAccountParamsConverter.decode(request.params);
                 if (params==null) throw InvalidParamsRPCException.INSTANCE;
                 Boolean result = rpc.personal_unlockAccount(params.address,params.password,params.duration);
-                res = BooleanConverter.encode(result);
+                res = BoolConverter.encode(result);
             }else
             if(request.method.equals("personal_lockAccount")){
                 LockAccountParams params= LockAccountParamsConverter.decode(request.params);
                 if (params==null) throw InvalidParamsRPCException.INSTANCE;
                 Boolean result = rpc.personal_lockAccount(params.address,params.password);
-                res = BooleanConverter.encode(result);
+                res = BoolConverter.encode(result);
             }else
             if(request.method.equals("personal_newAccount")){
                 PasswordParams params= PasswordParamsConverter.decode(request.params);
                 if (params==null) throw InvalidParamsRPCException.INSTANCE;
                 AionAddress result = rpc.personal_newAccount(params.password);
-                res = AionAddressConverter.encode(result);
+                res = AddressConverter.encode(result);
             }else
             if(request.method.equals("personal_listAccounts")){
                 VoidParams params= VoidParamsConverter.decode(request.params);
                 if (params==null) throw InvalidParamsRPCException.INSTANCE;
                 List<AionAddress> result = rpc.personal_listAccounts();
-                res = AionAddressListConverter.encode(result);
+                res = AddressListConverter.encode(result);
             }else
                 throw MethodNotFoundRPCException.INSTANCE;
         return res;
@@ -249,7 +249,7 @@ public interface RPCServerMethods extends RPC{
 
     * @return 
     */
-    opsTransaction ops_getTransaction(ByteArray hash);
+    OpsTransaction ops_getTransaction(ByteArray hash);
     /**
     * 
     * @param block 

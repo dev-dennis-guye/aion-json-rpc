@@ -84,7 +84,7 @@
         and so we avoid using language specific features like overloading or universal types. -->
         <type-union typeName="blockSpecifierUnion" nullable="true">
             <comment>Specifies a block</comment>
-            <union-element type="byte-array" name="hash">
+            <union-element type="byteArray" name="hash">
                 <comment>A block hash</comment>
             </union-element>
             <union-element type="long" name="blockNumber">
@@ -97,12 +97,12 @@
             <comment>Ensures that the result is type safe</comment>
             <union-element type="blockDetails" name="blockDetails"/>
             <union-element type="address" name="address"/>
-            <union-element type="byte-array" name="byteArray"/>
+            <union-element type="byteArray" name="byteArray"/>
             <union-element type="bool" name="bool"/>
             <union-element type="blockTemplate" name="blockTemplate"/>
             <union-element type="submissionResult" name="submissionResult"/>
             <union-element type="validateAddressResult" name="validateAddressResult"/>
-            <union-element type="big_int_hex_string" name="bigInt"/>
+            <union-element type="bigIntHexString" name="bigInt"/>
             <union-element type="minerStats" name="minerStats"/>
             <union-element type="pongEnum" name="pongEnum"/>
             <union-element type="accountState" name="accountState"/>
@@ -110,7 +110,7 @@
             <union-element type="address_array" name="addressArray"/>
         </type-union>
         <type-union typeName="paramUnion" nullable="false">
-            <!--Some of these types overlap eg address and blockSpecifier-->
+            <!--Some of these types overlap eg address and blockSpecifierParams-->
             <comment>Ensures that the request is type safe</comment>
             <union-element type="voidParams" name="voidParams"/>
             <union-element type="ecRecoverParams" name="ecRecoverParams"/>
@@ -118,7 +118,7 @@
             <union-element type="submitSignatureParams" name="submitSignatureParams"/>
             <union-element type="submitBlockParams" name="submitBlockParams"/>
             <union-element type="addressParams" name="addressParams"/>
-            <union-element type="blockSpecifier" name="blockSpecifier"/>
+            <union-element type="blockSpecifierParams" name="blockSpecifierParams"/>
             <union-element name="transactionHashParams" type="transactionHashParams"/>
             <union-element name="blockNumberParams" type="blockNumberParams"/>
             <union-element name="blockHashParams" type="blockHashParams"/>
@@ -136,16 +136,16 @@
             </field>
             <field fieldName="method" required="true" type="string"/>
             <field fieldName="params" required="false" type="any"/>
-            <field fieldName="jsonrpc" required="false" type="version_string"/>
+            <field fieldName="jsonrpc" required="false" type="versionType"/>
         </type-composite>
         <type-composite typeName="response">
             <comment>This is the standard response body for a JSON RPC Request</comment>
             <field fieldName="id" required="false" type="int"/>
             <field fieldName="result" required="false" type="any"/>
-            <field fieldName="error" required="false" type="error"/>
-            <field fieldName="jsonrpc" required="true" type="version_string"/>
+            <field fieldName="error" required="false" type="rpcError"/>
+            <field fieldName="jsonrpc" required="true" type="versionType"/>
         </type-composite>
-        <type-composite typeName="error">
+        <type-composite typeName="rpcError">
             <comment>Contains the error messages for failed JSON RPC Requests</comment>
             <field fieldName="code" required="true" type="int"/>
             <field fieldName="message" required="true" type="string" />
@@ -153,72 +153,72 @@
         <type-composite typeName="txLogDetails">
             <field fieldName="address" required="true" type="address"/>
             <field fieldName="transactionIndex" required="true" type="int"/>
-            <field fieldName="data" required="true" type="data_hex_string"/>
-            <field fieldName="topics" required="true" type="data_hex_string_array"/>
+            <field fieldName="data" required="true" type="dataHexString"/>
+            <field fieldName="topics" required="true" type="dataHexString_array"/>
             <field fieldName="blockNumber" required="true" type="long"/>
         </type-composite>
         <type-composite typeName="txDetails">
             <field fieldName="contractAddress" required="false" type="address"/>
-            <field fieldName="hash" required="true" type="byte_32_string"/>
+            <field fieldName="hash" required="true" type="byte32String"/>
             <field fieldName="transactionIndex" required="true" type="int"/>
-            <field fieldName="value" required="true" type="big_int_hex_string"/>
-            <field fieldName="nrg" required="true" type="long_hex_string"/>
-            <field fieldName="nrgPrice" required="true" type="long_hex_string"/>
-            <field fieldName="gas" required="true" type="long_hex_string"/>
-            <field fieldName="gasPrice" required="true" type="long_hex_string"/>
-            <field fieldName="nonce" required="true" type="data_hex_string"/>
+            <field fieldName="value" required="true" type="bigIntHexString"/>
+            <field fieldName="nrg" required="true" type="longHexString"/>
+            <field fieldName="nrgPrice" required="true" type="longHexString"/>
+            <field fieldName="gas" required="true" type="longHexString"/>
+            <field fieldName="gasPrice" required="true" type="longHexString"/>
+            <field fieldName="nonce" required="true" type="dataHexString"/>
             <field fieldName="from" required="true" type="address"/>
             <field fieldName="to" required="false" type="address"/>
             <field fieldName="timestamp" required="true" type="long"/>
-            <field fieldName="input" required="true" type="data_hex_string"/>
-            <field fieldName="blockNumber" required="true" type="long_hex_string"/>
-            <field fieldName="blockHash" required="true" type="byte_32_string"/>
+            <field fieldName="input" required="true" type="dataHexString"/>
+            <field fieldName="blockNumber" required="true" type="longHexString"/>
+            <field fieldName="blockHash" required="true" type="byte32String"/>
             <field fieldName="error" required="true" type="string"/>
-            <field fieldName="type" required="true" type="byte_hex_string"/>
-            <field fieldName="nrgUsed" required="true" type="long_hex_string"/>
-            <field fieldName="gasUsed" required="true" type="long_hex_string"/>
+            <field fieldName="type" required="true" type="byteHexString"/>
+            <field fieldName="nrgUsed" required="true" type="longHexString"/>
+            <field fieldName="gasUsed" required="true" type="longHexString"/>
             <field fieldName="hasInternalTransactions" required="true" type="bool"/>
             <field fieldName="logs" required="true" type="txLogDetails_array"/>
-            <field fieldName="beaconHash" required="false" type="byte_32_string"/>
+            <field fieldName="beaconHash" required="false" type="byte32String"/>
         </type-composite>
         <type-composite typeName="blockDetails">
             <field fieldName="number" required="true" type="long"/>
-            <field fieldName="hash" required="true" type="byte_32_string"/>
-            <field fieldName="parentHash" required="true" type="byte_32_string"/>
-            <field fieldName="logsBloom" required="true" type="byte-array"/>
-            <field fieldName="transactionsRoot" required="true" type="data_hex_string"/>
-            <field fieldName="statesRoot" required="true" type="data_hex_string"/>
-            <field fieldName="receiptsRoot" required="true" type="data_hex_string"/>
-            <field fieldName="difficulty" required="true" type="big_int_hex_string"/>
-            <field fieldName="totalDifficulty" required="true" type="big_int_hex_string"/>
+            <field fieldName="hash" required="true" type="byte32String"/>
+            <field fieldName="parentHash" required="true" type="byte32String"/>
+            <field fieldName="logsBloom" required="true" type="byteArray"/>
+            <field fieldName="transactionsRoot" required="true" type="dataHexString"/>
+            <field fieldName="statesRoot" required="true" type="dataHexString"/>
+            <field fieldName="receiptsRoot" required="true" type="dataHexString"/>
+            <field fieldName="difficulty" required="true" type="bigIntHexString"/>
+            <field fieldName="totalDifficulty" required="true" type="bigIntHexString"/>
             <field fieldName="miner" required="true" type="address" />
-            <field fieldName="timestamp" required="true" type="long_hex_string"/>
-            <field fieldName="gasUsed" required="true" type="long_hex_string"/>
-            <field fieldName="gasLimit" required="true" type="long_hex_string"/>
-            <field fieldName="nrgUsed" required="true" type="long_hex_string"/>
-            <field fieldName="nrgLimit" required="true" type="long_hex_string"/>
-            <field fieldName="sealType" required="true" type="byte_hex_string"/>
+            <field fieldName="timestamp" required="true" type="longHexString"/>
+            <field fieldName="gasUsed" required="true" type="longHexString"/>
+            <field fieldName="gasLimit" required="true" type="longHexString"/>
+            <field fieldName="nrgUsed" required="true" type="longHexString"/>
+            <field fieldName="nrgLimit" required="true" type="longHexString"/>
+            <field fieldName="sealType" required="true" type="byteHexString"/>
             <field fieldName="mainChain" required="true" type="bool"/>
-            <field fieldName="extraData" required="true" type="data_hex_string"/>
+            <field fieldName="extraData" required="true" type="dataHexString"/>
             <field fieldName="size" required="true" type="int"/>
             <field fieldName="numTransactions" required="true" type="int"/>
-            <field fieldName="txTrieRoot" required="true" type="data_hex_string"/>
-            <field fieldName="blockReward" required="true" type="big_int_hex_string"/>
+            <field fieldName="txTrieRoot" required="true" type="dataHexString"/>
+            <field fieldName="blockReward" required="true" type="bigIntHexString"/>
             <field fieldName="transactions" required="true" type="txDetails_array"/>
-            <field fieldName="nonce" required="false" type="data_hex_string"/>
-            <field fieldName="solution" required="false" type="data_hex_string"/>
-            <field fieldName="seed" required="false" type="data_hex_string"/>
-            <field fieldName="signature" required="false" type="data_hex_string"/>
-            <field fieldName="publicKey" required="false" type="data_hex_string"/>
+            <field fieldName="nonce" required="false" type="dataHexString"/>
+            <field fieldName="solution" required="false" type="dataHexString"/>
+            <field fieldName="seed" required="false" type="dataHexString"/>
+            <field fieldName="signature" required="false" type="dataHexString"/>
+            <field fieldName="publicKey" required="false" type="dataHexString"/>
             <field fieldName="blockTime" required="false" type="int"/>
         </type-composite>
         <type-composite typeName="blockTemplate">
-            <field fieldName="previousblockhash" type="byte_32_string" required="true"/>
+            <field fieldName="previousblockhash" type="byte32String" required="true"/>
             <field fieldName="height" type="long" required="true"/>
-            <field fieldName="target" type="uint256_hex_string" required="true"/>
-            <field fieldName="headerHash" type="byte_32_string" required="true"/>
-            <field fieldName="blockBaseReward" type="big_int_hex_string" required="true"/>
-            <field fieldName="blockTxFee" type="big_int_hex_string" required="true"/>
+            <field fieldName="target" type="uint256HexString" required="true"/>
+            <field fieldName="headerHash" type="byte32String" required="true"/>
+            <field fieldName="blockBaseReward" type="bigIntHexString" required="true"/>
+            <field fieldName="blockTxFee" type="bigIntHexString" required="true"/>
         </type-composite>
         <type-composite typeName="submissionResult">
             <field fieldName="result" type="bool" required="true"/>
@@ -229,36 +229,36 @@
             <field fieldName="ismine" type="bool" required="true"/>
         </type-composite>
         <type-composite typeName="minerStats">
-            <field fieldName="networkHashRate" type="decimal_string" required="true"/>
-            <field fieldName="minerHashrate" type="decimal_string" required="true"/>
-            <field fieldName="minerHashrateShare" type="decimal_string" required="true"/>
+            <field fieldName="networkHashRate" type="decimalstring" required="true"/>
+            <field fieldName="minerHashrate" type="decimalstring" required="true"/>
+            <field fieldName="minerHashrateShare" type="decimalstring" required="true"/>
         </type-composite>
         <type-composite typeName="txLog">
             <field fieldName="address" required="true" type="address"/>
             <field fieldName="transactionIndex" required="true" type="int"/>
-            <field fieldName="data" required="true" type="data_hex_string"/>
-            <field fieldName="topics" required="true" type="data_hex_string_array"/>
+            <field fieldName="data" required="true" type="dataHexString"/>
+            <field fieldName="topics" required="true" type="dataHexString_array"/>
         </type-composite>
         <type-composite typeName="accountState">
             <field fieldName="address" type="address" required="true"/>
             <field fieldName="blockNumber" type="long" required="true"/>
-            <field fieldName="balance" type="bigint" required="true"/>
-            <field fieldName="nonce" type="bigint" required="true"/>
+            <field fieldName="balance" type="bigInt" required="true"/>
+            <field fieldName="nonce" type="bigInt" required="true"/>
         </type-composite>
         <type-composite typeName="opsTransaction">
             <field fieldName="timestampVal" type="long" required="true"/>
-            <field fieldName="transactionHash" type="byte_32_string" required="true"/>
+            <field fieldName="transactionHash" type="byte32String" required="true"/>
             <field fieldName="blockNumber" type="long" required="true"/>
-            <field fieldName="blockHash" type="byte_32_string" required="true"/>
-            <field fieldName="nonce" type="big_int_hex_string" required="true"/>
+            <field fieldName="blockHash" type="byte32String" required="true"/>
+            <field fieldName="nonce" type="bigIntHexString" required="true"/>
             <field fieldName="fromAddr" type="address" required="true"/>
             <field fieldName="toAddr" type="address" required="true"/>
-            <field fieldName="value" type="big_int_hex_string" required="true"/>
-            <field fieldName="nrgPrice" type="long_hex_string" required="true"/>
-            <field fieldName="nrgConsumed" type="long_hex_string" required="true"/>
-            <field fieldName="data" type="data_hex_string" required="true"/>
+            <field fieldName="value" type="bigIntHexString" required="true"/>
+            <field fieldName="nrgPrice" type="longHexString" required="true"/>
+            <field fieldName="nrgConsumed" type="longHexString" required="true"/>
+            <field fieldName="data" type="dataHexString" required="true"/>
             <field fieldName="transactionIndex" type="int" required="true"/>
-            <field fieldName="beaconHash" type="byte_32_string" required="true"/>
+            <field fieldName="beaconHash" type="byte32String" required="true"/>
             <field fieldName="logs" type="txLog_array" required="true"/>
         </type-composite>
     </composite>
@@ -267,7 +267,7 @@
         <!--TODO explicitly prevent nesting of arrays-->
         <type-list typeName="request_array" nestedType="request"/>
         <type-list typeName="response_array" nestedType="response"/>
-        <type-list typeName="data_hex_string_array" nestedType="data_hex_string"/>
+        <type-list typeName="dataHexString_array" nestedType="dataHexString"/>
         <type-list typeName="address_array" nestedType="address"/>
         <type-list typeName="txLogDetails_array" nestedType="txLogDetails"/>
         <type-list typeName="txLog_array" nestedType="txLog"/>
@@ -276,23 +276,23 @@
     <constrained>
         <!--Constrained types define a maximum and minimum size, and a regex to be used for validating the type-->
         <!--They all rely on a base type-->
-        <type-constrained baseType="byte-array" max="infinity"
-            min="2" regex="^0x([0-9a-fA-F][0-9a-fA-F])*$" typeName="data_hex_string"/>
-        <type-constrained baseType="bigint" max="infinity" min="3" regex="^0x[0-9a-fA-F]+$"
-            typeName="big_int_hex_string"/>
-        <type-constrained baseType="uint256" max="infinity" min="3" regex="^0x[0-9a-fA-F]+$"
-            typeName="uint256_hex_string"/>
+        <type-constrained baseType="byteArray" max="infinity"
+            min="2" regex="^0x([0-9a-fA-F][0-9a-fA-F])*$" typeName="dataHexString"/>
+        <type-constrained baseType="bigInt" max="infinity" min="3" regex="^0x[0-9a-fA-F]+$"
+            typeName="bigIntHexString"/>
+        <type-constrained baseType="uint256" max="64" min="64" regex="^0x[0-9a-fA-F]+$"
+            typeName="uint256HexString"/>
         <type-constrained baseType="long" min="3" max="18" regex="^0x[0-9a-fA-F]+$"
-            typeName="long_hex_string"/>
+            typeName="longHexString"/>
         <type-constrained baseType="int" min="3" max="10" regex="^0x[0-9a-fA-F]+$"
-            typeName="int_hex_string"/>
+            typeName="intHexString"/>
         <type-constrained baseType="byte" min="3" max="4" regex="^0x[0-9a-fA-F]+$"
-            typeName="byte_hex_string"/>
-        <type-constrained baseType="data_hex_string" typeName="byte_32_string" max="66" min="66"
+            typeName="byteHexString"/>
+        <type-constrained baseType="dataHexString" typeName="byte32String" max="66" min="66"
             regex=".*"/>
-        <type-constrained baseType="data_hex_string" typeName="byte_64_string" max="130" min="130"
+        <type-constrained baseType="dataHexString" typeName="byte64String" max="130" min="130"
             regex=".*"/>
-        <type-constrained baseType="string" typeName="decimal_string"
+        <type-constrained baseType="string" typeName="decimalstring"
             regex="^([+-]([1-9][0-9]*|[0-9]+[.][0-9])|[0-9]+([.][0-9])?)[0-9]*$" min="1"
             max="infinity"/>
         <!--The regex constraint for decimal string was implemented above to minimize differences between languages.
@@ -300,7 +300,7 @@
     </constrained>
     <enum>
         <!--Enum types are used in the case of a string or value with a restricted set of values-->
-        <type-enum typeName="version_string" internalType = "string">
+        <type-enum typeName="versionType" internalType = "string">
             <value name="Version2" var="2.0"/>
         </type-enum>
         <type-enum typeName="blockEnum" internalType="string">
@@ -313,10 +313,10 @@
     <param>
         <!-- param types specific to each method-->
         <type-params-wrapper typeName="ecRecoverParams">
-            <field fieldName="dataThatWasSigned" index="0" required="true" type="data_hex_string"/>
-            <field fieldName="signature" index="1" required="true" type="data_hex_string"/>
+            <field fieldName="dataThatWasSigned" index="0" required="true" type="dataHexString"/>
+            <field fieldName="signature" index="1" required="true" type="dataHexString"/>
         </type-params-wrapper>
-        <type-params-wrapper typeName="blockSpecifier">
+        <type-params-wrapper typeName="blockSpecifierParams">
             <field fieldName="block" index="0" required="true" type="blockSpecifierUnion">
                 <comment>Specifies the block to be returned with either a block hash, number or
                     enum.
@@ -324,19 +324,19 @@
             </field>
         </type-params-wrapper>
         <type-params-wrapper typeName="submitSeedParams">
-            <field fieldName="newSeed" index="0" required="true" type="byte_64_string"/>
-            <field fieldName="signingPublicKey" index="1" required="true" type="byte_32_string"/>
+            <field fieldName="newSeed" index="0" required="true" type="byte64String"/>
+            <field fieldName="signingPublicKey" index="1" required="true" type="byte32String"/>
             <field fieldName="coinbase" index="2" required="true" type="address"/>
         </type-params-wrapper>
         <type-params-wrapper typeName="submitSignatureParams">
-            <field fieldName="signature" index="0" required="true" type="byte_64_string"/>
-            <field fieldName="sealHash" index="1" required="true" type="byte_32_string"/>
+            <field fieldName="signature" index="0" required="true" type="byte64String"/>
+            <field fieldName="sealHash" index="1" required="true" type="byte32String"/>
         </type-params-wrapper>
         <type-params-wrapper typeName="voidParams"/>
         <type-params-wrapper typeName="submitBlockParams">
-            <field fieldName="nonce" index="0" required="true" type="data_hex_string"/>
-            <field fieldName="solution" index="1" required="true" type="data_hex_string"/>
-            <field fieldName="headerHash" index="2" required="true" type="byte_32_string"/>
+            <field fieldName="nonce" index="0" required="true" type="dataHexString"/>
+            <field fieldName="solution" index="1" required="true" type="dataHexString"/>
+            <field fieldName="headerHash" index="2" required="true" type="byte32String"/>
         </type-params-wrapper>
         <type-params-wrapper typeName="addressParams">
             <field fieldName="address" index="0" required="true" type="address"/>
@@ -351,10 +351,10 @@
             <field fieldName="password" index="1" required="true" type="string"/>
         </type-params-wrapper>
         <type-params-wrapper typeName="blockHashParams">
-            <field fieldName="block" index="0" required="true" type="byte_32_string"/>
+            <field fieldName="block" index="0" required="true" type="byte32String"/>
         </type-params-wrapper>
         <type-params-wrapper typeName="transactionHashParams">
-            <field fieldName="hash" index="0" required="true" type="byte_32_string"/>
+            <field fieldName="hash" index="0" required="true" type="byte32String"/>
         </type-params-wrapper>
         <type-params-wrapper typeName="passwordParams">
             <field fieldName="password" index="0" required="true" type="string"/>
@@ -372,8 +372,8 @@
         <type-primitive typeName="long"/>
         <type-primitive typeName="int"/>
         <type-primitive typeName="byte"/>
-        <type-primitive typeName="bigint"/>
-        <type-primitive typeName="byte-array"/>
+        <type-primitive typeName="bigInt"/>
+        <type-primitive typeName="byteArray"/>
         <type-primitive typeName="address"/>
         <type-primitive typeName="uint16"/>
         <type-primitive typeName="uint32"/>

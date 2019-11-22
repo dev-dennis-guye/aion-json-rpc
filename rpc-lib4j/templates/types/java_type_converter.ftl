@@ -328,7 +328,7 @@ public class RPCTypesConverter{
         }
     }
 
-    public static class ${macros.toJavaConverterFromName("bigint")}{
+    public static class ${macros.toJavaConverterFromName("bigInt")}{
 
         public static String encodeHex(BigInteger bigInteger){
             try{
@@ -363,7 +363,7 @@ public class RPCTypesConverter{
         }
     }
 
-    public static class ${macros.toJavaConverterFromName("byte-array")}{
+    public static class ${macros.toJavaConverterFromName("byteArray")}{
 
         public static ByteArray decode(Object obj){
             if (obj == null || obj.equals(JSONObject.NULL)){

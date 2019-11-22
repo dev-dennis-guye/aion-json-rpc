@@ -14,6 +14,26 @@
         <#return "BigInteger">
     <#elseif typeName=="uint256">
         <#return "BigInteger">
+    <#elseif typeName=="any">
+        <#return "Object">
+    <#elseif typeName=="bool">
+        <#return "Boolean">
+    <#elseif typeName=="string">
+        <#return "String">
+    <#elseif typeName=="long">
+        <#return "Long">
+    <#elseif typeName=="int">
+        <#return "Integer">
+    <#elseif typeName=="bool">
+        <#return "Boolean">
+    <#elseif typeName=="byte">
+        <#return "Byte">
+    <#elseif typeName=="bigInt">
+        <#return "BigInteger">
+    <#elseif typeName=="byteArray">
+        <#return "ByteArray">
+    <#elseif typeName=="address">
+        <#return "AionAddress">
     <#else>
         <#return toCamelCase(typeName)>
     </#if>
@@ -46,132 +66,13 @@
 </#function>
 
 <#function toCamelCase typeName>
-
-    <#if typeName == "string">
-        <#return "String">
-    <#elseif typeName == "data_hex_string">
-        <#return "DataHexString">
-    <#elseif typeName == "hex_string">
-        <#return "HexString">
-    <#elseif typeName == "byte">
-        <#return "Byte">
-    <#elseif typeName=="uint16">
-        <#return "UnsignedInteger16">
-    <#elseif typeName=="uint32">
-        <#return "UnsignedInteger32">
-    <#elseif typeName=="uint64">
-        <#return "UnsignedInteger64">
-    <#elseif typeName=="uint128">
-        <#return "UnsignedInteger128">
-    <#elseif typeName=="uint256">
-        <#return "UnsignedInteger256">
-    <#elseif typeName == "bool">
-        <#return "Boolean">
-    <#elseif typeName == "byte-array">
-        <#return "ByteArray">
-    <#elseif typeName == "blockSpecifier">
-        <#return "BlockSpecifier">
-    <#elseif typeName == "blockDetails">
-        <#return "BlockDetails">
-    <#elseif typeName == "blockEnum">
-        <#return "BlockEnum">
-    <#elseif typeName=="blockSpecifierUnion">
-        <#return "BlockSpecifierUnion">
-    <#elseif typeName=="resultUnion">
-        <#return "ResultUnion">
-    <#elseif typeName=="paramUnion">
-        <#return "ParamUnion">
-    <#elseif typeName == "txDetails">
-        <#return "TransactionDetails">
-    <#elseif typeName == "big_int_hex_string">
-        <#return "BigIntegerHexString">
-    <#elseif typeName == "long_hex_string">
-        <#return "LongHexString">
-    <#elseif typeName == "int_hex_string">
-        <#return "IntHexString">
-    <#elseif typeName == "uint256_hex_string">
-        <#return "Uint256IntHexString">
-    <#elseif typeName=="decimal_string">
-        <#return "DecimalString">
-    <#elseif typeName=="blockTemplate">
-        <#return "BlockTemplate">
-    <#elseif typeName=="submissionResult">
-        <#return "SubmissionResult">
-    <#elseif typeName=="validateAddressResult">
-        <#return "ValidateAddressResult">
-    <#elseif typeName=="minerStats">
-        <#return "MinerStats">
-    <#elseif typeName=="submitBlockParams">
-        <#return "SubmitBlockParams">
-    <#elseif typeName=="addressParams">
-        <#return "AddressParams">
-    <#elseif typeName == "address" >
-        <#return "AionAddress">
-    <#elseif typeName="request">
-        <#return "Request">
-    <#elseif typeName=="ecRecoverParams">
-        <#return "EcRecoverParams">
-    <#elseif typeName=="voidParams">
-        <#return "VoidParams">
-    <#elseif typeName=="version_string">
-        <#return "VersionType">
-    <#elseif typeName=="long">
-        <#return "Long">
-    <#elseif typeName=="int">
-        <#return "Integer">
-    <#elseif typeName=="bigint">
-        <#return "BigInteger">
-    <#elseif typeName=="response">
-        <#return "Response">
-    <#elseif typeName=="error">
-        <#return "RPCError">
-    <#elseif typeName=="any">
-        <#return "Object">
-    <#elseif typeName=="txLogDetails">
-        <#return "TxLogDetails">
-    <#elseif typeName=="byte_hex_string">
-        <#return "ByteHexString">
-    <#elseif typeName=="byte_32_string">
-        <#return "Byte32String">
-    <#elseif typeName=="byte_64_string">
-        <#return "Byte64String">
-    <#elseif typeName=="submitSignatureParams">
-        <#return "SubmitSignatureParams">
-    <#elseif typeName=="submitSeedParams">
-        <#return "SubmitSeedParams">
-    <#elseif typeName=="addressParams">
-        <#return "AddressParams">
-    <#elseif typeName=="validateAddressResults">
-        <#return "ValidateAddressResults">
-    <#elseif typeName=="pongEnum">
-        <#return "PongEnum">
-    <#elseif typeName=="accountState">
-        <#return "AccountState">
-    <#elseif typeName=="txLog">
-        <#return "TxLog">
-    <#elseif typeName=="unlockAccountParams">
-        <#return "UnlockAccountParams">
-    <#elseif typeName=="lockAccountParams">
-        <#return "LockAccountParams">
-    <#elseif typeName=="blockHashParams">
-        <#return "BlockHashParams">
-    <#elseif typeName=="transactionHashParams">
-        <#return "TransactionHashParams">
-    <#elseif typeName=="passwordParams">
-        <#return "PasswordParams">
-    <#elseif typeName=="blockNumberParams">
-        <#return "BlockNumberParams">
-    <#elseif typeName == "string">
-        <#return "String">
-    <#else >
-        <#return typeName>
-    </#if>
+    <#return "${typeName?cap_first}">
 </#function>
 
 <#function resultExtractorFromName type>
     <#if type.baseType?has_content><#return resultExtractorFromName(type.baseType)></#if>
     <#local name = type.name>
-    <#if name=="byte-array">
+    <#if name=="byteArray">
         <#return "r->r.byteArray">
     <#elseif name=="address_array">
         <#return "r->r.addressArray">

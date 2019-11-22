@@ -74,7 +74,7 @@ public class RPCClientMethods{
     * @param <O> the result type of the async task.
     * @return The result of this asynchronous request
     */
-    public final <O> CompletableFuture<O> ${method.name}(<#list method.param.fields as parameter>${macros.toJavaType(parameter.type)} ${parameter.fieldName},</#list> BiFunction<${macros.toJavaType(method.returnType)}, RPCError, O> asyncTask){
+    public final <O> CompletableFuture<O> ${method.name}(<#list method.param.fields as parameter>${macros.toJavaType(parameter.type)} ${parameter.fieldName},</#list> BiFunction<${macros.toJavaType(method.returnType)}, RpcError, O> asyncTask){
         ${macros.toJavaType(method.param)} params= new ${macros.toJavaType(method.param)}(<#list method.param.fields as parameter>${parameter.fieldName}<#if parameter_has_next> ,</#if></#list>);
         Request request = new Request(generator.generateID(), "${method.name}", ${macros.toJavaConverter(method.param)}.encode(params), VersionType.Version2);
 
