@@ -95,6 +95,20 @@ task packageGeneratedFiles4J(){
     }
 }
 
+task printSpec(type: Exec){
+    dependsOn 'clean'
+    dependsOn('createGenerator')
+    if (project.hasProperty('filePath')) {
+        commandLine("$generatorPath/bin/generator",
+                "print",
+                '-f',
+                project.property('filePath'))
+    } else {
+        commandLine("$generatorPath/bin/generator",
+                "print",
+                '--help')
+    }
+}
 
 task genJava(type:Exec){
     dependsOn 'clean', 'createGenerator'

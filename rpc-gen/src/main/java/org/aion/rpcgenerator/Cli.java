@@ -30,7 +30,7 @@ import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 
 //TODO move the template and spec filenames to an external file/configuration step
-@Command(name = "generator", mixinStandardHelpOptions = true)
+@Command(name = "generator", mixinStandardHelpOptions = true, subcommands = {PrintSpec.class})
 public class Cli implements Runnable {
 
     private static final Logger logger = LoggerFactory.getLogger(Cli.class);
@@ -116,21 +116,21 @@ public class Cli implements Runnable {
             logException(e);
             CommandLine.usage(this, System.out);//print out the help info if we
             // encountered a runtime exception
-            System.exit(-1);
+            System.exit(ExitCodes.Error.code);
         } catch (IOException e) {
             logger.warn("Failed due to io.");
             logException(e);
-            System.exit(-1);
+            System.exit(ExitCodes.Error.code);
         } catch (SAXException | ParserConfigurationException e) {
             logger.warn("Could not read the xml file.", e);
             logException(e);
-            System.exit(-1);
+            System.exit(ExitCodes.Error.code);
         } catch (TemplateException e) {
             logger.warn("Failed to create file from template.", e);
             logException(e);
-            System.exit(-1);
+            System.exit(ExitCodes.Error.code);
         }
-        System.exit(0);
+        System.exit(ExitCodes.Normal.code);
     }
 
     private void logException(Exception e) {
