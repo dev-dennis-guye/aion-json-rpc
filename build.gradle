@@ -2,6 +2,7 @@ def workingDir = rootDir.absolutePath
 def generatedFolderPath = "${workingDir}/out/"
 def generatorPath = "${workingDir}/generator"
 def javaTemplatePath = "${workingDir}/rpc-lib4j/templates"
+def javaConfigurationPath = "${workingDir}/rpc-lib4j/configuration/configuration.xml"
 def specPath = "${workingDir}/spec/"
 def javaLibraryPath = "${workingDir}/rpc-lib4j/src/main/java/org/aion/rpc"
 def javaGeneratedTestsPath = "${workingDir}/rpc-lib4j/tests"
@@ -98,17 +99,12 @@ task packageGeneratedFiles4J(){
 
 task genJava(type:Exec){
     dependsOn 'clean', 'createGenerator'
-    def stdOut = new ByteArrayOutputStream()
-    standardOutput=stdOut
     commandLine("$generatorPath/bin/generator",
             '-s',
             "$specPath",
             '-o', "$generatedFolderPath",
-            "--templates", "$javaTemplatePath/types",
-            "$javaTemplatePath/errors",
-            "$javaTemplatePath/rpc")
-
-    ant.echo(standardOutput.toString())
+            "--templates", "$javaTemplatePath",
+            "--config", "$javaConfigurationPath")
 
     finalizedBy {
         'packageGeneratedFiles4J'

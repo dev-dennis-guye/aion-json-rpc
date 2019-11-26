@@ -8,14 +8,21 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.Writer;
+import java.nio.file.DirectoryStream;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import javax.xml.parsers.ParserConfigurationException;
 import org.aion.rpcgenerator.data.TypeSchema;
 import org.aion.rpcgenerator.error.ErrorSchema;
@@ -37,14 +44,18 @@ public class Cli implements Runnable {
     @Option(names = {"--verbose"}, defaultValue = "false")
     private boolean verbose;//indicates whether the debug level should be used
     @Option(names = {"--templates",
-        "-t"}, arity = "1..3", description = "The root directory of each template. The template directories must be named errors, rpc or types.")
-    private String[] templates;//the list of templates that should be used
+        "-t"}, arity = "1", description = "The template root directory.")
+    private String templatePath;//the list of templates that should be used
+    private String[] templates;
     @Option(names = {"--spec",
         "-s"}, arity = "1", defaultValue = "definitions/spec", description = "The root directory for the xml specification files.")
     private String spec;//the root directory of all the spec files
     @Option(names = {"--out",
         "-o"}, defaultValue = "output", description = "The output output directory for the generated files.")
     private String output;// the output directory
+    @Option(names = "--config", required = true)
+    private String configPath;//the configuration path
+    private Config config;
 
     private Cli() {
     }
@@ -67,8 +78,9 @@ public class Cli implements Runnable {
      */
     @Override
     public void run() {
-        setLogLevel();//change the log level
         try {
+            initConfig();
+            setLogLevel();//change the log level
             checkTemplates();// set the default template location
             checkSpec();//validate the spec path is valid
             logger.info("Starting RPC generator...");
@@ -77,42 +89,34 @@ public class Cli implements Runnable {
             Path specPath = Paths.get(spec);
             if (specPath.toFile().exists() && specPath.toFile().isDirectory()) {
                 logger.debug("Attempting to read spec...");
-                File errors = Paths.get(Utils.appendToPath(spec,"errors.xml")).toFile();//get the error spec file
+                File errors = Paths.get(Utils.appendToPath(spec,config.getErrorSpecFileName())).toFile();//get the error spec file
                 logger.debug("Reading error template files.");
                 //TODO replace this list of errors with a single object
                 List<ErrorSchema> errorSchemas = ErrorSchema
                     .fromDocument(XMLUtils.fromFile(errors));// convert the file to a list of errors
-                File types = Paths.get(Utils.appendToPath(spec, "types.xml")).toFile();
+                File types = Paths.get(Utils.appendToPath(spec, config.getTypeSpecFileName())).toFile();
                 TypeSchema typeSchema = new TypeSchema(XMLUtils.fromFile(types));//convert the types to a schema object
                 typeSchema.setErrors(errorSchemas); // set the errors in the type schema
                 logger.debug("Reading rpc template files.");
                 //noinspection ConstantConditions
                 //Read the rpc spec into the application
-                RPCSchema rpcSchema = new RPCSchema(XMLUtils.fromFile(Utils.appendToPath(spec, "rpc.xml")), typeSchema, errorSchemas);
+                RPCSchema rpcSchema = new RPCSchema(XMLUtils.fromFile(Utils.appendToPath(spec, config.getRPCSpecFileName())), typeSchema, errorSchemas);
 
                 //create the output path
                 File errorsOutputFile = new File(Utils.appendToPath(output, "errors"));
                 File rpcOutputFile = new File(Utils.appendToPath(output, "rpc"));
                 File typesOutputFile = new File(Utils.appendToPath(output, "types"));
 
-                for (String template : templates) {// for each defined template file parse the template
-                    logger.debug("Processing: {}", template);
-                    if (template.endsWith("errors")) {
-                        processAllErrors(errorsOutputFile, errorSchemas, template, configuration);
-                    } else if (template.endsWith("rpc")) {
-                        processAllRPCTemplates(rpcOutputFile, rpcSchema, template, configuration);
-                    } else if (template.endsWith("types")) {
-                        processAllTypes(typesOutputFile, typeSchema, template, configuration);
-                    } else {
-                        logger.warn("Encountered an unidentified template {}", template);// log any unrecognize file
-                    }
-                }
+                processAllErrors(errorsOutputFile, errorSchemas, templatePath, configuration);
+                processAllRPCTemplates(rpcOutputFile, rpcSchema, templatePath, configuration);
+                processAllTypes(typesOutputFile, typeSchema, templatePath, configuration);
+
                 logger.info("Successfully autogenerated files for:\n\t{}", String.join( "\n\t", templates));
             } else {
                 logger.warn("Could not open xml specification directory. Check if it exists");
             }
         } catch (RuntimeException e) {
-            logger.warn("Failed unexpectedly, check the application arguments.");
+            logger.warn("Failed unexpectedly, check the application arguments and config at: {}", configPath);
             logException(e);
             CommandLine.usage(this, System.out);//print out the help info if we
             // encountered a runtime exception
@@ -144,11 +148,9 @@ public class Cli implements Runnable {
         try {
             createDir(outputFile);// create the output directory that will store the error
             //noinspection ConstantConditions
-            List<String> errorTemplates = Arrays
-                .stream(Paths.get(templatePath).toFile().listFiles()).filter(
-                    p -> p.getName().endsWith("exceptions.ftl") || p.getName()
-                        .endsWith("errors.ftl"))
-                .map(File::getPath).collect(Collectors.toUnmodifiableList());// get all the error
+            List<String> errorTemplates = (listFiles(templatePath, config.getErrorsTemplateDirectory())).filter(
+                    p -> p.endsWith("ftl"))
+                .collect(Collectors.toUnmodifiableList());// get all the error
             // templates which match the expected names
             Map<String, Object> errors = Map.ofEntries(// create the error map
                 Map.entry("date", ZonedDateTime.now().toLocalDate()),
@@ -156,11 +158,10 @@ public class Cli implements Runnable {
 
             for (String templateFile : errorTemplates) {
                 String outputFileName;
-                if (Utils.isJavaTemplate(templateFile)) {// create the output file name
-                    //this can be moved to an external error file
-                    outputFileName = "RPCExceptions.java";
-                } else {
-                    outputFileName = "";
+                outputFileName = config.errorFileName(getFileName(templateFile));
+
+                if (outputFileName == null) {
+                    throw new NullPointerException();
                 }
                 File temp = new File(
                     Utils.appendToPath(outputFile.getAbsolutePath(), outputFileName));
@@ -194,30 +195,15 @@ public class Cli implements Runnable {
         try {
             createDir(outputFile);
             //noinspection ConstantConditions
-            List<String> errorTemplates = Arrays
-                .stream(Paths.get(templatePath).toFile().listFiles()).filter(
-                    p -> p.getName().endsWith("rpc.ftl") || p.getName().endsWith("rpc_client.ftl")
-                        || p.getName().endsWith("testUtils.ftl") || p.getName().endsWith("test.ftl"))
-                .map(File::getPath).collect(Collectors.toUnmodifiableList());//get all the supported template files
+            List<String> errorTemplates = (listFiles(templatePath, config.getRpcTemplateDirectory())).filter(
+                    p -> p.endsWith("ftl"))
+                .collect(Collectors.toUnmodifiableList());//get all the supported template files
             for (String templateFile : errorTemplates) {
-                String outputFileName;
-                if (Utils.isJavaTemplate(templateFile)) {
-                    if(templateFile.endsWith("rpc.ftl")) {
-                        outputFileName ="RPCServerMethods.java";// server interface
-                    } else if (templateFile.endsWith("rpc_client.ftl")){
-                        outputFileName="RPCClientMethods.java";// client methods
-                    } else if(templateFile.endsWith("test.ftl")){
-                        outputFileName="RPCMethodsTest.java";// rpc test cases
-                    } else if(templateFile.endsWith("testUtils.ftl")){
-                        outputFileName="RPCTestUtilsInterface.java";// rpc test environment
-                    } else {
-                        logger.warn("Encountered an unexpected file: {}", templateFile);
-                        continue;
-                    }
-                } else {
-                    logger.warn("Encountered an unexpected file: {}", templateFile);
-                    continue;
+                String outputFileName = config.rpcFileName(getFileName(templateFile));
+                if (outputFileName == null) {
+                    throw new NullPointerException();
                 }
+
                 File temp = new File(
                     Utils.appendToPath(outputFile.getAbsolutePath(), outputFileName));
                 //create the output file
@@ -239,24 +225,18 @@ public class Cli implements Runnable {
         throws IOException, TemplateException {
         try{
             createDir(outputFile);
-            List<String> typesTemplates = Arrays.stream(Paths.get(templatePath).toFile().listFiles())
-                .filter(file-> file.getName().endsWith("type_converter.ftl") || file.getName().endsWith("types.ftl"))//get all the matching files
-                .map(File::getPath).collect(Collectors.toUnmodifiableList());
+            List<String> typesTemplates = (
+                listFiles(templatePath, config.getTypesTemplateDirectory()))
+                .filter(file-> file.endsWith("ftl"))//get all the matching files
+                .collect(Collectors.toUnmodifiableList());
 
             for (String templateFile: typesTemplates){
-                String outputFileName;
+                String outputFileName = config.typeFileName(getFileName(templateFile));
+                if (outputFileName == null) {
+                    throw new NullPointerException();
+                }
                 logger.debug("Processing: {}", templateFile);
-                if (Utils.isJavaTemplate(templateFile)){
-                    if (templateFile.contains("types.ftl")){// the pojo
-                        outputFileName="RPCTypes.java";
-                    }else{
-                        outputFileName="RPCTypesConverter.java";// codec
-                    }
-                }
-                else {
-                    logger.warn("Found unexpected file: {}", templateFile);
-                    continue;
-                }
+
                 File temp = new File(
                     Utils.appendToPath(outputFile.getAbsolutePath(), outputFileName));
                 if (createOutputFile(temp)) {// process the template
@@ -270,6 +250,28 @@ public class Cli implements Runnable {
         }catch (Exception e){
             logger.warn("Failed to process type templates");
             throw e;
+        }
+    }
+
+    private String getFileName(String templateFile) {
+        return Paths.get(templateFile).getFileName().toString();
+    }
+
+    private Stream<String> listFiles(String templatePath, String rpcTemplateDirectory)
+        throws IOException {
+        Path path = Paths.get(Utils.appendToPath(templatePath, rpcTemplateDirectory));
+        if (Files.exists(path) && Files.isDirectory(path)) {
+            try(DirectoryStream<Path> directoryStream = Files.newDirectoryStream(path)){
+                Iterator<Path> pathIterator = directoryStream.iterator();
+                ArrayList<String> files = new ArrayList<>();
+                while (pathIterator.hasNext()){
+                    Path temp = pathIterator.next();
+                    files.add(temp.toAbsolutePath().toString());
+                }
+                return files.stream();
+            }
+        } else {
+            throw new IllegalArgumentException("Supplied path is not a directory: " + path.toAbsolutePath());
         }
     }
 
@@ -319,32 +321,22 @@ public class Cli implements Runnable {
     }
 
     void checkTemplates() {
-        if (templates == null) {
-            templates = new String[]{"definitions/templates/errors", "definitions/templates/rpc", "definitions/templates/types"};// default template paths
+        if (templatePath == null) {
+            templatePath = "definitions/templates/";// default template paths
         }
-        logger.debug("Templates: [{}]", Arrays.stream(templates).collect(Collectors.joining(", ")));
-        boolean validTemplates = true;
-        for (String template :
-            templates) {// checks that all the template paths are valid. If any have an issue fail
-            File file = new File(template);
-            if (!file.isDirectory()) {
-                logger.debug("Failed on: {}", template);
-                validTemplates = false;
-                continue;
-            }
-            //noinspection ConstantConditions
-            long fileCount = Arrays.stream(Paths.get(template).toFile().list()).filter(path -> path
-                .endsWith(".ftl")).count();// checks that the template path contains templates that can be read
-            if (fileCount == 0) {
-                logger.debug("Failed on: {}", template);
-                logger.warn("Could not find any template files in the path.");
-                validTemplates = false;
-            }
+        logger.debug("Template path: [{}]", templatePath);
+        if (config == null){
+            throw new IllegalStateException("Config not initialized.");
+        }
+        List<Path> paths = List.of(Paths.get(Utils.appendToPath(templatePath, config.getRpcTemplateDirectory())),
+            Paths.get(Utils.appendToPath(templatePath, config.getTypesTemplateDirectory())),
+            Paths.get(Utils.appendToPath(templatePath, config.getRpcTemplateDirectory())));
+        for (Path path: paths){
+            if (!Files.exists(path)) throw new IllegalArgumentException("Path does not exist: "+ path.toString());
+            if (!Files.isDirectory(path)) throw new IllegalArgumentException("Path is not a directory: "+ path.toString());
         }
 
-        if (!validTemplates) {//throw if the templates are not valid
-            throw new IllegalStateException("The supplied template folders are invalid");
-        }
+        templates = paths.stream().map(Path::toAbsolutePath).map(Objects::toString).toArray(String[]::new);
     }
 
     void checkSpec() { // chect that the spec files exist
@@ -366,5 +358,9 @@ public class Cli implements Runnable {
             logger.warn("Could not find any template files in the path.");
             throw new IllegalStateException("The spec directory is not a folder");
         }
+    }
+
+    private void initConfig() throws ParserConfigurationException, SAXException, IOException {
+        config = new Config(Paths.get(configPath));
     }
 }

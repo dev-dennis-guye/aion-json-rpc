@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<config>
+    <!--This file maps the spec files to the FreeMarker template files and the java file names-->
+    <spec>
+        <!--The file names-->
+        <error specfile="errors.xml"/>
+        <rpc specfile="rpc.xml"/>
+        <type specfile="types.xml"/>
+    </spec>
+    <error-templates dir="errors"> <!--For use with errors.xml-->
+        <template outputfile="RPCExceptions.java" templatefile="java_exceptions.ftl"/>
+    </error-templates>
+    <rpc-templates dir="rpc"> <!--For use with rpc.xml-->
+        <template outputfile="RPCServerMethods.java" templatefile="java_rpc.ftl"/>
+        <template outputfile="RPCClientMethods.java" templatefile="java_rpc_client.ftl"/>
+        <template outputfile="RPCMethodsTest.java" templatefile="java_test.ftl"/>
+        <template outputfile="RPCTestUtilsInterface.java" templatefile="java_testUtils.ftl"/>
+    </rpc-templates>
+    <type-templates dir="types"> <!--For use with type.xml-->
+        <template outputfile="RPCTypes.java" templatefile="java_types.ftl"/>
+        <template outputfile="RPCTypesConverter.java" templatefile="java_type_converter.ftl"/>
+    </type-templates>
+</config>
