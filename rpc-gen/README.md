@@ -29,7 +29,6 @@ Currently this tooling only supports java. Additionally, the request and result 
 
 ## Future Plans
 
-1. Generate a rust implementaion of the RPC 
+1. Generate a rust implementation of the RPC 
 2. Generate test code
-3. Move the name of the auto generated files into an external configuration
-4. Print a spec template using the cli
+3. Print a spec template using the cli

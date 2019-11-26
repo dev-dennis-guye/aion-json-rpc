@@ -36,4 +36,8 @@ The types package contains all the type definitions used for communicating with 
 To edit this library the templates should be edited and the files should be regenerated. 
 The rpc-gen application specifies all the variables that can be used in a template file. 
 
+## Configuration 
+
+The configuration file is used to point to the spec files and define the names of the output java files.
+
 
