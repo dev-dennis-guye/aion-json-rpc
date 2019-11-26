@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<config>
+    <!--This file maps the spec files to the FreeMarker template files and the java file names-->
+    <spec>
+        <!--The file names-->
+        <error specfile="errors.xml"/>
+        <rpc specfile="rpc.xml"/>
+        <type specfile="types.xml"/>
+    </spec>
+    <error-templates dir="errors"> <!--For use with errors.xml-->
+    </error-templates>
+    <rpc-templates dir="rpc"> <!--For use with rpc.xml-->
+    </rpc-templates>
+    <type-templates dir="types"> <!--For use with type.xml-->
+    </type-templates>
+</config>
