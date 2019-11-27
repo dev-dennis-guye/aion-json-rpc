@@ -1,5 +1,6 @@
 plugins {
     id "com.github.johnrengelman.shadow" version "5.1.0"
+    id 'java'
 }
 version= "1.0-${getCommitHash()}"
 shadowJar{
@@ -7,6 +8,7 @@ shadowJar{
 }
 
 group 'org.aion.rpc'
+sourceCompatibility = 1.10
 
 repositories {
     mavenCentral()
@@ -16,14 +18,69 @@ test {
     useJUnitPlatform()
 }
 
+def workingDir = rootDir.absolutePath
+def generatedFolderPath = "${workingDir}/out/"
+def javaLibraryPath = "${workingDir}/rpc-lib4j/src/main/java/org/aion/rpc"
+def javaGeneratedTestsPath = "${workingDir}/rpc-lib4j/tests"
+def buildRoot = "${rootDir.absolutePath}/build"
+
+task copyJavaExceptions(type: Copy){
+    from "${generatedFolderPath}/errors"
+    into "${javaLibraryPath}/errors"
+    include "*.java"
+}
+
+task copyJavaClientMethods(type:Copy){
+    from "${generatedFolderPath}/rpc/RPCClientMethods.java"
+    into "${javaLibraryPath}/client"
+}
+
+task copyJavaServerMethods(type:Copy){
+    from "${generatedFolderPath}/rpc/RPCServerMethods.java"
+    into "${javaLibraryPath}/server"
+}
+
+task copyJavaTypes(type:Copy){
+    from "${generatedFolderPath}/types"
+    into "${javaLibraryPath}/types"
+    include "*.java"
+}
+
+task copyJavaTests(type:Copy){
+    from "${generatedFolderPath}/rpc"
+    into "${javaGeneratedTestsPath}"
+    include "*Test*.java"
+}
+
+task copyAllGeneratedJava(type:Copy){
+    dependsOn  'copyJavaExceptions', 'copyJavaClientMethods', 'copyJavaServerMethods', 'copyJavaTypes', 'copyJavaTests'
+}
+
+task docs4J(type: Zip){
+    dependsOn ':rpc-lib4j:javadoc'
+    def rpcPath ="$buildRoot/rpc-lib4j/docs"
+    archiveFileName = "rpc-docs.zip"
+    destinationDirectory = file("$rpcPath")
+    from "$rpcPath/javadoc"
+}
+
+task packageGeneratedFiles4J(){
+    dependsOn 'copyAllGeneratedJava'
+    dependsOn ':rpc-lib4j:build', ':rpc-lib4j:shadowJar'
+    dependsOn 'docs4J'
+    doFirst{
+        println("Compiling jars")
+    }
+}
+
 dependencies {
     compile files("lib/util4j-cc9c754dd.jar")
     compile files("lib/aion-types-22a3be9.jar")
-    compile group: 'org.json', name: 'json', version: '20180130'
-    compile group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5.10'
-    compile group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.3'
+    implementation group: 'org.json', name: 'json', version: '20180130'
+    implementation group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5.10'
+    implementation group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.3'
     testImplementation('org.junit.jupiter:junit-jupiter:5.5.2')
-    testCompile("org.junit.jupiter:junit-jupiter-params:5.4.2")
-    testRuntime('org.junit.jupiter:junit-jupiter-engine:5.4.2')
+    testImplementation("org.junit.jupiter:junit-jupiter-params:5.4.2")
+    testRuntimeOnly('org.junit.jupiter:junit-jupiter-engine:5.4.2')
 }
 

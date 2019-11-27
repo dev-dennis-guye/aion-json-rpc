@@ -11,9 +11,11 @@ buildscript {
 plugins {
     id 'application'
     id 'distribution'
+    id 'java'
 }
 
 group 'org.aion.rpcgenerator'
+sourceCompatibility = 1.10
 
 mainClassName = 'org.aion.rpcgenerator.Cli'
 applicationName = 'generator'
@@ -32,10 +34,9 @@ jar {
 }
 
 dependencies {
-    compile group: 'org.freemarker', name: 'freemarker', version: '2.3.14'
-    compile group: 'info.picocli', name: 'picocli', version: '4.0.4'
+    implementation group: 'org.freemarker', name: 'freemarker', version: '2.3.14'
+    implementation group: 'info.picocli', name: 'picocli', version: '4.0.4'
     testImplementation('org.junit.jupiter:junit-jupiter:5.5.2')
-    compile group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.3'
-    compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.28'
+    implementation group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.3'
     testCompile 'com.google.truth:truth:0.42'
 }
