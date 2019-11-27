@@ -12,7 +12,7 @@ import org.json.JSONObject;
 *
 * AUTO-GENERATED SOURCE FILE.  DO NOT EDIT MANUALLY -- YOUR CHANGES WILL
 * BE WIPED OUT WHEN THIS FILE GETS RE-GENERATED OR UPDATED.
-* GENERATED: 2019-11-22
+* GENERATED: 2019-11-28
 *
 *****************************************************************************/
 public class RPCTypes{
@@ -619,7 +619,7 @@ public class RPCTypes{
         public final Long nrgPrice;
         public final Long gas;
         public final Long gasPrice;
-        public final ByteArray nonce;
+        public final Long nonce;
         public final AionAddress from;
         public final AionAddress to;
         public final Long timestamp;
@@ -634,7 +634,7 @@ public class RPCTypes{
         public final List<TxLogDetails> logs;
         public final ByteArray beaconHash;
 
-        public TxDetails(AionAddress contractAddress ,ByteArray hash ,Integer transactionIndex ,BigInteger value ,Long nrg ,Long nrgPrice ,Long gas ,Long gasPrice ,ByteArray nonce ,AionAddress from ,AionAddress to ,Long timestamp ,ByteArray input ,Long blockNumber ,ByteArray blockHash ,String error ,Byte type ,Long nrgUsed ,Long gasUsed ,Boolean hasInternalTransactions ,List<TxLogDetails> logs ,ByteArray beaconHash ){
+        public TxDetails(AionAddress contractAddress ,ByteArray hash ,Integer transactionIndex ,BigInteger value ,Long nrg ,Long nrgPrice ,Long gas ,Long gasPrice ,Long nonce ,AionAddress from ,AionAddress to ,Long timestamp ,ByteArray input ,Long blockNumber ,ByteArray blockHash ,String error ,Byte type ,Long nrgUsed ,Long gasUsed ,Boolean hasInternalTransactions ,List<TxLogDetails> logs ,ByteArray beaconHash ){
             this.contractAddress=contractAddress;
             if(hash==null) throw ParseErrorRPCException.INSTANCE;
             this.hash=hash;
@@ -684,7 +684,7 @@ public class RPCTypes{
         public final ByteArray parentHash;
         public final ByteArray logsBloom;
         public final ByteArray transactionsRoot;
-        public final ByteArray statesRoot;
+        public final ByteArray stateRoot;
         public final ByteArray receiptsRoot;
         public final BigInteger difficulty;
         public final BigInteger totalDifficulty;
@@ -709,7 +709,7 @@ public class RPCTypes{
         public final ByteArray publicKey;
         public final Integer blockTime;
 
-        public BlockDetails(Long number ,ByteArray hash ,ByteArray parentHash ,ByteArray logsBloom ,ByteArray transactionsRoot ,ByteArray statesRoot ,ByteArray receiptsRoot ,BigInteger difficulty ,BigInteger totalDifficulty ,AionAddress miner ,Long timestamp ,Long gasUsed ,Long gasLimit ,Long nrgUsed ,Long nrgLimit ,Byte sealType ,Boolean mainChain ,ByteArray extraData ,Integer size ,Integer numTransactions ,ByteArray txTrieRoot ,BigInteger blockReward ,List<TxDetails> transactions ,ByteArray nonce ,ByteArray solution ,ByteArray seed ,ByteArray signature ,ByteArray publicKey ,Integer blockTime ){
+        public BlockDetails(Long number ,ByteArray hash ,ByteArray parentHash ,ByteArray logsBloom ,ByteArray transactionsRoot ,ByteArray stateRoot ,ByteArray receiptsRoot ,BigInteger difficulty ,BigInteger totalDifficulty ,AionAddress miner ,Long timestamp ,Long gasUsed ,Long gasLimit ,Long nrgUsed ,Long nrgLimit ,Byte sealType ,Boolean mainChain ,ByteArray extraData ,Integer size ,Integer numTransactions ,ByteArray txTrieRoot ,BigInteger blockReward ,List<TxDetails> transactions ,ByteArray nonce ,ByteArray solution ,ByteArray seed ,ByteArray signature ,ByteArray publicKey ,Integer blockTime ){
             if(number==null) throw ParseErrorRPCException.INSTANCE;
             this.number=number;
             if(hash==null) throw ParseErrorRPCException.INSTANCE;
@@ -720,8 +720,8 @@ public class RPCTypes{
             this.logsBloom=logsBloom;
             if(transactionsRoot==null) throw ParseErrorRPCException.INSTANCE;
             this.transactionsRoot=transactionsRoot;
-            if(statesRoot==null) throw ParseErrorRPCException.INSTANCE;
-            this.statesRoot=statesRoot;
+            if(stateRoot==null) throw ParseErrorRPCException.INSTANCE;
+            this.stateRoot=stateRoot;
             if(receiptsRoot==null) throw ParseErrorRPCException.INSTANCE;
             this.receiptsRoot=receiptsRoot;
             if(difficulty==null) throw ParseErrorRPCException.INSTANCE;

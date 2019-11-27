@@ -533,7 +533,13 @@ public class RPCTypesConverter{
                     throw ${macros.toJavaException(decodeError.error_class)}.INSTANCE;
                 }
                 return obj;<#else >
-                if(s.equals("[]") || s.equals("{}")) {//TODO This may not be the best way to handle an empty param list
+                if(object instanceof JSONArray && ((JSONArray) object).length()==0){
+                    return new VoidParams();
+                }
+                else if (object instanceof JSONObject && ((JSONObject) object).length()==0){
+                    return new ${macros.toJavaType(paramType)}();
+                }
+                else if(s.equals("[]") || s.equals("{}")) {//TODO This may not be the best way to handle an empty param list
                     return new ${macros.toJavaType(paramType)}();
                 }
                 else{
