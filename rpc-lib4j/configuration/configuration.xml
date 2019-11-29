@@ -11,7 +11,7 @@
         <template outputfile="RPCExceptions.java" templatefile="java_exceptions.ftl"/>
     </error-templates>
     <rpc-templates dir="rpc"> <!--For use with rpc.xml-->
-        <template outputfile="RPCServerMethods.java" templatefile="java_rpc.ftl"/>
+        <template outputfile="RPCServerMethods.rs" templatefile="java_rpc.ftl"/>
         <template outputfile="RPCClientMethods.java" templatefile="java_rpc_client.ftl"/>
         <template outputfile="RPCMethodsTest.java" templatefile="java_test.ftl"/>
         <template outputfile="RPCTestUtilsInterface.java" templatefile="java_testUtils.ftl"/>

@@ -59,7 +59,7 @@ task copyJavaClientMethods(type:Copy){
 }
 
 task copyJavaServerMethods(type:Copy){
-    from "${generatedFolderPath}/rpc/RPCServerMethods.java"
+    from "${generatedFolderPath}/rpc/RPCServerMethods.rs"
     into "${javaLibraryPath}/server"
 }
 
