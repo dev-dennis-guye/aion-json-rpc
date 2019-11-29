@@ -18,14 +18,14 @@ import org.json.JSONObject;
 *
 * AUTO-GENERATED SOURCE FILE.  DO NOT EDIT MANUALLY -- YOUR CHANGES WILL
 * BE WIPED OUT WHEN THIS FILE GETS RE-GENERATED OR UPDATED.
-* GENERATED: 2019-11-28
+* GENERATED: 2019-11-29
 *
 *****************************************************************************/
 public class RPCTypesConverter{
     /**
     * Validates that a hex string.
     */
-    public static final Pattern hexPattern = Pattern.compile("^(0x)?[0-9a-fA-F]+$");
+    public static final Pattern hexPattern = Pattern.compile("^0x[0-9a-fA-F]+$");
     /**
     * Validates an unsigned decimal string.
     */
@@ -33,7 +33,7 @@ public class RPCTypesConverter{
     /**
     * Validates that a number is encoded as a hex string. This is different from hex pattern since this validates that the string correctly encodes a byte array.
     */
-    public static final Pattern unsignedHexPattern = Pattern.compile("^(0x)?([0-9a-fA-F]{2})+$");
+    public static final Pattern unsignedHexPattern = Pattern.compile("^0x([0-9a-fA-F]{2})+$");
     /**
     * Validates a signed decimal string.
     */
@@ -45,7 +45,7 @@ public class RPCTypesConverter{
     /**
     * Validates a byte hex string. This is different from unsignedHexPattern since empty byte arrays are allowed here.
     */
-    public static final Pattern byteArrayPattern = Pattern.compile("^(0x)?([0-9a-fA-F]{2})*$");
+    public static final Pattern byteArrayPattern = Pattern.compile("^0x([0-9a-fA-F]{2})*$");
     /**
     * Validates that an aion address is valid
     */
