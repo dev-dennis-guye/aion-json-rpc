@@ -6,3 +6,4 @@ Blockchain.
 
 1.  To generate the java code execute: `./gradlew genJava`
 2.  To create new spec files execute: `./gradlew printSpec -PfilePath={output file path}`
+3.  To generate the rust code execute: `./gradlew genRust`
