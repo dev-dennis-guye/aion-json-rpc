@@ -49,7 +49,7 @@ public class RPCTypesConverter{
     /**
     * Validates that an aion address is valid
     */
-    public static final Pattern aionAddressPattern = Pattern.compile("^(0x)?([Aa]0[a-fA-F0-9]{62}|0{64}|0{61}200)$");
+    public static final Pattern aionAddressPattern = Pattern.compile("^(0x)?([a-fA-F0-9]{64})$");
 
     public static class AnyConverter{
 
