@@ -291,7 +291,7 @@
             typeName="uint256HexString"/>
         <type-constrained baseType="uint64" max="18" min="18" regex="^(0x)?[0-9a-fA-F]+$"
             typeName="uint64HexString"/>
-        <type-constrained baseType="uint128" max="18" min="18" regex="^(0x)?[0-9a-fA-F]+$"
+        <type-constrained baseType="uint128" max="34" min="34" regex="^(0x)?[0-9a-fA-F]+$"
             typeName="uint128HexString"/>
         <type-constrained baseType="long" min="3" max="18" regex="^(0x)?[0-9a-fA-F]+$"
             typeName="longHexString"/>

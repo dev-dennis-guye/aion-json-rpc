@@ -1302,7 +1302,7 @@ public class RPCTypesConverter{
         }
 
         private static boolean checkConstraints(String s){
-            return regex.matcher(s).find() && s.length() >= 18 && s.length() <= 18;
+            return regex.matcher(s).find() && s.length() >= 34 && s.length() <= 34;
         }
     }
 

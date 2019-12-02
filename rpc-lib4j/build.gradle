@@ -28,28 +28,33 @@ task copyJavaExceptions(type: Copy){
     from "${generatedFolderPath}/errors"
     into "${javaLibraryPath}/errors"
     include "*.java"
+    outputs.upToDateWhen{ false }
 }
 
 task copyJavaClientMethods(type:Copy){
     from "${generatedFolderPath}/rpc/RPCClientMethods.java"
     into "${javaLibraryPath}/client"
+    outputs.upToDateWhen{ false }
 }
 
 task copyJavaServerMethods(type:Copy){
     from "${generatedFolderPath}/rpc/RPCServerMethods.java"
     into "${javaLibraryPath}/server"
+    outputs.upToDateWhen{ false }
 }
 
 task copyJavaTypes(type:Copy){
     from "${generatedFolderPath}/types"
     into "${javaLibraryPath}/types"
     include "*.java"
+    outputs.upToDateWhen{ false }
 }
 
 task copyJavaTests(type:Copy){
     from "${generatedFolderPath}/rpc"
     into "${javaGeneratedTestsPath}"
     include "*Test*.java"
+    outputs.upToDateWhen{ false }
 }
 
 task copyAllGeneratedJava(type:Copy){
