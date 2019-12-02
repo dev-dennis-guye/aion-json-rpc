@@ -11,6 +11,33 @@ import org.aion.rpc.types.RPCTypesConverter.RpcErrorConverter;
 *
 *****************************************************************************/
 public class RPCExceptions{
+
+    public enum RpcCodeEnums{
+        <#list errors as error>${error.error_class?cap_first}_CODE(${error.code})<#if error_has_next>,
+        </#if></#list>;
+        public final int code;
+        private static RpcCodeEnums[] values = RpcCodeEnums.values();
+        RpcCodeEnums(int code){
+            this.code=code;
+        }
+
+        /**
+        * Returns the enum constant for the specified error code
+        * @param errorCode the error code of the constant to be returned
+        * @throws IllegalArgumentException if a constant of {@link RpcCodeEnums} does not exist
+        *                                   for the specified code
+        * @return the enum matching the error code
+        */
+        public static RpcCodeEnums enumFromCode(int errorCode){
+            for(RpcCodeEnums rpcEnum: values){
+                if(errorCode == rpcEnum.code){
+                    return rpcEnum;
+                }
+            }
+            throw new IllegalArgumentException();
+        }
+    }
+
     /**
     * @param code the rpc error code
     * @return the RPCException which maps to the supplied code. Otherwise an instance of InternalErrorRPCException.

@@ -6,10 +6,44 @@ import org.aion.rpc.types.RPCTypesConverter.RpcErrorConverter;
 *
 * AUTO-GENERATED SOURCE FILE.  DO NOT EDIT MANUALLY -- YOUR CHANGES WILL
 * BE WIPED OUT WHEN THIS FILE GETS RE-GENERATED OR UPDATED.
-* GENERATED: 2019-11-29
+* GENERATED: 2019-12-02
 *
 *****************************************************************************/
 public class RPCExceptions{
+
+    public enum RpcCodeEnums{
+        InvalidRequest_CODE(-32600),
+        ParseError_CODE(-32700),
+        MethodNotFound_CODE(-32601),
+        InvalidParams_CODE(-32602),
+        InternalError_CODE(-32603),
+        UnsupportedUnityFeature_CODE(-32001),
+        BlockTemplateNotFound_CODE(-32002),
+        FailedToSealBlock_CODE(-32003),
+        FailedToComputeMetrics_CODE(-32004);
+        public final int code;
+        private static RpcCodeEnums[] values = RpcCodeEnums.values();
+        RpcCodeEnums(int code){
+            this.code=code;
+        }
+
+        /**
+        * Returns the enum constant for the specified error code
+        * @param errorCode the error code of the constant to be returned
+        * @throws IllegalArgumentException if a constant of {@link RpcCodeEnums} does not exist
+        *                                   for the specified code
+        * @return the enum matching the error code
+        */
+        public static RpcCodeEnums enumFromCode(int errorCode){
+            for(RpcCodeEnums rpcEnum: values){
+                if(errorCode == rpcEnum.code){
+                    return rpcEnum;
+                }
+            }
+            throw new IllegalArgumentException();
+        }
+    }
+
     /**
     * @param code the rpc error code
     * @return the RPCException which maps to the supplied code. Otherwise an instance of InternalErrorRPCException.
