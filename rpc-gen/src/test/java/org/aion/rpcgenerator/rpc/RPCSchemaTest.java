@@ -270,7 +270,7 @@ public class RPCSchemaTest {
         PrimitiveType stringType = new PrimitiveType("string", Collections.emptyList());
         EnumType.EnumValues enumValue = new EnumValues("Version2",  "2.0");
         CompositeType.Field compositeField = new CompositeType.Field("id", "int", "true",
-            Collections.emptyList());
+            Collections.emptyList(), "");
         compositeField.setTypeDef(Collections.singletonList(intType));
         ConstrainedType hexType = new ConstrainedType("data_hex_string", Collections.emptyList(),
             "^0x([0-9a-fA-F][0-9a-fA-F])+", 4, Integer.MAX_VALUE, "string");

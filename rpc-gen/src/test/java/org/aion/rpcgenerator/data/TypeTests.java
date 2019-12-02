@@ -60,7 +60,7 @@ public class TypeTests {
         PrimitiveType stringType = new PrimitiveType("string", Collections.emptyList());
         EnumType.EnumValues enumValue = new EnumValues("Version2", "2.0");
         CompositeType.Field compositeField = new CompositeType.Field("id", "int", "true",
-            Collections.emptyList());
+            Collections.emptyList(), "");
         compositeField.setTypeDef(Collections.singletonList(intType));
 
 

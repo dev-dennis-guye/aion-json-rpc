@@ -145,14 +145,15 @@ public class RPCTypes{
         </#list>
         */
         </#if>
-        public final ${macros.toJavaType(field.type)} ${field.fieldName};
+        public final ${macros.toJavaType(field.type)} ${field.fieldName};<#if field.defaultValue?has_content>
+        public static final ${macros.toJavaType(field.type)} ${field.fieldName}DefaultValue=${macros.toJavaConverter(field.type)}.decode("${field.defaultValue}");</#if>
     </#list>
 
         public ${macros.toJavaType(composite_type)}(<#list composite_type.fields as field>${macros.toJavaType(field.type)} ${field.fieldName} <#if field_has_next>,</#if></#list>){
             <#list composite_type.fields as field><#if field.required=="true" >
             if(${field.fieldName}==null) throw ${macros.toJavaException("ParseError")}.INSTANCE;
             </#if>
-            this.${field.fieldName}=${field.fieldName};
+            this.${field.fieldName}=<#if field.defaultValue?has_content>${field.fieldName}==null? ${field.fieldName}DefaultValue:</#if>${field.fieldName};
             </#list>
         }
     }
@@ -200,7 +201,7 @@ public class RPCTypes{
         */
         </#if>
         public final ${macros.toJavaType(field.type)} ${field.fieldName};
-        <#if field.defaultValue?has_content>public final ${macros.toJavaType(field.type)} ${field.fieldName}DefaultValue=${macros.toJavaConverter(field.type)}.decode("${field.defaultValue}");</#if>
+        <#if field.defaultValue?has_content>public static final ${macros.toJavaType(field.type)} ${field.fieldName}DefaultValue=${macros.toJavaConverter(field.type)}.decode("${field.defaultValue}");</#if>
     </#list>
 
         public ${macros.toJavaType(paramType)}(<#list paramType.fields as field>${macros.toJavaType(field.type)} ${field.fieldName} <#if field_has_next>,</#if></#list>){

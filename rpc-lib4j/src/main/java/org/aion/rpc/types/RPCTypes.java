@@ -1110,7 +1110,7 @@ public class RPCTypes{
         * default value = latest
         */
         public final BlockNumberEnumUnion block;
-        public final BlockNumberEnumUnion blockDefaultValue=BlockNumberEnumUnionConverter.decode("latest");
+        public static final BlockNumberEnumUnion blockDefaultValue=BlockNumberEnumUnionConverter.decode("latest");
 
         public AddressBlockParams(AionAddress address ,BlockNumberEnumUnion block ){
             if(address==null) throw ParseErrorRPCException.INSTANCE;
@@ -1124,7 +1124,7 @@ public class RPCTypes{
         public final String password;
         
         public final Integer duration;
-        public final Integer durationDefaultValue=IntConverter.decode("300");
+        public static final Integer durationDefaultValue=IntConverter.decode("300");
 
         public UnlockAccountParams(AionAddress address ,String password ,Integer duration ){
             if(address==null) throw ParseErrorRPCException.INSTANCE;

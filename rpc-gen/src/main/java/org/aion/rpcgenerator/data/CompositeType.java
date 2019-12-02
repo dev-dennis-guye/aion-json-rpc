@@ -1,7 +1,6 @@
 package org.aion.rpcgenerator.data;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
@@ -10,7 +9,6 @@ import org.aion.rpcgenerator.Mappable;
 import org.aion.rpcgenerator.util.SchemaUtils;
 import org.aion.rpcgenerator.util.XMLUtils;
 import org.w3c.dom.Element;
-import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 public class CompositeType extends Type {
@@ -28,7 +26,8 @@ public class CompositeType extends Type {
                     XMLUtils.valueFromAttribute(fieldNode, "fieldName"),
                     XMLUtils.valueFromAttribute(fieldNode, "type"),
                     XMLUtils.valueFromAttribute(fieldNode, "required"),
-                    SchemaUtils.getComments(fieldNode.getChildNodes())));
+                    SchemaUtils.getComments(fieldNode.getChildNodes()),
+                    XMLUtils.optionalValueFromAttribute(fieldNode, "defaultValue").orElse("")));
             }
         }
     }
@@ -62,22 +61,35 @@ public class CompositeType extends Type {
         private String required;
         private Type type;
         private List<String> comments;
+        private String defaultValue;
 
         public Field(String fieldName, String typeName, String required,
-            List<String> comment) {
+            List<String> comment, String defaultValue) {
             this.fieldName = fieldName;
             this.typeName = typeName;
             this.required = required;
             this.comments = comment;
+            this.defaultValue = defaultValue;
         }
 
         public Map<String, Object> toMap() {
-            return Map.ofEntries(
-                Map.entry("fieldName", fieldName),
-                Map.entry("type", type.toMap()),
-                Map.entry("required", required),
-                Map.entry("comments", comments)
-            );
+            if (defaultValue.equalsIgnoreCase("")) {
+                return Map.ofEntries(
+                    Map.entry("fieldName", fieldName),
+                    Map.entry("type", type.toMap()),
+                    Map.entry("required", required),
+                    Map.entry("comments", comments)
+                );
+            }
+            else {
+                return Map.ofEntries(
+                    Map.entry("fieldName", fieldName),
+                    Map.entry("type", type.toMap()),
+                    Map.entry("required", required),
+                    Map.entry("comments", comments),
+                    Map.entry("defaultValue", defaultValue)
+                );
+            }
         }
 
         public boolean setTypeDef(List<Type> types) {
