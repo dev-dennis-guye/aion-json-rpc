@@ -92,6 +92,13 @@
             </union-element>
             <union-element type="blockEnum" name="blockEnum"/>
         </type-union>
+        <type-union typeName="blockNumberEnumUnion" nullable="true">
+            <comment>Specifies a block</comment>
+            <union-element type="uint32" name="blockNumber">
+                <comment>The block number</comment>
+            </union-element>
+            <union-element type="blockEnum" name="blockEnum"/>
+        </type-union>
         <type-union typeName="resultUnion" nullable="true">
             <!--Please use the same string for the name and type-->
             <comment>Ensures that the result is type safe</comment>
@@ -282,6 +289,10 @@
             typeName="bigIntHexString"/>
         <type-constrained baseType="uint256" max="66" min="66" regex="^(0x)?[0-9a-fA-F]+$"
             typeName="uint256HexString"/>
+        <type-constrained baseType="uint64" max="18" min="18" regex="^(0x)?[0-9a-fA-F]+$"
+            typeName="uint64HexString"/>
+        <type-constrained baseType="uint128" max="18" min="18" regex="^(0x)?[0-9a-fA-F]+$"
+            typeName="uint128HexString"/>
         <type-constrained baseType="long" min="3" max="18" regex="^(0x)?[0-9a-fA-F]+$"
             typeName="longHexString"/>
         <type-constrained baseType="int" min="3" max="10" regex="^(0x)?[0-9a-fA-F]+$"
@@ -340,6 +351,16 @@
         </type-params-wrapper>
         <type-params-wrapper typeName="addressParams">
             <field fieldName="address" index="0" required="true" type="address"/>
+        </type-params-wrapper>
+        <type-params-wrapper typeName="addressBlockParams">
+            <field fieldName="address" index="0" required="true" type="address">
+                <comment>An Aion account address</comment>
+            </field>
+            <field fieldName="block" index="1" required="false" type="blockNumberEnumUnion" defaultValue="latest">
+                <comment>Specifies the block to be returned with either a block hash, number or
+                    enum.
+                </comment>
+            </field>
         </type-params-wrapper>
         <type-params-wrapper typeName="unlockAccountParams">
             <field fieldName="address" index="0" required="true" type="address"/>

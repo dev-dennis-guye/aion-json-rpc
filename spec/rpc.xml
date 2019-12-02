@@ -63,6 +63,12 @@
         <method name="ops_getTransaction" param="transactionHashParams" returnType="opsTransaction" namespace="ops"/>
         <method name="ops_getBlockDetailsByNumber" param="blockNumberParams" returnType="blockDetails" namespace="ops"/>
         <method name="ops_getBlockDetailsByHash" param="blockHashParams" returnType="blockDetails" namespace="ops"/>
+        <method name="eth_getBalance" param="addressBlockParams" returnType="uint256HexString" namespace="eth">
+            <comment>The account balance for the specified account at a given block height </comment>
+        </method>
+        <method name="eth_getTransactionCount" param="addressBlockParams" returnType="uint128HexString" namespace="eth">
+            <comment>The account balance for the specified account at a given block height </comment>
+        </method>
         <method name="personal_unlockAccount" param="unlockAccountParams" returnType="bool" namespace="personal"/>
         <method name="personal_lockAccount" param="lockAccountParams" returnType="bool" namespace="personal"/>
         <method name="personal_newAccount" param="passwordParams" returnType="address" namespace="personal"/>

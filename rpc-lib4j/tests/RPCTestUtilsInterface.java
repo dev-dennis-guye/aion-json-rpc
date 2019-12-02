@@ -44,6 +44,10 @@ public interface RPCTestUtilsInterface{
     RPC ops_getBlockDetailsByNumberRPC();
     Request ops_getBlockDetailsByHash_succeeds();
     RPC ops_getBlockDetailsByHashRPC();
+    Request eth_getBalance_succeeds();
+    RPC eth_getBalanceRPC();
+    Request eth_getTransactionCount_succeeds();
+    RPC eth_getTransactionCountRPC();
     Request personal_unlockAccount_succeeds();
     RPC personal_unlockAccountRPC();
     Request personal_lockAccount_succeeds();

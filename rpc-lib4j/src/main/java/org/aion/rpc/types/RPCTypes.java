@@ -140,6 +140,56 @@ public class RPCTypes{
     }
 
     /**
+    * Specifies a block
+    */
+    public static final class BlockNumberEnumUnion{
+        /**
+        * The block number
+        *
+        */
+        public final Long blockNumber;
+        public final BlockEnum blockEnum;
+        private BlockNumberEnumUnion(Long blockNumber ,BlockEnum blockEnum ){
+            this.blockNumber=blockNumber;
+            this.blockEnum=blockEnum;
+        }
+
+        public BlockNumberEnumUnion(Long blockNumber){
+            this(blockNumber,null);
+            if(blockNumber == null) throw ParseErrorRPCException.INSTANCE;
+        }
+        public BlockNumberEnumUnion(BlockEnum blockEnum){
+            this(null,blockEnum);
+            if(blockEnum == null) throw ParseErrorRPCException.INSTANCE;
+        }
+
+        public static BlockNumberEnumUnion wrap(Long blockNumber){
+            if(blockNumber == null) throw ParseErrorRPCException.INSTANCE;
+            else return new BlockNumberEnumUnion(blockNumber);
+        }
+        public static BlockNumberEnumUnion wrap(BlockEnum blockEnum){
+            if(blockEnum == null) throw ParseErrorRPCException.INSTANCE;
+            else return new BlockNumberEnumUnion(blockEnum);
+        }
+
+        public Object encode(){
+            if(this.blockNumber != null) return Uint32Converter.encode(blockNumber);
+            if(this.blockEnum != null) return BlockEnumConverter.encode(blockEnum);
+            throw ParseErrorRPCException.INSTANCE;
+        }
+
+        public static BlockNumberEnumUnion decode(Object object){
+            try{
+                return new BlockNumberEnumUnion(Uint32Converter.decode(object));
+            }catch(Exception e){}
+            try{
+                return new BlockNumberEnumUnion(BlockEnumConverter.decode(object));
+            }catch(Exception e){}
+            throw ParseErrorRPCException.INSTANCE;
+        }
+    }
+
+    /**
     * Ensures that the result is type safe
     */
     public static final class ResultUnion{
@@ -1040,6 +1090,32 @@ public class RPCTypes{
         public AddressParams(AionAddress address ){
             if(address==null) throw ParseErrorRPCException.INSTANCE;
             this.address= address;
+        }
+    }
+    public static final class AddressBlockParams {
+        /**
+        <p>
+        * An Aion account address
+        </p>
+        
+        */
+        public final AionAddress address;
+        
+        /**
+        <p>
+        * Specifies the block to be returned with either a block hash, number or
+                    enum.
+                
+        </p>
+        * default value = latest
+        */
+        public final BlockNumberEnumUnion block;
+        public final BlockNumberEnumUnion blockDefaultValue=BlockNumberEnumUnionConverter.decode("latest");
+
+        public AddressBlockParams(AionAddress address ,BlockNumberEnumUnion block ){
+            if(address==null) throw ParseErrorRPCException.INSTANCE;
+            this.address= address;
+            this.block= block==null? blockDefaultValue: block;
         }
     }
     public static final class UnlockAccountParams {

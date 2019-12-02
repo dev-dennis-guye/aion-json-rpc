@@ -220,6 +220,44 @@ public class RPCClientMethods{
         return provider.execute(request, BlockDetailsConverter::decode);
     }
     /**
+    * The account balance for the specified account at a given block height 
+    * 
+    * @param address An Aion account address
+
+    * @param block Specifies the block to be returned with either a block hash, number or
+                    enum.
+                
+
+
+
+    * @return 
+    */
+    public final BigInteger eth_getBalance(AionAddress address,BlockNumberEnumUnion block){
+        AddressBlockParams params= new AddressBlockParams(address ,block);
+        Request request = new Request(generator.generateID(), "eth_getBalance", AddressBlockParamsConverter.encode(params), VersionType.Version2);
+
+        return provider.execute(request, Uint256HexStringConverter::decode);
+    }
+    /**
+    * The account balance for the specified account at a given block height 
+    * 
+    * @param address An Aion account address
+
+    * @param block Specifies the block to be returned with either a block hash, number or
+                    enum.
+                
+
+
+
+    * @return 
+    */
+    public final BigInteger eth_getTransactionCount(AionAddress address,BlockNumberEnumUnion block){
+        AddressBlockParams params= new AddressBlockParams(address ,block);
+        Request request = new Request(generator.generateID(), "eth_getTransactionCount", AddressBlockParamsConverter.encode(params), VersionType.Version2);
+
+        return provider.execute(request, Uint128HexStringConverter::decode);
+    }
+    /**
     * 
     * @param address 
     * @param password 
@@ -494,6 +532,48 @@ public class RPCClientMethods{
         Request request = new Request(generator.generateID(), "ops_getBlockDetailsByHash", BlockHashParamsConverter.encode(params), VersionType.Version2);
 
         return provider.executeAsync(request, BlockDetailsConverter::decode, asyncTask);
+    }
+    /**
+    * The account balance for the specified account at a given block height 
+    * 
+    * @param address An Aion account address
+
+    * @param block Specifies the block to be returned with either a block hash, number or
+                    enum.
+                
+
+
+
+    * @param asyncTask The task to be executed upon successfuly or exceptional completion of this RPC request.
+    * @param <O> the result type of the async task.
+    * @return The result of this asynchronous request
+    */
+    public final <O> CompletableFuture<O> eth_getBalance(AionAddress address,BlockNumberEnumUnion block, BiFunction<BigInteger, RpcError, O> asyncTask){
+        AddressBlockParams params= new AddressBlockParams(address ,block);
+        Request request = new Request(generator.generateID(), "eth_getBalance", AddressBlockParamsConverter.encode(params), VersionType.Version2);
+
+        return provider.executeAsync(request, Uint256HexStringConverter::decode, asyncTask);
+    }
+    /**
+    * The account balance for the specified account at a given block height 
+    * 
+    * @param address An Aion account address
+
+    * @param block Specifies the block to be returned with either a block hash, number or
+                    enum.
+                
+
+
+
+    * @param asyncTask The task to be executed upon successfuly or exceptional completion of this RPC request.
+    * @param <O> the result type of the async task.
+    * @return The result of this asynchronous request
+    */
+    public final <O> CompletableFuture<O> eth_getTransactionCount(AionAddress address,BlockNumberEnumUnion block, BiFunction<BigInteger, RpcError, O> asyncTask){
+        AddressBlockParams params= new AddressBlockParams(address ,block);
+        Request request = new Request(generator.generateID(), "eth_getTransactionCount", AddressBlockParamsConverter.encode(params), VersionType.Version2);
+
+        return provider.executeAsync(request, Uint128HexStringConverter::decode, asyncTask);
     }
     /**
     * 

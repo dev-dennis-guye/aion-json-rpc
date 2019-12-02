@@ -449,6 +449,23 @@ public class RPCTypesConverter{
         }
     }
 
+    public static class BlockNumberEnumUnionConverter{
+        public static BlockNumberEnumUnion decode(Object str){
+             if(str==null|| str==JSONObject.NULL) return null;
+            return BlockNumberEnumUnion.decode(str);
+        }
+
+        public static Object encode(BlockNumberEnumUnion obj){
+            if(obj==null) return null;
+            else return obj.encode();
+        }
+
+        public static String encodeStr(BlockNumberEnumUnion obj){
+            if(obj==null) return null;
+            else return obj.encode().toString();
+        }
+    }
+
     public static class ResultUnionConverter{
         public static ResultUnion decode(Object str){
              if(str==null|| str==JSONObject.NULL) return null;
@@ -1219,6 +1236,76 @@ public class RPCTypesConverter{
         }
     }
 
+    public static class Uint64HexStringConverter{
+        private static final Pattern regex = Pattern.compile("^(0x)?[0-9a-fA-F]+$");
+
+        public static BigInteger decode(Object object){
+            try{
+                if(object==null || object.equals(JSONObject.NULL)) return null;
+                else if (checkConstraints(object.toString())){
+                    return Uint64Converter.decode(object);
+                }
+                else{
+                    throw ParseErrorRPCException.INSTANCE;
+                }
+            } catch(Exception e){
+                throw ParseErrorRPCException.INSTANCE;
+            }
+        }
+
+        public static String encode(BigInteger obj){
+            if (obj != null){
+                String result = Uint64Converter.encodeHex(obj);
+                if(checkConstraints(result))
+                    return result;
+                else
+                    throw ParseErrorRPCException.INSTANCE;
+            }
+            else{
+                return null;
+            }
+        }
+
+        private static boolean checkConstraints(String s){
+            return regex.matcher(s).find() && s.length() >= 18 && s.length() <= 18;
+        }
+    }
+
+    public static class Uint128HexStringConverter{
+        private static final Pattern regex = Pattern.compile("^(0x)?[0-9a-fA-F]+$");
+
+        public static BigInteger decode(Object object){
+            try{
+                if(object==null || object.equals(JSONObject.NULL)) return null;
+                else if (checkConstraints(object.toString())){
+                    return Uint128Converter.decode(object);
+                }
+                else{
+                    throw ParseErrorRPCException.INSTANCE;
+                }
+            } catch(Exception e){
+                throw ParseErrorRPCException.INSTANCE;
+            }
+        }
+
+        public static String encode(BigInteger obj){
+            if (obj != null){
+                String result = Uint128Converter.encodeHex(obj);
+                if(checkConstraints(result))
+                    return result;
+                else
+                    throw ParseErrorRPCException.INSTANCE;
+            }
+            else{
+                return null;
+            }
+        }
+
+        private static boolean checkConstraints(String s){
+            return regex.matcher(s).find() && s.length() >= 18 && s.length() <= 18;
+        }
+    }
+
     public static class LongHexStringConverter{
         private static final Pattern regex = Pattern.compile("^(0x)?[0-9a-fA-F]+$");
 
@@ -1682,6 +1769,44 @@ public class RPCTypesConverter{
             try{
                 JSONArray arr = new JSONArray();
                 arr.put(0, AddressConverter.encode(obj.address));
+                return arr;
+            }catch(Exception e){
+                throw ParseErrorRPCException.INSTANCE;
+            }
+        }
+    }
+
+    public static class AddressBlockParamsConverter{
+        public static AddressBlockParams decode(Object object){
+            if(object==null || object.equals(JSONObject.NULL)) return null;
+            String s = object.toString();
+            try{
+                AddressBlockParams obj;
+                if(s.startsWith("[") && s.endsWith("]")){
+                    JSONArray jsonArray = new JSONArray(s);
+                    if(jsonArray.length() > 2) throw ParseErrorRPCException.INSTANCE;
+                    else obj = new AddressBlockParams( AddressConverter.decode(jsonArray.opt(0)), BlockNumberEnumUnionConverter.decode(jsonArray.opt(1)));
+                }
+                else if(s.startsWith("{") && s.endsWith("}")){
+                    JSONObject jsonObject = new JSONObject(s);
+                    if(jsonObject.keySet().size() > 2) throw ParseErrorRPCException.INSTANCE;
+                    else obj = new AddressBlockParams( AddressConverter.decode(jsonObject.opt("address")), BlockNumberEnumUnionConverter.decode(jsonObject.opt("block")));
+                }
+                else{
+                    throw ParseErrorRPCException.INSTANCE;
+                }
+                return obj;
+            }
+            catch(Exception e){
+                throw InvalidParamsRPCException.INSTANCE;
+            }
+        }
+
+        public static Object encode(AddressBlockParams obj){
+            try{
+                JSONArray arr = new JSONArray();
+                arr.put(0, AddressConverter.encode(obj.address));
+                arr.put(1, BlockNumberEnumUnionConverter.encode(obj.block));
                 return arr;
             }catch(Exception e){
                 throw ParseErrorRPCException.INSTANCE;

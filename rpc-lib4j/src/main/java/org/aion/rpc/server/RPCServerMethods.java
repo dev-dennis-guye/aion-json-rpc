@@ -115,6 +115,18 @@ public interface RPCServerMethods extends RPC{
                 BlockDetails result = rpc.ops_getBlockDetailsByHash(params.block);
                 res = BlockDetailsConverter.encode(result);
             }else
+            if(request.method.equals("eth_getBalance")){
+                AddressBlockParams params= AddressBlockParamsConverter.decode(request.params);
+                if (params==null) throw InvalidParamsRPCException.INSTANCE;
+                BigInteger result = rpc.eth_getBalance(params.address,params.block);
+                res = Uint256HexStringConverter.encode(result);
+            }else
+            if(request.method.equals("eth_getTransactionCount")){
+                AddressBlockParams params= AddressBlockParamsConverter.decode(request.params);
+                if (params==null) throw InvalidParamsRPCException.INSTANCE;
+                BigInteger result = rpc.eth_getTransactionCount(params.address,params.block);
+                res = Uint128HexStringConverter.encode(result);
+            }else
             if(request.method.equals("personal_unlockAccount")){
                 UnlockAccountParams params= UnlockAccountParamsConverter.decode(request.params);
                 if (params==null) throw InvalidParamsRPCException.INSTANCE;
@@ -147,7 +159,7 @@ public interface RPCServerMethods extends RPC{
     * @return a set containing all the methods supported by this interface
     */
     static Set<String> listMethods(){
-        return Set.of( "personal_ecRecover", "getseed", "submitseed", "submitsignature", "ops_getBlockDetails", "getblocktemplate", "submitblock", "validateaddress", "getDifficulty", "getMinerStats", "ping", "ops_getAccountState", "ops_getTransaction", "ops_getBlockDetailsByNumber", "ops_getBlockDetailsByHash", "personal_unlockAccount", "personal_lockAccount", "personal_newAccount", "personal_listAccounts");
+        return Set.of( "personal_ecRecover", "getseed", "submitseed", "submitsignature", "ops_getBlockDetails", "getblocktemplate", "submitblock", "validateaddress", "getDifficulty", "getMinerStats", "ping", "ops_getAccountState", "ops_getTransaction", "ops_getBlockDetailsByNumber", "ops_getBlockDetailsByHash", "eth_getBalance", "eth_getTransactionCount", "personal_unlockAccount", "personal_lockAccount", "personal_newAccount", "personal_listAccounts");
     }
 
     /**
@@ -270,6 +282,34 @@ public interface RPCServerMethods extends RPC{
     */
     BlockDetails ops_getBlockDetailsByHash(ByteArray block);
     /**
+    * The account balance for the specified account at a given block height 
+    * 
+    * @param address An Aion account address
+
+    * @param block Specifies the block to be returned with either a block hash, number or
+                    enum.
+                
+
+
+
+    * @return 
+    */
+    BigInteger eth_getBalance(AionAddress address,BlockNumberEnumUnion block);
+    /**
+    * The account balance for the specified account at a given block height 
+    * 
+    * @param address An Aion account address
+
+    * @param block Specifies the block to be returned with either a block hash, number or
+                    enum.
+                
+
+
+
+    * @return 
+    */
+    BigInteger eth_getTransactionCount(AionAddress address,BlockNumberEnumUnion block);
+    /**
     * 
     * @param address 
     * @param password 
@@ -322,6 +362,8 @@ public interface RPCServerMethods extends RPC{
             Map.entry("ops_getTransaction", "ops"),
             Map.entry("ops_getBlockDetailsByNumber", "ops"),
             Map.entry("ops_getBlockDetailsByHash", "ops"),
+            Map.entry("eth_getBalance", "eth"),
+            Map.entry("eth_getTransactionCount", "eth"),
             Map.entry("personal_unlockAccount", "personal"),
             Map.entry("personal_lockAccount", "personal"),
             Map.entry("personal_newAccount", "personal"),

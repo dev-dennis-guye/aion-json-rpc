@@ -252,6 +252,20 @@ public class RPCMethodsTest{
         assertNotNull(resultUnion);
         resultUnion.encode();
     }
+    public void eth_getBalanceTest(){
+        String method = "eth_getBalance";
+        Request successfulRequest = testUtils.eth_getBalance_succeeds();
+        ResultUnion resultUnion = testUtils.eth_getBalanceRPC().execute(request);
+        assertNotNull(resultUnion);
+        resultUnion.encode();
+    }
+    public void eth_getTransactionCountTest(){
+        String method = "eth_getTransactionCount";
+        Request successfulRequest = testUtils.eth_getTransactionCount_succeeds();
+        ResultUnion resultUnion = testUtils.eth_getTransactionCountRPC().execute(request);
+        assertNotNull(resultUnion);
+        resultUnion.encode();
+    }
     public void personal_unlockAccountTest(){
         String method = "personal_unlockAccount";
         Request successfulRequest = testUtils.personal_unlockAccount_succeeds();
