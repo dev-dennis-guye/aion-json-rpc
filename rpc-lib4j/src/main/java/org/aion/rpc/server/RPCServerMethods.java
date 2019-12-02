@@ -12,7 +12,7 @@ import org.aion.util.types.ByteArrayWrapper;
 *
 * AUTO-GENERATED SOURCE FILE.  DO NOT EDIT MANUALLY -- YOUR CHANGES WILL
 * BE WIPED OUT WHEN THIS FILE GETS RE-GENERATED OR UPDATED.
-* GENERATED: 2019-12-07
+* GENERATED: 2019-12-10
 *
 *****************************************************************************/
 public interface RPCServerMethods extends RPC{
@@ -77,7 +77,7 @@ public interface RPCServerMethods extends RPC{
                 VoidParams params= VoidParamsConverter.decode(request.params);
                 if (params==null) throw InvalidParamsRPCException.INSTANCE;
                 BigInteger result = rpc.getDifficulty();
-                res = BigIntHexStringConverter.encode(result);
+                res = Uint128HexStringConverter.encode(result);
             }else
             if(request.method.equals("getMinerStatistics")){
                 AddressParams params= AddressParamsConverter.decode(request.params);
@@ -151,6 +151,18 @@ public interface RPCServerMethods extends RPC{
                 List<AionAddress> result = rpc.personal_listAccounts();
                 res = AddressListConverter.encode(result);
             }else
+            if(request.method.equals("eth_blockNumber")){
+                VoidParams params= VoidParamsConverter.decode(request.params);
+                if (params==null) throw InvalidParamsRPCException.INSTANCE;
+                Long result = rpc.eth_blockNumber();
+                res = LongConverter.encode(result);
+            }else
+            if(request.method.equals("eth_call")){
+                CallParams params= CallParamsConverter.decode(request.params);
+                if (params==null) throw InvalidParamsRPCException.INSTANCE;
+                ByteArray result = rpc.eth_call(params.transaction,params.block);
+                res = DataHexStringConverter.encode(result);
+            }else
                 throw MethodNotFoundRPCException.INSTANCE;
         return res;
     }
@@ -159,7 +171,7 @@ public interface RPCServerMethods extends RPC{
     * @return a set containing all the methods supported by this interface
     */
     static Set<String> listMethods(){
-        return Set.of( "personal_ecRecover", "getseed", "submitseed", "submitsignature", "ops_getBlockDetails", "getBlockTemplate", "submitBlock", "validateaddress", "getDifficulty", "getMinerStatistics", "ping", "ops_getAccountState", "ops_getTransaction", "ops_getBlockDetailsByNumber", "ops_getBlockDetailsByHash", "eth_getBalance", "eth_getTransactionCount", "personal_unlockAccount", "personal_lockAccount", "personal_newAccount", "personal_listAccounts");
+        return Set.of( "personal_ecRecover", "getseed", "submitseed", "submitsignature", "ops_getBlockDetails", "getBlockTemplate", "submitBlock", "validateaddress", "getDifficulty", "getMinerStatistics", "ping", "ops_getAccountState", "ops_getTransaction", "ops_getBlockDetailsByNumber", "ops_getBlockDetailsByHash", "eth_getBalance", "eth_getTransactionCount", "personal_unlockAccount", "personal_lockAccount", "personal_newAccount", "personal_listAccounts", "eth_blockNumber", "eth_call");
     }
 
     /**
@@ -341,6 +353,21 @@ public interface RPCServerMethods extends RPC{
     * @return 
     */
     List<AionAddress> personal_listAccounts();
+    /**
+    * Returns the block number of the last block added to the chain.
+    * 
+    * @return 
+    */
+    Long eth_blockNumber();
+    /**
+    * 
+    * @param transaction 
+    * @param block 
+
+
+    * @return 
+    */
+    ByteArray eth_call(TxCall transaction,BlockNumberEnumUnion block);
 
     /**
     * @return an map that stores the method names as the key and the interface(namespace) as the value.
@@ -367,7 +394,9 @@ public interface RPCServerMethods extends RPC{
             Map.entry("personal_unlockAccount", "personal"),
             Map.entry("personal_lockAccount", "personal"),
             Map.entry("personal_newAccount", "personal"),
-            Map.entry("personal_listAccounts", "personal")
+            Map.entry("personal_listAccounts", "personal"),
+            Map.entry("eth_blockNumber", "eth"),
+            Map.entry("eth_call", "eth")
         );
     }
 

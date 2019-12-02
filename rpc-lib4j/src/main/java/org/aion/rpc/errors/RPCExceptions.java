@@ -6,7 +6,7 @@ import org.aion.rpc.types.RPCTypesConverter.RpcErrorConverter;
 *
 * AUTO-GENERATED SOURCE FILE.  DO NOT EDIT MANUALLY -- YOUR CHANGES WILL
 * BE WIPED OUT WHEN THIS FILE GETS RE-GENERATED OR UPDATED.
-* GENERATED: 2019-12-07
+* GENERATED: 2019-12-10
 *
 *****************************************************************************/
 public class RPCExceptions{
@@ -20,7 +20,8 @@ public class RPCExceptions{
         UnsupportedUnityFeature_CODE(-32001),
         BlockTemplateNotFound_CODE(-32002),
         FailedToSealBlock_CODE(-32003),
-        FailedToComputeMetrics_CODE(-32004);
+        FailedToComputeMetrics_CODE(-32004),
+        NullReturn_CODE(-32005);
         public final int code;
         private static RpcCodeEnums[] values = RpcCodeEnums.values();
         RpcCodeEnums(int code){
@@ -76,6 +77,9 @@ public class RPCExceptions{
         else if(code == -32004){
             return FailedToComputeMetricsRPCException.INSTANCE;
         }
+        else if(code == -32005){
+            return NullReturnRPCException.INSTANCE;
+        }
         else 
             return InternalErrorRPCException.INSTANCE;
     }
@@ -90,6 +94,8 @@ public class RPCExceptions{
             return new MethodNotFoundRPCException(code, message);
         }else if(code == -32603){
             return new InternalErrorRPCException(code, message);
+        }else if(code == -32005){
+            return new NullReturnRPCException(code, message);
         }else
             return InternalErrorRPCException.INSTANCE;
     }
@@ -226,6 +232,23 @@ public class RPCExceptions{
         public static final FailedToComputeMetricsRPCException INSTANCE = new FailedToComputeMetricsRPCException();
         private FailedToComputeMetricsRPCException(){
             super("{\"code\":-32004,\"message\":\"Could not compute the POW metrics.\"}");
+        }
+    }
+
+    /**
+    * <p>Contains errors of the form {"code":-32005,"message":"Block chain rpc returned null."}.</p>
+    <p></p>
+    */
+    public static class NullReturnRPCException extends RPCException{
+        public static final NullReturnRPCException INSTANCE = new NullReturnRPCException();
+        private NullReturnRPCException(){
+            super("{\"code\":-32005,\"message\":\"Block chain rpc returned null.\"}");
+        }
+        public NullReturnRPCException(String appendedMessage){
+            super("{\"code\":-32005,\"message\":\"Block chain rpc returned null.:"+appendedMessage+"\"}");
+        }
+        NullReturnRPCException(Integer code, String message){
+            super(code,message);
         }
     }
 

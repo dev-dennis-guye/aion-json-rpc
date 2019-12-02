@@ -188,6 +188,16 @@
             <field fieldName="logs" required="true" type="txLogDetails_array"/>
             <field fieldName="beaconHash" required="false" type="byte32String"/>
         </type-composite>
+        <type-composite typeName="txCall">
+            <field fieldName="from" required="true" type="address"/>
+            <field fieldName="to"  required="false" type="address"/>
+            <field fieldName="data" required="false" type="dataHexString" defaultValue="0x"/>
+            <field fieldName="nonce" required="false" type="bigInt" defaultValue="0x00"/>
+            <field fieldName="value" required="false" type="bigInt" defaultValue="0x00"/>
+            <field fieldName="gas" required="false" type="long"/>
+            <field fieldName="gasPrice" required="false" type="long"/>
+            <field fieldName="beaconHash" required="false" type="byte32String"/>
+        </type-composite>
         <type-composite typeName="blockDetails">
             <field fieldName="number" required="true" type="long"/>
             <field fieldName="hash" required="true" type="byte32String"/>
@@ -382,6 +392,10 @@
         </type-params-wrapper>
         <type-params-wrapper typeName="blockNumberParams">
             <field fieldName="block" index="0" required="true" type="long"/>
+        </type-params-wrapper>
+        <type-params-wrapper typeName="callParams">
+            <field fieldName="transaction" required="true" type="txCall" index="0"/>
+            <field fieldName="block" required="false" type="blockNumberEnumUnion" defaultValue="latest" index="1"/>
         </type-params-wrapper>
         <!-- return type specific to each method-->
     </param>

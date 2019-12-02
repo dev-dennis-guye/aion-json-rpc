@@ -79,7 +79,7 @@ import org.junit.Test;
 *
 * AUTO-GENERATED SOURCE FILE.  DO NOT EDIT MANUALLY -- YOUR CHANGES WILL
 * BE WIPED OUT WHEN THIS FILE GETS RE-GENERATED OR UPDATED.
-* GENERATED: 2019-12-07
+* GENERATED: 2019-12-10
 *
 *****************************************************************************/
 public class RPCMethodsTest{
@@ -291,6 +291,29 @@ public class RPCMethodsTest{
         String method = "personal_listAccounts";
         Request successfulRequest = testUtils.personal_listAccounts_succeeds();
         ResultUnion resultUnion = testUtils.personal_listAccountsRPC().execute(request);
+        assertNotNull(resultUnion);
+        resultUnion.encode();
+    }
+    public void eth_blockNumberTest(){
+        String method = "eth_blockNumber";
+        Request successfulRequest = testUtils.eth_blockNumber_succeeds();
+        ResultUnion resultUnion = testUtils.eth_blockNumberRPC().execute(request);
+        assertNotNull(resultUnion);
+        resultUnion.encode();
+    }
+    public void eth_callTestErrorsNullReturnRPCException(){
+        String method = "eth_call";
+        try{
+            Request request = testUtils.eth_call_NullReturn();
+            testUtils.eth_callRPC().execute(request);
+            fail();
+        }catch(NullReturnRPCException e){/*We expect this error*/}
+    }
+
+    public void eth_callTest(){
+        String method = "eth_call";
+        Request successfulRequest = testUtils.eth_call_succeeds();
+        ResultUnion resultUnion = testUtils.eth_callRPC().execute(request);
         assertNotNull(resultUnion);
         resultUnion.encode();
     }

@@ -18,7 +18,7 @@ import org.json.JSONObject;
 *
 * AUTO-GENERATED SOURCE FILE.  DO NOT EDIT MANUALLY -- YOUR CHANGES WILL
 * BE WIPED OUT WHEN THIS FILE GETS RE-GENERATED OR UPDATED.
-* GENERATED: 2019-12-07
+* GENERATED: 2019-12-10
 *
 *****************************************************************************/
 public class RPCTypesConverter{
@@ -731,6 +731,55 @@ public class RPCTypesConverter{
                 jsonObject.put("gasUsed", LongHexStringConverter.encode(obj.gasUsed));
                 jsonObject.put("hasInternalTransactions", BoolConverter.encode(obj.hasInternalTransactions));
                 jsonObject.put("logs", TxLogDetailsListConverter.encode(obj.logs));
+                jsonObject.put("beaconHash", Byte32StringConverter.encode(obj.beaconHash));
+                return jsonObject;
+            }catch (Exception e){
+                throw ParseErrorRPCException.INSTANCE;
+            }
+        }
+    }
+
+    public static class TxCallConverter{
+        public static TxCall decode(Object str){
+            try{
+                if(str==null || str.equals(JSONObject.NULL)) return null;
+                JSONObject jsonObject = str instanceof JSONObject? (JSONObject)str :new JSONObject(str.toString());
+                return new TxCall( AddressConverter.decode(jsonObject.opt("from")) , AddressConverter.decode(jsonObject.opt("to")) , DataHexStringConverter.decode(jsonObject.opt("data")) , BigIntConverter.decode(jsonObject.opt("nonce")) , BigIntConverter.decode(jsonObject.opt("value")) , LongConverter.decode(jsonObject.opt("gas")) , LongConverter.decode(jsonObject.opt("gasPrice")) , Byte32StringConverter.decode(jsonObject.opt("beaconHash")) );
+            } catch (Exception e){
+                throw ParseErrorRPCException.INSTANCE;
+            }
+        }
+
+        public static String encodeStr( TxCall obj){
+            try{
+                if(obj==null) return null;
+                JSONObject jsonObject = new JSONObject();
+                jsonObject.put("from", AddressConverter.encode(obj.from));
+                jsonObject.put("to", AddressConverter.encode(obj.to));
+                jsonObject.put("data", DataHexStringConverter.encode(obj.data));
+                jsonObject.put("nonce", BigIntConverter.encode(obj.nonce));
+                jsonObject.put("value", BigIntConverter.encode(obj.value));
+                jsonObject.put("gas", LongConverter.encode(obj.gas));
+                jsonObject.put("gasPrice", LongConverter.encode(obj.gasPrice));
+                jsonObject.put("beaconHash", Byte32StringConverter.encode(obj.beaconHash));
+                return jsonObject.toString();
+            }
+            catch (Exception e){
+                throw ParseErrorRPCException.INSTANCE;
+            }
+        }
+
+        public static Object encode( TxCall obj){
+            try{
+                if(obj==null) return null;
+                JSONObject jsonObject = new JSONObject();
+                jsonObject.put("from", AddressConverter.encode(obj.from));
+                jsonObject.put("to", AddressConverter.encode(obj.to));
+                jsonObject.put("data", DataHexStringConverter.encode(obj.data));
+                jsonObject.put("nonce", BigIntConverter.encode(obj.nonce));
+                jsonObject.put("value", BigIntConverter.encode(obj.value));
+                jsonObject.put("gas", LongConverter.encode(obj.gas));
+                jsonObject.put("gasPrice", LongConverter.encode(obj.gasPrice));
                 jsonObject.put("beaconHash", Byte32StringConverter.encode(obj.beaconHash));
                 return jsonObject;
             }catch (Exception e){
@@ -2032,6 +2081,44 @@ public class RPCTypesConverter{
             try{
                 JSONArray arr = new JSONArray();
                 arr.put(0, LongConverter.encode(obj.block));
+                return arr;
+            }catch(Exception e){
+                throw ParseErrorRPCException.INSTANCE;
+            }
+        }
+    }
+
+    public static class CallParamsConverter{
+        public static CallParams decode(Object object){
+            if(object==null || object.equals(JSONObject.NULL)) return null;
+            String s = object.toString();
+            try{
+                CallParams obj;
+                if(s.startsWith("[") && s.endsWith("]")){
+                    JSONArray jsonArray = new JSONArray(s);
+                    if(jsonArray.length() > 2) throw ParseErrorRPCException.INSTANCE;
+                    else obj = new CallParams( TxCallConverter.decode(jsonArray.opt(0)), BlockNumberEnumUnionConverter.decode(jsonArray.opt(1)));
+                }
+                else if(s.startsWith("{") && s.endsWith("}")){
+                    JSONObject jsonObject = new JSONObject(s);
+                    if(jsonObject.keySet().size() > 2) throw ParseErrorRPCException.INSTANCE;
+                    else obj = new CallParams( TxCallConverter.decode(jsonObject.opt("transaction")), BlockNumberEnumUnionConverter.decode(jsonObject.opt("block")));
+                }
+                else{
+                    throw ParseErrorRPCException.INSTANCE;
+                }
+                return obj;
+            }
+            catch(Exception e){
+                throw InvalidParamsRPCException.INSTANCE;
+            }
+        }
+
+        public static Object encode(CallParams obj){
+            try{
+                JSONArray arr = new JSONArray();
+                arr.put(0, TxCallConverter.encode(obj.transaction));
+                arr.put(1, BlockNumberEnumUnionConverter.encode(obj.block));
                 return arr;
             }catch(Exception e){
                 throw ParseErrorRPCException.INSTANCE;

@@ -3,7 +3,7 @@ package org.aion.api.server.rpc3;
 *
 * AUTO-GENERATED SOURCE FILE.  DO NOT EDIT MANUALLY -- YOUR CHANGES WILL
 * BE WIPED OUT WHEN THIS FILE GETS RE-GENERATED OR UPDATED.
-* GENERATED: 2019-12-07
+* GENERATED: 2019-12-10
 *
 *****************************************************************************/
 public interface RPCTestUtilsInterface{
@@ -56,4 +56,9 @@ public interface RPCTestUtilsInterface{
     RPC personal_newAccountRPC();
     Request personal_listAccounts_succeeds();
     RPC personal_listAccountsRPC();
+    Request eth_blockNumber_succeeds();
+    RPC eth_blockNumberRPC();
+    Request eth_call_NullReturn()();
+    Request eth_call_succeeds();
+    RPC eth_callRPC();
 }

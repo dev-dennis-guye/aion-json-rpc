@@ -13,7 +13,7 @@ import org.aion.util.types.ByteArrayWrapper;
 *
 * AUTO-GENERATED SOURCE FILE.  DO NOT EDIT MANUALLY -- YOUR CHANGES WILL
 * BE WIPED OUT WHEN THIS FILE GETS RE-GENERATED OR UPDATED.
-* GENERATED: 2019-12-07
+* GENERATED: 2019-12-10
 *
 *****************************************************************************/
 public class RPCClientMethods{
@@ -142,7 +142,7 @@ public class RPCClientMethods{
         VoidParams params= new VoidParams();
         Request request = new Request(generator.generateID(), "getDifficulty", VoidParamsConverter.encode(params), VersionType.Version2);
 
-        return provider.execute(request, BigIntHexStringConverter::decode);
+        return provider.execute(request, Uint128HexStringConverter::decode);
     }
     /**
     * 
@@ -310,6 +310,31 @@ public class RPCClientMethods{
         return provider.execute(request, AddressListConverter::decode);
     }
     /**
+    * Returns the block number of the last block added to the chain.
+    * 
+    * @return 
+    */
+    public final Long eth_blockNumber(){
+        VoidParams params= new VoidParams();
+        Request request = new Request(generator.generateID(), "eth_blockNumber", VoidParamsConverter.encode(params), VersionType.Version2);
+
+        return provider.execute(request, LongConverter::decode);
+    }
+    /**
+    * 
+    * @param transaction 
+    * @param block 
+
+
+    * @return 
+    */
+    public final ByteArray eth_call(TxCall transaction,BlockNumberEnumUnion block){
+        CallParams params= new CallParams(transaction ,block);
+        Request request = new Request(generator.generateID(), "eth_call", CallParamsConverter.encode(params), VersionType.Version2);
+
+        return provider.execute(request, DataHexStringConverter::decode);
+    }
+    /**
     * Returns the key used to sign an input string.
     * 
     * @param dataThatWasSigned 
@@ -444,7 +469,7 @@ public class RPCClientMethods{
         VoidParams params= new VoidParams();
         Request request = new Request(generator.generateID(), "getDifficulty", VoidParamsConverter.encode(params), VersionType.Version2);
 
-        return provider.executeAsync(request, BigIntHexStringConverter::decode, asyncTask);
+        return provider.executeAsync(request, Uint128HexStringConverter::decode, asyncTask);
     }
     /**
     * 
@@ -634,5 +659,34 @@ public class RPCClientMethods{
         Request request = new Request(generator.generateID(), "personal_listAccounts", VoidParamsConverter.encode(params), VersionType.Version2);
 
         return provider.executeAsync(request, AddressListConverter::decode, asyncTask);
+    }
+    /**
+    * Returns the block number of the last block added to the chain.
+    * 
+    * @param asyncTask The task to be executed upon successfuly or exceptional completion of this RPC request.
+    * @param <O> the result type of the async task.
+    * @return The result of this asynchronous request
+    */
+    public final <O> CompletableFuture<O> eth_blockNumber( BiFunction<Long, RpcError, O> asyncTask){
+        VoidParams params= new VoidParams();
+        Request request = new Request(generator.generateID(), "eth_blockNumber", VoidParamsConverter.encode(params), VersionType.Version2);
+
+        return provider.executeAsync(request, LongConverter::decode, asyncTask);
+    }
+    /**
+    * 
+    * @param transaction 
+    * @param block 
+
+
+    * @param asyncTask The task to be executed upon successfuly or exceptional completion of this RPC request.
+    * @param <O> the result type of the async task.
+    * @return The result of this asynchronous request
+    */
+    public final <O> CompletableFuture<O> eth_call(TxCall transaction,BlockNumberEnumUnion block, BiFunction<ByteArray, RpcError, O> asyncTask){
+        CallParams params= new CallParams(transaction ,block);
+        Request request = new Request(generator.generateID(), "eth_call", CallParamsConverter.encode(params), VersionType.Version2);
+
+        return provider.executeAsync(request, DataHexStringConverter::decode, asyncTask);
     }
 }

@@ -12,7 +12,7 @@ import org.json.JSONObject;
 *
 * AUTO-GENERATED SOURCE FILE.  DO NOT EDIT MANUALLY -- YOUR CHANGES WILL
 * BE WIPED OUT WHEN THIS FILE GETS RE-GENERATED OR UPDATED.
-* GENERATED: 2019-12-07
+* GENERATED: 2019-12-10
 *
 *****************************************************************************/
 public class RPCTypes{
@@ -728,6 +728,31 @@ public class RPCTypes{
             this.beaconHash=beaconHash;
         }
     }
+    public static final class TxCall {
+        public final AionAddress from;
+        public final AionAddress to;
+        public final ByteArray data;
+        public static final ByteArray dataDefaultValue=DataHexStringConverter.decode("0x");
+        public final BigInteger nonce;
+        public static final BigInteger nonceDefaultValue=BigIntConverter.decode("0x00");
+        public final BigInteger value;
+        public static final BigInteger valueDefaultValue=BigIntConverter.decode("0x00");
+        public final Long gas;
+        public final Long gasPrice;
+        public final ByteArray beaconHash;
+
+        public TxCall(AionAddress from ,AionAddress to ,ByteArray data ,BigInteger nonce ,BigInteger value ,Long gas ,Long gasPrice ,ByteArray beaconHash ){
+            if(from==null) throw ParseErrorRPCException.INSTANCE;
+            this.from=from;
+            this.to=to;
+            this.data=data==null? dataDefaultValue:data;
+            this.nonce=nonce==null? nonceDefaultValue:nonce;
+            this.value=value==null? valueDefaultValue:value;
+            this.gas=gas;
+            this.gasPrice=gasPrice;
+            this.beaconHash=beaconHash;
+        }
+    }
     public static final class BlockDetails {
         public final Long number;
         public final ByteArray hash;
@@ -1181,6 +1206,18 @@ public class RPCTypes{
         public BlockNumberParams(Long block ){
             if(block==null) throw ParseErrorRPCException.INSTANCE;
             this.block= block;
+        }
+    }
+    public static final class CallParams {
+        public final TxCall transaction;
+        
+        public final BlockNumberEnumUnion block;
+        public static final BlockNumberEnumUnion blockDefaultValue=BlockNumberEnumUnionConverter.decode("latest");
+
+        public CallParams(TxCall transaction ,BlockNumberEnumUnion block ){
+            if(transaction==null) throw ParseErrorRPCException.INSTANCE;
+            this.transaction= transaction;
+            this.block= block==null? blockDefaultValue: block;
         }
     }
 }
