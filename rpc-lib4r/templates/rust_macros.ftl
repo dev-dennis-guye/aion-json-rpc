@@ -61,9 +61,9 @@
     <#elseif typeName=="version_string">
         <#return "VersionType">
     <#elseif typeName=="long">
-        <#return "Long">
+        <#return "i64">
     <#elseif typeName=="int">
-        <#return "Integer">
+        <#return "i32">
     <#elseif typeName=="bigint">
         <#return "BigInteger">
     <#elseif typeName=="response">
@@ -82,6 +82,30 @@
         <#return "ValidateAddressResults">
     <#else >
         <#return typeName>
+    </#if>
+</#function>
+
+<#function toRustClassName className>
+    <#if className=="InvalidRequest">
+        <#return "invalid_request">
+    <#elseif className=="ParseError">
+        <#return "parse_error">
+    <#elseif className=="MethodNotFound">
+        <#return "method_not_found">
+    <#elseif className=="InvalidParams">
+        <#return "invalid_params">
+    <#elseif className=="InternalError">
+        <#return "internal_error">
+    <#elseif className=="UnsupportedUnityFeature">
+        <#return "unsupported_unity_feature">
+    <#elseif className=="BlockTemplateNotFound">
+        <#return "block_template_not_found">
+    <#elseif className=="FailedToSealBlock">
+        <#return "failed_to_seal_block">
+    <#elseif className=="FailedToComputeMetrics">
+        <#return "failed_to_compute_metrics">
+    <#else>
+        <#return "internal_error">
     </#if>
 </#function>
 
@@ -132,9 +156,13 @@
     <#elseif typeName=="uint256">
         <#return "UnsignedInteger256">
     <#elseif typeName == "bool">
-        <#return "Boolean">
+        <#return "Bool">
     <#elseif typeName == "byte-array">
         <#return "ByteArray">
+    <#elseif typeName == "hash">
+        <#return "Hash">
+    <#elseif typeName == "blockNumber">
+        <#return "BlockNumber">
     <#elseif typeName == "blockSpecifier">
         <#return "BlockSpecifier">
     <#elseif typeName == "blockDetails">
