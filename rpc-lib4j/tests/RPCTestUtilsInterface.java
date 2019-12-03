@@ -61,4 +61,12 @@ public interface RPCTestUtilsInterface{
     Request eth_call_NullReturn()();
     Request eth_call_succeeds();
     RPC eth_callRPC();
+    Request eth_syncing_succeeds();
+    RPC eth_syncingRPC();
+    Request eth_sendRawTransaction_TxFailed()();
+    Request eth_sendRawTransaction_succeeds();
+    RPC eth_sendRawTransactionRPC();
+    Request eth_sendTransaction_TxFailed()();
+    Request eth_sendTransaction_succeeds();
+    RPC eth_sendTransactionRPC();
 }

@@ -335,6 +335,46 @@ public class RPCClientMethods{
         return provider.execute(request, DataHexStringConverter::decode);
     }
     /**
+    * Used to determine if the kernel is up-to-date with the rest of the network.
+    * 
+    * @return Details the current sync state of the kernel.
+
+    */
+    public final SyncInfoUnion eth_syncing(){
+        VoidParams params= new VoidParams();
+        Request request = new Request(generator.generateID(), "eth_syncing", VoidParamsConverter.encode(params), VersionType.Version2);
+
+        return provider.execute(request, SyncInfoUnionConverter::decode);
+    }
+    /**
+    * Executes a transaction to be sealed in a block and returns the transaction hash of the created transaction.
+    * 
+    * @param transaction 
+
+
+    * @return 
+    */
+    public final ByteArray eth_sendRawTransaction(ByteArray transaction){
+        SendTransactionRawParams params= new SendTransactionRawParams(transaction);
+        Request request = new Request(generator.generateID(), "eth_sendRawTransaction", SendTransactionRawParamsConverter.encode(params), VersionType.Version2);
+
+        return provider.execute(request, Byte32StringConverter::decode);
+    }
+    /**
+    * Executes a transaction to be sealed in a block and returns the transaction hash of the created transaction.
+    * 
+    * @param transaction 
+
+
+    * @return 
+    */
+    public final ByteArray eth_sendTransaction(TxCall transaction){
+        SendTransactionParams params= new SendTransactionParams(transaction);
+        Request request = new Request(generator.generateID(), "eth_sendTransaction", SendTransactionParamsConverter.encode(params), VersionType.Version2);
+
+        return provider.execute(request, Byte32StringConverter::decode);
+    }
+    /**
     * Returns the key used to sign an input string.
     * 
     * @param dataThatWasSigned 
@@ -688,5 +728,50 @@ public class RPCClientMethods{
         Request request = new Request(generator.generateID(), "eth_call", CallParamsConverter.encode(params), VersionType.Version2);
 
         return provider.executeAsync(request, DataHexStringConverter::decode, asyncTask);
+    }
+    /**
+    * Used to determine if the kernel is up-to-date with the rest of the network.
+    * 
+    * @param asyncTask The task to be executed upon successfuly or exceptional completion of this RPC request.
+    * @param <O> the result type of the async task.
+    * @return The result of this asynchronous request
+    */
+    public final <O> CompletableFuture<O> eth_syncing( BiFunction<SyncInfoUnion, RpcError, O> asyncTask){
+        VoidParams params= new VoidParams();
+        Request request = new Request(generator.generateID(), "eth_syncing", VoidParamsConverter.encode(params), VersionType.Version2);
+
+        return provider.executeAsync(request, SyncInfoUnionConverter::decode, asyncTask);
+    }
+    /**
+    * Executes a transaction to be sealed in a block and returns the transaction hash of the created transaction.
+    * 
+    * @param transaction 
+
+
+    * @param asyncTask The task to be executed upon successfuly or exceptional completion of this RPC request.
+    * @param <O> the result type of the async task.
+    * @return The result of this asynchronous request
+    */
+    public final <O> CompletableFuture<O> eth_sendRawTransaction(ByteArray transaction, BiFunction<ByteArray, RpcError, O> asyncTask){
+        SendTransactionRawParams params= new SendTransactionRawParams(transaction);
+        Request request = new Request(generator.generateID(), "eth_sendRawTransaction", SendTransactionRawParamsConverter.encode(params), VersionType.Version2);
+
+        return provider.executeAsync(request, Byte32StringConverter::decode, asyncTask);
+    }
+    /**
+    * Executes a transaction to be sealed in a block and returns the transaction hash of the created transaction.
+    * 
+    * @param transaction 
+
+
+    * @param asyncTask The task to be executed upon successfuly or exceptional completion of this RPC request.
+    * @param <O> the result type of the async task.
+    * @return The result of this asynchronous request
+    */
+    public final <O> CompletableFuture<O> eth_sendTransaction(TxCall transaction, BiFunction<ByteArray, RpcError, O> asyncTask){
+        SendTransactionParams params= new SendTransactionParams(transaction);
+        Request request = new Request(generator.generateID(), "eth_sendTransaction", SendTransactionParamsConverter.encode(params), VersionType.Version2);
+
+        return provider.executeAsync(request, Byte32StringConverter::decode, asyncTask);
     }
 }

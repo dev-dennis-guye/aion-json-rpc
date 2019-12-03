@@ -449,6 +449,23 @@ public class RPCTypesConverter{
         }
     }
 
+    public static class SyncInfoUnionConverter{
+        public static SyncInfoUnion decode(Object str){
+             if(str==null|| str==JSONObject.NULL) return null;
+            return SyncInfoUnion.decode(str);
+        }
+
+        public static Object encode(SyncInfoUnion obj){
+            if(obj==null) return null;
+            else return obj.encode();
+        }
+
+        public static String encodeStr(SyncInfoUnion obj){
+            if(obj==null) return null;
+            else return obj.encode().toString();
+        }
+    }
+
     public static class BlockNumberEnumUnionConverter{
         public static BlockNumberEnumUnion decode(Object str){
              if(str==null|| str==JSONObject.NULL) return null;
@@ -534,6 +551,45 @@ public class RPCTypesConverter{
                 jsonObject.put("method", StringConverter.encode(obj.method));
                 jsonObject.put("params", AnyConverter.encode(obj.params));
                 jsonObject.put("jsonrpc", VersionTypeConverter.encode(obj.jsonrpc));
+                return jsonObject;
+            }catch (Exception e){
+                throw ParseErrorRPCException.INSTANCE;
+            }
+        }
+    }
+
+    public static class SyncInfoConverter{
+        public static SyncInfo decode(Object str){
+            try{
+                if(str==null || str.equals(JSONObject.NULL)) return null;
+                JSONObject jsonObject = str instanceof JSONObject? (JSONObject)str :new JSONObject(str.toString());
+                return new SyncInfo( LongHexStringConverter.decode(jsonObject.opt("startingBlock")) , LongHexStringConverter.decode(jsonObject.opt("currentBlock")) , LongHexStringConverter.decode(jsonObject.opt("highestBlock")) );
+            } catch (Exception e){
+                throw ParseErrorRPCException.INSTANCE;
+            }
+        }
+
+        public static String encodeStr( SyncInfo obj){
+            try{
+                if(obj==null) return null;
+                JSONObject jsonObject = new JSONObject();
+                jsonObject.put("startingBlock", LongHexStringConverter.encode(obj.startingBlock));
+                jsonObject.put("currentBlock", LongHexStringConverter.encode(obj.currentBlock));
+                jsonObject.put("highestBlock", LongHexStringConverter.encode(obj.highestBlock));
+                return jsonObject.toString();
+            }
+            catch (Exception e){
+                throw ParseErrorRPCException.INSTANCE;
+            }
+        }
+
+        public static Object encode( SyncInfo obj){
+            try{
+                if(obj==null) return null;
+                JSONObject jsonObject = new JSONObject();
+                jsonObject.put("startingBlock", LongHexStringConverter.encode(obj.startingBlock));
+                jsonObject.put("currentBlock", LongHexStringConverter.encode(obj.currentBlock));
+                jsonObject.put("highestBlock", LongHexStringConverter.encode(obj.highestBlock));
                 return jsonObject;
             }catch (Exception e){
                 throw ParseErrorRPCException.INSTANCE;
@@ -2119,6 +2175,80 @@ public class RPCTypesConverter{
                 JSONArray arr = new JSONArray();
                 arr.put(0, TxCallConverter.encode(obj.transaction));
                 arr.put(1, BlockNumberEnumUnionConverter.encode(obj.block));
+                return arr;
+            }catch(Exception e){
+                throw ParseErrorRPCException.INSTANCE;
+            }
+        }
+    }
+
+    public static class SendTransactionParamsConverter{
+        public static SendTransactionParams decode(Object object){
+            if(object==null || object.equals(JSONObject.NULL)) return null;
+            String s = object.toString();
+            try{
+                SendTransactionParams obj;
+                if(s.startsWith("[") && s.endsWith("]")){
+                    JSONArray jsonArray = new JSONArray(s);
+                    if(jsonArray.length() > 1) throw ParseErrorRPCException.INSTANCE;
+                    else obj = new SendTransactionParams( TxCallConverter.decode(jsonArray.opt(0)));
+                }
+                else if(s.startsWith("{") && s.endsWith("}")){
+                    JSONObject jsonObject = new JSONObject(s);
+                    if(jsonObject.keySet().size() > 1) throw ParseErrorRPCException.INSTANCE;
+                    else obj = new SendTransactionParams( TxCallConverter.decode(jsonObject.opt("transaction")));
+                }
+                else{
+                    throw ParseErrorRPCException.INSTANCE;
+                }
+                return obj;
+            }
+            catch(Exception e){
+                throw InvalidParamsRPCException.INSTANCE;
+            }
+        }
+
+        public static Object encode(SendTransactionParams obj){
+            try{
+                JSONArray arr = new JSONArray();
+                arr.put(0, TxCallConverter.encode(obj.transaction));
+                return arr;
+            }catch(Exception e){
+                throw ParseErrorRPCException.INSTANCE;
+            }
+        }
+    }
+
+    public static class SendTransactionRawParamsConverter{
+        public static SendTransactionRawParams decode(Object object){
+            if(object==null || object.equals(JSONObject.NULL)) return null;
+            String s = object.toString();
+            try{
+                SendTransactionRawParams obj;
+                if(s.startsWith("[") && s.endsWith("]")){
+                    JSONArray jsonArray = new JSONArray(s);
+                    if(jsonArray.length() > 1) throw ParseErrorRPCException.INSTANCE;
+                    else obj = new SendTransactionRawParams( DataHexStringConverter.decode(jsonArray.opt(0)));
+                }
+                else if(s.startsWith("{") && s.endsWith("}")){
+                    JSONObject jsonObject = new JSONObject(s);
+                    if(jsonObject.keySet().size() > 1) throw ParseErrorRPCException.INSTANCE;
+                    else obj = new SendTransactionRawParams( DataHexStringConverter.decode(jsonObject.opt("transaction")));
+                }
+                else{
+                    throw ParseErrorRPCException.INSTANCE;
+                }
+                return obj;
+            }
+            catch(Exception e){
+                throw InvalidParamsRPCException.INSTANCE;
+            }
+        }
+
+        public static Object encode(SendTransactionRawParams obj){
+            try{
+                JSONArray arr = new JSONArray();
+                arr.put(0, DataHexStringConverter.encode(obj.transaction));
                 return arr;
             }catch(Exception e){
                 throw ParseErrorRPCException.INSTANCE;

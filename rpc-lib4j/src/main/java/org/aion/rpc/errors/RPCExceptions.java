@@ -21,7 +21,8 @@ public class RPCExceptions{
         BlockTemplateNotFound_CODE(-32002),
         FailedToSealBlock_CODE(-32003),
         FailedToComputeMetrics_CODE(-32004),
-        NullReturn_CODE(-32005);
+        NullReturn_CODE(-32005),
+        TxFailed_CODE(-32006);
         public final int code;
         private static RpcCodeEnums[] values = RpcCodeEnums.values();
         RpcCodeEnums(int code){
@@ -80,6 +81,9 @@ public class RPCExceptions{
         else if(code == -32005){
             return NullReturnRPCException.INSTANCE;
         }
+        else if(code == -32006){
+            return TxFailedRPCException.INSTANCE;
+        }
         else 
             return InternalErrorRPCException.INSTANCE;
     }
@@ -96,6 +100,8 @@ public class RPCExceptions{
             return new InternalErrorRPCException(code, message);
         }else if(code == -32005){
             return new NullReturnRPCException(code, message);
+        }else if(code == -32006){
+            return new TxFailedRPCException(code, message);
         }else
             return InternalErrorRPCException.INSTANCE;
     }
@@ -248,6 +254,25 @@ public class RPCExceptions{
             super("{\"code\":-32005,\"message\":\"Block chain rpc returned null.:"+appendedMessage+"\"}");
         }
         NullReturnRPCException(Integer code, String message){
+            super(code,message);
+        }
+    }
+
+    /**
+    * <p>Contains errors of the form {"code":-32006,"message":"Failed to execute transaction"}.</p>
+    <p>* Occurs when a transaction failed.
+    * The error will always contain contextual information on why the transaction failed to execute.
+    </p>
+    */
+    public static class TxFailedRPCException extends RPCException{
+        public static final TxFailedRPCException INSTANCE = new TxFailedRPCException();
+        private TxFailedRPCException(){
+            super("{\"code\":-32006,\"message\":\"Failed to execute transaction\"}");
+        }
+        public TxFailedRPCException(String appendedMessage){
+            super("{\"code\":-32006,\"message\":\"Failed to execute transaction:"+appendedMessage+"\"}");
+        }
+        TxFailedRPCException(Integer code, String message){
             super(code,message);
         }
     }

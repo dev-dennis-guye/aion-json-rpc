@@ -140,6 +140,60 @@ public class RPCTypes{
     }
 
     /**
+    * Details the current sync state of the kernel.
+    */
+    public static final class SyncInfoUnion{
+        /**
+        * Only present if the kernel is syncing. Details on the current sync state of the kernel.
+        *
+        */
+        public final SyncInfo syncInfo;
+        /**
+        * Only present if the kernel is not syncing. If this is present the value will be true.
+        *
+        */
+        public final Boolean done;
+        private SyncInfoUnion(SyncInfo syncInfo ,Boolean done ){
+            this.syncInfo=syncInfo;
+            this.done=done;
+        }
+
+        public SyncInfoUnion(SyncInfo syncInfo){
+            this(syncInfo,null);
+            if(syncInfo == null) throw ParseErrorRPCException.INSTANCE;
+        }
+        public SyncInfoUnion(Boolean done){
+            this(null,done);
+            if(done == null) throw ParseErrorRPCException.INSTANCE;
+        }
+
+        public static SyncInfoUnion wrap(SyncInfo syncInfo){
+            if(syncInfo == null) throw ParseErrorRPCException.INSTANCE;
+            else return new SyncInfoUnion(syncInfo);
+        }
+        public static SyncInfoUnion wrap(Boolean done){
+            if(done == null) throw ParseErrorRPCException.INSTANCE;
+            else return new SyncInfoUnion(done);
+        }
+
+        public Object encode(){
+            if(this.syncInfo != null) return SyncInfoConverter.encode(syncInfo);
+            if(this.done != null) return BoolConverter.encode(done);
+            throw ParseErrorRPCException.INSTANCE;
+        }
+
+        public static SyncInfoUnion decode(Object object){
+            try{
+                return new SyncInfoUnion(SyncInfoConverter.decode(object));
+            }catch(Exception e){}
+            try{
+                return new SyncInfoUnion(BoolConverter.decode(object));
+            }catch(Exception e){}
+            throw ParseErrorRPCException.INSTANCE;
+        }
+    }
+
+    /**
     * Specifies a block
     */
     public static final class BlockNumberEnumUnion{
@@ -607,6 +661,20 @@ public class RPCTypes{
             this.method=method;
             this.params=params;
             this.jsonrpc=jsonrpc;
+        }
+    }
+    public static final class SyncInfo {
+        public final Long startingBlock;
+        public final Long currentBlock;
+        public final Long highestBlock;
+
+        public SyncInfo(Long startingBlock ,Long currentBlock ,Long highestBlock ){
+            if(startingBlock==null) throw ParseErrorRPCException.INSTANCE;
+            this.startingBlock=startingBlock;
+            if(currentBlock==null) throw ParseErrorRPCException.INSTANCE;
+            this.currentBlock=currentBlock;
+            if(highestBlock==null) throw ParseErrorRPCException.INSTANCE;
+            this.highestBlock=highestBlock;
         }
     }
     /**
@@ -1218,6 +1286,24 @@ public class RPCTypes{
             if(transaction==null) throw ParseErrorRPCException.INSTANCE;
             this.transaction= transaction;
             this.block= block==null? blockDefaultValue: block;
+        }
+    }
+    public static final class SendTransactionParams {
+        public final TxCall transaction;
+        
+
+        public SendTransactionParams(TxCall transaction ){
+            if(transaction==null) throw ParseErrorRPCException.INSTANCE;
+            this.transaction= transaction;
+        }
+    }
+    public static final class SendTransactionRawParams {
+        public final ByteArray transaction;
+        
+
+        public SendTransactionRawParams(ByteArray transaction ){
+            if(transaction==null) throw ParseErrorRPCException.INSTANCE;
+            this.transaction= transaction;
         }
     }
 }

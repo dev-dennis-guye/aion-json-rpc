@@ -317,4 +317,43 @@ public class RPCMethodsTest{
         assertNotNull(resultUnion);
         resultUnion.encode();
     }
+    public void eth_syncingTest(){
+        String method = "eth_syncing";
+        Request successfulRequest = testUtils.eth_syncing_succeeds();
+        ResultUnion resultUnion = testUtils.eth_syncingRPC().execute(request);
+        assertNotNull(resultUnion);
+        resultUnion.encode();
+    }
+    public void eth_sendRawTransactionTestErrorsTxFailedRPCException(){
+        String method = "eth_sendRawTransaction";
+        try{
+            Request request = testUtils.eth_sendRawTransaction_TxFailed();
+            testUtils.eth_sendRawTransactionRPC().execute(request);
+            fail();
+        }catch(TxFailedRPCException e){/*We expect this error*/}
+    }
+
+    public void eth_sendRawTransactionTest(){
+        String method = "eth_sendRawTransaction";
+        Request successfulRequest = testUtils.eth_sendRawTransaction_succeeds();
+        ResultUnion resultUnion = testUtils.eth_sendRawTransactionRPC().execute(request);
+        assertNotNull(resultUnion);
+        resultUnion.encode();
+    }
+    public void eth_sendTransactionTestErrorsTxFailedRPCException(){
+        String method = "eth_sendTransaction";
+        try{
+            Request request = testUtils.eth_sendTransaction_TxFailed();
+            testUtils.eth_sendTransactionRPC().execute(request);
+            fail();
+        }catch(TxFailedRPCException e){/*We expect this error*/}
+    }
+
+    public void eth_sendTransactionTest(){
+        String method = "eth_sendTransaction";
+        Request successfulRequest = testUtils.eth_sendTransaction_succeeds();
+        ResultUnion resultUnion = testUtils.eth_sendTransactionRPC().execute(request);
+        assertNotNull(resultUnion);
+        resultUnion.encode();
+    }
 }

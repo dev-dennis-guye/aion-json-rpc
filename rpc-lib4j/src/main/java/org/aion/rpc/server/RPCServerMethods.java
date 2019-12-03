@@ -163,6 +163,24 @@ public interface RPCServerMethods extends RPC{
                 ByteArray result = rpc.eth_call(params.transaction,params.block);
                 res = DataHexStringConverter.encode(result);
             }else
+            if(request.method.equals("eth_syncing")){
+                VoidParams params= VoidParamsConverter.decode(request.params);
+                if (params==null) throw InvalidParamsRPCException.INSTANCE;
+                SyncInfoUnion result = rpc.eth_syncing();
+                res = SyncInfoUnionConverter.encode(result);
+            }else
+            if(request.method.equals("eth_sendRawTransaction")){
+                SendTransactionRawParams params= SendTransactionRawParamsConverter.decode(request.params);
+                if (params==null) throw InvalidParamsRPCException.INSTANCE;
+                ByteArray result = rpc.eth_sendRawTransaction(params.transaction);
+                res = Byte32StringConverter.encode(result);
+            }else
+            if(request.method.equals("eth_sendTransaction")){
+                SendTransactionParams params= SendTransactionParamsConverter.decode(request.params);
+                if (params==null) throw InvalidParamsRPCException.INSTANCE;
+                ByteArray result = rpc.eth_sendTransaction(params.transaction);
+                res = Byte32StringConverter.encode(result);
+            }else
                 throw MethodNotFoundRPCException.INSTANCE;
         return res;
     }
@@ -171,7 +189,7 @@ public interface RPCServerMethods extends RPC{
     * @return a set containing all the methods supported by this interface
     */
     static Set<String> listMethods(){
-        return Set.of( "personal_ecRecover", "getseed", "submitseed", "submitsignature", "ops_getBlockDetails", "getBlockTemplate", "submitBlock", "validateaddress", "getDifficulty", "getMinerStatistics", "ping", "ops_getAccountState", "ops_getTransaction", "ops_getBlockDetailsByNumber", "ops_getBlockDetailsByHash", "eth_getBalance", "eth_getTransactionCount", "personal_unlockAccount", "personal_lockAccount", "personal_newAccount", "personal_listAccounts", "eth_blockNumber", "eth_call");
+        return Set.of( "personal_ecRecover", "getseed", "submitseed", "submitsignature", "ops_getBlockDetails", "getBlockTemplate", "submitBlock", "validateaddress", "getDifficulty", "getMinerStatistics", "ping", "ops_getAccountState", "ops_getTransaction", "ops_getBlockDetailsByNumber", "ops_getBlockDetailsByHash", "eth_getBalance", "eth_getTransactionCount", "personal_unlockAccount", "personal_lockAccount", "personal_newAccount", "personal_listAccounts", "eth_blockNumber", "eth_call", "eth_syncing", "eth_sendRawTransaction", "eth_sendTransaction");
     }
 
     /**
@@ -368,6 +386,31 @@ public interface RPCServerMethods extends RPC{
     * @return 
     */
     ByteArray eth_call(TxCall transaction,BlockNumberEnumUnion block);
+    /**
+    * Used to determine if the kernel is up-to-date with the rest of the network.
+    * 
+    * @return Details the current sync state of the kernel.
+
+    */
+    SyncInfoUnion eth_syncing();
+    /**
+    * Executes a transaction to be sealed in a block and returns the transaction hash of the created transaction.
+    * 
+    * @param transaction 
+
+
+    * @return 
+    */
+    ByteArray eth_sendRawTransaction(ByteArray transaction);
+    /**
+    * Executes a transaction to be sealed in a block and returns the transaction hash of the created transaction.
+    * 
+    * @param transaction 
+
+
+    * @return 
+    */
+    ByteArray eth_sendTransaction(TxCall transaction);
 
     /**
     * @return an map that stores the method names as the key and the interface(namespace) as the value.
@@ -396,7 +439,10 @@ public interface RPCServerMethods extends RPC{
             Map.entry("personal_newAccount", "personal"),
             Map.entry("personal_listAccounts", "personal"),
             Map.entry("eth_blockNumber", "eth"),
-            Map.entry("eth_call", "eth")
+            Map.entry("eth_call", "eth"),
+            Map.entry("eth_syncing", "eth"),
+            Map.entry("eth_sendRawTransaction", "eth"),
+            Map.entry("eth_sendTransaction", "eth")
         );
     }
 

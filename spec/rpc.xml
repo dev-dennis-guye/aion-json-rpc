@@ -81,6 +81,22 @@
                 <error value="NullReturn"/>
             </errors>
         </method>
-
+        <method name="eth_syncing" param="voidParams" returnType="syncInfoUnion" namespace="eth">
+            <comment>Used to determine if the kernel is up-to-date with the rest of the network.</comment>
+        </method>
+        <method name="eth_sendRawTransaction" param="sendTransactionRawParams" returnType="byte32String"
+            namespace="eth">
+            <comment>Executes a transaction to be sealed in a block and returns the transaction hash of the created transaction.</comment>
+            <errors>
+                <error value="TxFailed"/>
+            </errors>
+        </method>
+        <method name="eth_sendTransaction" param="sendTransactionParams" returnType="byte32String"
+            namespace="eth">
+            <comment>Executes a transaction to be sealed in a block and returns the transaction hash of the created transaction.</comment>
+            <errors>
+                <error value="TxFailed"/>
+            </errors>
+        </method>
     </methods>
 </rpc>

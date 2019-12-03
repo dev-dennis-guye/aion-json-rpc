@@ -92,6 +92,15 @@
             </union-element>
             <union-element type="blockEnum" name="blockEnum"/>
         </type-union>
+        <type-union nullable="true" typeName="syncInfoUnion">
+            <comment>Details the current sync state of the kernel.</comment>
+            <union-element name="syncInfo" type="syncInfo">
+                <comment>Only present if the kernel is syncing. Details on the current sync state of the kernel.</comment>
+            </union-element>
+            <union-element name="done" type="bool">
+                <comment>Only present if the kernel is not syncing. If this is present the value will be true.</comment>
+            </union-element>
+        </type-union>
         <type-union typeName="blockNumberEnumUnion" nullable="true">
             <comment>Specifies a block</comment>
             <union-element type="uint32" name="blockNumber">
@@ -144,6 +153,11 @@
             <field fieldName="method" required="true" type="string"/>
             <field fieldName="params" required="false" type="any"/>
             <field fieldName="jsonrpc" required="false" type="versionType"/>
+        </type-composite>
+        <type-composite typeName="syncInfo">
+            <field fieldName="startingBlock" required="true" type="longHexString"/>
+            <field fieldName="currentBlock" required="true" type="longHexString"/>
+            <field fieldName="highestBlock" required="true" type="longHexString"/>
         </type-composite>
         <type-composite typeName="response">
             <comment>This is the standard response body for a JSON RPC Request</comment>
@@ -396,6 +410,12 @@
         <type-params-wrapper typeName="callParams">
             <field fieldName="transaction" required="true" type="txCall" index="0"/>
             <field fieldName="block" required="false" type="blockNumberEnumUnion" defaultValue="latest" index="1"/>
+        </type-params-wrapper>
+        <type-params-wrapper typeName="sendTransactionParams">
+            <field fieldName="transaction" required="true" type="txCall" index="0"/>
+        </type-params-wrapper>
+        <type-params-wrapper typeName="sendTransactionRawParams">
+            <field fieldName="transaction" required="true" type="dataHexString" index="0"/>
         </type-params-wrapper>
         <!-- return type specific to each method-->
     </param>
