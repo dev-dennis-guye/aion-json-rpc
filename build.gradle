@@ -2,9 +2,9 @@ def workingDir = rootDir.absolutePath
 def generatedFolderPath = "${workingDir}/out/"
 def generatorPath = "${workingDir}/generator"
 def javaTemplatePath = "${workingDir}/rpc-lib4j/templates"
-def rustTemplatePath = "${workingDir}/rpc-lib4j/templates"
+def rustTemplatePath = "${workingDir}/rpc-lib4r/templates"
 def javaConfigurationPath = "${workingDir}/rpc-lib4j/configuration/configuration.xml"
-def rustConfigurationPath = "${workingDir}/rpc-lib4j/configuration/configuration.xml"
+def rustConfigurationPath = "${workingDir}/rpc-lib4r/configuration/configuration.xml"
 def specPath = "${workingDir}/spec/"
 def buildRoot = "${rootDir.absolutePath}/build"
 
@@ -84,7 +84,7 @@ task genRust(type:Exec){
             "--templates", "$rustTemplatePath",
             "--config", "$rustConfigurationPath")
     finalizedBy {
-        ':rpc_lib_4_rust:packageGeneratedFiles4R'
+        ':rpc-lib4r:packageGeneratedFiles4R'
     }
 }
 

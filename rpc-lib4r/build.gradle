@@ -1,0 +1,43 @@
+def workingDir = rootDir.absolutePath
+def rustDir = "${workingDir}/rpc-lib4r"
+def rustLibraryPath = "${rustDir}/src"
+def generatedFolderPath = "${workingDir}/out/"
+def rustGeneratedTestsPath = "${workingDir}/rpc-lib4r/tests"
+def buildRoot = "${rootDir.absolutePath}/build"
+
+task copyRustExceptions(type: Copy){
+    from "${generatedFolderPath}/errors"
+    into "${rustLibraryPath}/errors"
+    include "*.rs"
+}
+
+task copyRustClientMethods(type:Copy){
+    from "${generatedFolderPath}/rpc/rpc_client.rs"
+    into "${rustLibraryPath}/client"
+}
+
+task copyRustServerMethods(type:Copy){
+    from "${generatedFolderPath}/rpc/rpc_server.rs"
+    into "${rustLibraryPath}/server"
+}
+
+task copyRustTypes(type:Copy){
+    from "${generatedFolderPath}/types"
+    into "${rustLibraryPath}/types"
+    include "*.rs"
+}
+
+task copyRustTests(type:Copy){
+    from "${generatedFolderPath}/rpc"
+    into "${rustGeneratedTestsPath}"
+    include "*_test*.rs"
+}
+
+task copyAllGeneratedRust(type:Copy){
+    dependsOn  'copyRustExceptions', 'copyRustClientMethods', 'copyRustServerMethods', 'copyRustTypes', 'copyRustTests'
+}
+
+task packageGeneratedFiles4R(type:Exec){
+    dependsOn 'copyAllGeneratedRust'
+    commandLine("cargo", "run")
+}
