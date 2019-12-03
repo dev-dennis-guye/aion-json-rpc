@@ -11,4 +11,4 @@ rootProject.name = 'aion-json-rpc'
 
 include 'rpc-gen', 
 	'rpc-lib4j',
-	'rpc_lib_4_Rust'
+	'rpc-lib4r'

@@ -1,7 +1,0 @@
-def workingDir = rootDir.absolutePath
-def rustDir = "${workingDir}/rpc_lib_4_Rust"
-def generatedFolderPath = "${workingDir}/out/"
-def buildRoot = "${rootDir.absolutePath}/build"
-task packageGeneratedFiles4R(type:Exec){
-    commandLine("${rustDir}/build.sh", rustDir, generatedFolderPath, buildRoot)
-}

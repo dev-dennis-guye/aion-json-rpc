@@ -8,9 +8,16 @@
         <type specfile="types.xml"/>
     </spec>
     <error-templates dir="errors"> <!--For use with errors.xml-->
+        <template outputfile="rpc_errors.rs" templatefile="rust_errors.ftl"/>
     </error-templates>
     <rpc-templates dir="rpc"> <!--For use with rpc.xml-->
+        <template outputfile="rpc_server.rs" templatefile="rust_rpc.ftl"/>
+        <template outputfile="rpc_client.rs" templatefile="rust_rpc_client.ftl"/>
+        <template outputfile="rpc_test.rs" templatefile="rust_test.ftl"/>
+        <template outputfile="rpc_test_utils.rs" templatefile="rust_testUtils.ftl"/>
     </rpc-templates>
     <type-templates dir="types"> <!--For use with type.xml-->
+        <template outputfile="rpc_types.rs" templatefile="rust_types.ftl"/>
+        <template outputfile="rpc_types_converter.rs" templatefile="java_type_converter.ftl"/>
     </type-templates>
 </config>
