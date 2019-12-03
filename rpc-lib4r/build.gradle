@@ -13,12 +13,12 @@ task copyRustExceptions(type: Copy){
 
 task copyRustClientMethods(type:Copy){
     from "${generatedFolderPath}/rpc/rpc_client.rs"
-    into "${rustLibraryPath}/client"
+    into "${rustLibraryPath}/impl"
 }
 
 task copyRustServerMethods(type:Copy){
     from "${generatedFolderPath}/rpc/rpc_server.rs"
-    into "${rustLibraryPath}/server"
+    into "${rustLibraryPath}/traits"
 }
 
 task copyRustTypes(type:Copy){

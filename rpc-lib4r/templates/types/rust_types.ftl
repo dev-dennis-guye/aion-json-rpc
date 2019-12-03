@@ -1,14 +1,5 @@
 <#import "../rust_macros.ftl" as macros>
-package org.aion.rpc.types;
 
-import java.math.BigInteger;
-import java.util.Arrays;
-import java.util.List;
-import org.aion.rpc.errors.RPCExceptions.*;
-import org.aion.rpc.types.RPCTypesConverter.*;
-import org.aion.types.AionAddress;
-import org.aion.util.bytes.ByteUtil;
-import org.json.JSONObject;
 /******************************************************************************
 *
 * AUTO-GENERATED SOURCE FILE.  DO NOT EDIT MANUALLY -- YOUR CHANGES WILL
@@ -16,61 +7,6 @@ import org.json.JSONObject;
 * GENERATED: ${date}
 *
 *****************************************************************************/
-public class RPCTypes1{
-
-    /**
-    * An immutable class that wraps a byte array.
-    */
-    public static final class ByteArray{
-        private final byte[] bytes;
-
-        public ByteArray(byte[] bytes) {
-            if (bytes == null) {
-                throw new NullPointerException("Byte array is null");
-            }
-            this.bytes = bytes;
-        }
-        /**
-        * @param hexString a hexadecimal string that encodes a byte array.
-        */
-        public ByteArray(String hexString){
-            if (hexString == null) throw new NullPointerException("Hex String is null");
-            this.bytes = ByteUtil.hexStringToBytes(hexString);
-        }
-
-        /**
-        * @return a copy of the byte array wrapped by this class.
-        */
-        public byte[] toBytes(){
-            return Arrays.copyOf(bytes, bytes.length);
-        }
-
-        /**
-        * @return the byte array encoded as a hex string
-        */
-        @Override
-        public String toString() {
-            return "0x"+ ByteUtil.toHexString(bytes);
-        }
-
-        @Override
-        public boolean equals(Object that){
-            if (that==null || !(that instanceof ByteArray) )return false;
-            else return Arrays.equals(this.bytes, ((ByteArray)that).bytes);
-        }
-
-        public int hashCode(){
-            return Arrays.hashCode(this.bytes);
-        }
-
-        public static ByteArray wrap(byte[] bytes){
-            return new ByteArray(bytes);
-        }
-
-        public static ByteArray wrap(String hexString){
-            return new ByteArray(hexString);
-        }
-    }
 
 <#list unionTypes as unionType>
     <#if unionType.comments?has_content>
@@ -80,7 +16,7 @@ public class RPCTypes1{
     </#list>
     */
     </#if>
-    public static final class ${macros.toRustType(unionType)}{
+    enum ${macros.toRustType(unionType)} {
         <#list unionType.unionElements as unionElement >
         <#if unionElement.comments?has_content>
         /**<#list unionElement.comments as comment>
@@ -88,43 +24,8 @@ public class RPCTypes1{
         </#list>*
         */
         </#if>
-        public final ${macros.toRustType(unionElement.type)} ${unionElement.name};
+        ${macros.toCamelCase(unionElement.name)}(${macros.toRustType(unionElement.type)})
         </#list>
-        private ${macros.toRustType(unionType)}(<#list unionType.unionElements as unionElement >${macros.toRustType(unionElement.type)} ${unionElement.name} <#if unionElement_has_next>,</#if></#list>){
-            <#list unionType.unionElements as unionElement >
-            this.${unionElement.name}=${unionElement.name};
-            </#list>
-        }
-
-        <#list unionType.unionElements as unionElement >
-        public ${macros.toRustType(unionType)}(${macros.toRustType(unionElement.type)} ${unionElement.name}){
-            this(<#list 0..unionType.unionElements?size-1 as i><#if i==unionElement_index>${unionElement.name}<#else>null</#if><#if i_has_next>,</#if ></#list>);
-            if(${unionElement.name} == null) throw ${macros.toJavaException(decodeError.error_class)}.INSTANCE;
-        }
-        </#list>
-
-        <#list unionType.unionElements as unionElement >
-        public static ${macros.toRustType(unionType)} wrap(${macros.toRustType(unionElement.type)} ${unionElement.name}){
-            if(${unionElement.name} == null) throw ${macros.toJavaException(decodeError.error_class)}.INSTANCE;
-            else return new ${macros.toRustType(unionType)}(${unionElement.name});
-        }
-        </#list>
-
-        public Object encode(){
-            <#list unionType.unionElements as unionElement>
-            if(this.${unionElement.name} != null) return ${macros.toJavaConverter(unionElement.type)}.encode(${unionElement.name});
-            </#list>
-            throw ${macros.toJavaException(encodeError.error_class)}.INSTANCE;
-        }
-
-        public static ${macros.toRustType(unionType)} decode(Object object){
-            <#list unionType.unionElements as unionElement>
-            try{
-                return new ${macros.toRustType(unionType)}(${macros.toJavaConverter(unionElement.type)}.decode(object));
-            }catch(Exception e){}
-            </#list>
-            throw ${macros.toJavaException(decodeError.error_class)}.INSTANCE;
-        }
     }
 
 </#list>
@@ -136,7 +37,7 @@ public class RPCTypes1{
     </#list>
     */
     </#if>
-    public static final class ${macros.toRustType(composite_type)} {
+    pub struct ${macros.toRustType(composite_type)} {
     <#list composite_type.fields as field>
         <#if field.comments?has_content>
         /**
@@ -145,17 +46,22 @@ public class RPCTypes1{
         </#list>
         */
         </#if>
-        public final ${macros.toRustType(field.type)} ${field.fieldName};
+        pub ${field.fieldName}: ${macros.toRustType(field.type)},
     </#list>
+    }
 
-        public ${macros.toRustType(composite_type)}(<#list composite_type.fields as field>${macros.toRustType(field.type)} ${field.fieldName} <#if field_has_next>,</#if></#list>){
-            <#list composite_type.fields as field><#if field.required=="true" >
-            if(${field.fieldName}==null) throw ${macros.toJavaException("ParseError")}.INSTANCE;
-            </#if>
-            this.${field.fieldName}=${field.fieldName};
-            </#list>
+    impl ${macros.toRustType(composite_type)} {
+        pub fn new(<#list composite_type.fields as field>${field.fieldName}: ${macros.toRustType(field.type)} <#if field_has_next>,</#if></#list>) -> Self {
+            ${macros.toRustType(composite_type)} {
+                <#list composite_type.fields as field><#if field.required=="true" >
+                // TODO: check ${field.fieldName}
+                </#if>
+                ${field.fieldName},
+                </#list>
+            }
         }
     }
+
 </#list>
 
 <#list enumTypes as enum >
@@ -164,22 +70,9 @@ public class RPCTypes1{
         <#list enum.comments as comment>* ${comment}</#list>
         */
     </#if>
-    public enum ${macros.toRustType(enum)}{
+    public enum ${macros.toRustType(enum)} {
         <#list enum.values as value>
-        ${value.name}("${value.value}")<#if value_has_next>,</#if></#list>;
-        public final ${macros.toRustType(enum.internalType)} x;
-        ${macros.toRustType(enum)}(${macros.toRustType(enum.internalType)} x){
-            this.x = x;
-        }
-
-        public static ${macros.toRustType(enum)} fromString(String x){
-            if(x==null) throw ${macros.toJavaException("ParseError")}.INSTANCE;
-            <#list enum.values as value>
-            if(x.equals("${value.value}")){
-                return ${value.name};
-            }else</#list>
-                throw ${macros.toJavaException("ParseError")}.INSTANCE;
-        }
+        ${value.name} = "${value.value}"<#if value_has_next>,</#if></#list>,
     }
 </#list>
 
@@ -189,7 +82,7 @@ public class RPCTypes1{
         <#list paramType.comments as comment>* ${comment}</#list>
         */
     </#if>
-    public static final class ${macros.toRustType(paramType)} {
+    pub struct ${macros.toRustType(paramType)} {
     <#list paramType.fields as field>
         <#if field.comments?has_content>
         /**
@@ -199,16 +92,19 @@ public class RPCTypes1{
         <#if field.defaultValue?has_content>* default value = ${field.defaultValue}</#if>
         */
         </#if>
-        public final ${macros.toRustType(field.type)} ${field.fieldName};
-        <#if field.defaultValue?has_content>public final ${macros.toRustType(field.type)} ${field.fieldName}DefaultValue=${macros.toJavaConverter(field.type)}.decode("${field.defaultValue}");</#if>
+        pub ${field.fieldName}: ${macros.toRustType(field.type)},
     </#list>
+    }
 
-        public ${macros.toRustType(paramType)}(<#list paramType.fields as field>${macros.toRustType(field.type)} ${field.fieldName} <#if field_has_next>,</#if></#list>){
-    <#list paramType.fields as field><#if field.required=="true" >
-            if(${field.fieldName}==null) throw ${macros.toJavaException("ParseError")}.INSTANCE;
-    </#if>
-            this.${field.fieldName}=<#if field.defaultValue?has_content> ${field.fieldName}==null? ${field.fieldName}DefaultValue:</#if> ${field.fieldName};
-    </#list>
+    impl ${macros.toRustType(paramType)} {
+        pub fn new(<#list paramType.fields as field>${field.fieldName}: ${macros.toRustType(field.type)}<#if field_has_next>, </#if></#list>) -> Self {
+            ${macros.toRustType(paramType)} {
+                <#list paramType.fields as field><#if field.required=="true" >
+                // TODO: check ${field.fieldName}
+                </#if>
+                ${field.fieldName},
+                </#list>
+            }
         }
     }
 </#list>
