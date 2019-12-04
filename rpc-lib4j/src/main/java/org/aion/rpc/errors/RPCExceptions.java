@@ -242,16 +242,16 @@ public class RPCExceptions{
     }
 
     /**
-    * <p>Contains errors of the form {"code":-32005,"message":"Block chain rpc returned null."}.</p>
+    * <p>Contains errors of the form {"code":-32005,"message":"Block chain rpc returned null"}.</p>
     <p></p>
     */
     public static class NullReturnRPCException extends RPCException{
         public static final NullReturnRPCException INSTANCE = new NullReturnRPCException();
         private NullReturnRPCException(){
-            super("{\"code\":-32005,\"message\":\"Block chain rpc returned null.\"}");
+            super("{\"code\":-32005,\"message\":\"Block chain rpc returned null\"}");
         }
         public NullReturnRPCException(String appendedMessage){
-            super("{\"code\":-32005,\"message\":\"Block chain rpc returned null.:"+appendedMessage+"\"}");
+            super("{\"code\":-32005,\"message\":\"Block chain rpc returned null:"+appendedMessage+"\"}");
         }
         NullReturnRPCException(Integer code, String message){
             super(code,message);

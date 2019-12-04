@@ -20,6 +20,9 @@ public interface RPCServerMethods extends RPC{
     *
     * @param request the client request
     * @param rpc the rpc implementation to be used in fulfilling this request.
+    * @throws InvalidParamsRPCException if the parameters are not well formed
+    * @throws NullReturnRPCException if the specified method returns a null result
+    * @throws MethodNotFoundRPCException if the requested method does not exist
     * @return the result of this request
     */
     static Object execute(Request request, RPCServerMethods rpc){
@@ -29,157 +32,235 @@ public interface RPCServerMethods extends RPC{
                 EcRecoverParams params= EcRecoverParamsConverter.decode(request.params);
                 if (params==null) throw InvalidParamsRPCException.INSTANCE;
                 AionAddress result = rpc.personal_ecRecover(params.dataThatWasSigned,params.signature);
-                res = AddressConverter.encode(result);
+                // JSON RPC spec demands that if the result member does not exist
+                // we should return an error see: https://www.jsonrpc.org/specification#response_object
+                if (result == null ) throw new NullReturnRPCException("Could not retrieve a result for personal_ecRecover");
+                else res = AddressConverter.encode(result);
             }else
             if(request.method.equals("getseed")){
                 VoidParams params= VoidParamsConverter.decode(request.params);
                 if (params==null) throw InvalidParamsRPCException.INSTANCE;
                 ByteArray result = rpc.getseed();
-                res = DataHexStringConverter.encode(result);
+                // JSON RPC spec demands that if the result member does not exist
+                // we should return an error see: https://www.jsonrpc.org/specification#response_object
+                if (result == null ) throw new NullReturnRPCException("Could not retrieve a result for getseed");
+                else res = DataHexStringConverter.encode(result);
             }else
             if(request.method.equals("submitseed")){
                 SubmitSeedParams params= SubmitSeedParamsConverter.decode(request.params);
                 if (params==null) throw InvalidParamsRPCException.INSTANCE;
                 ByteArray result = rpc.submitseed(params.newSeed,params.signingPublicKey,params.coinbase);
-                res = DataHexStringConverter.encode(result);
+                // JSON RPC spec demands that if the result member does not exist
+                // we should return an error see: https://www.jsonrpc.org/specification#response_object
+                if (result == null ) throw new NullReturnRPCException("Could not retrieve a result for submitseed");
+                else res = DataHexStringConverter.encode(result);
             }else
             if(request.method.equals("submitsignature")){
                 SubmitSignatureParams params= SubmitSignatureParamsConverter.decode(request.params);
                 if (params==null) throw InvalidParamsRPCException.INSTANCE;
                 Boolean result = rpc.submitsignature(params.signature,params.sealHash);
-                res = BoolConverter.encode(result);
+                // JSON RPC spec demands that if the result member does not exist
+                // we should return an error see: https://www.jsonrpc.org/specification#response_object
+                if (result == null ) throw new NullReturnRPCException("Could not retrieve a result for submitsignature");
+                else res = BoolConverter.encode(result);
             }else
             if(request.method.equals("ops_getBlockDetails")){
                 BlockSpecifierParams params= BlockSpecifierParamsConverter.decode(request.params);
                 if (params==null) throw InvalidParamsRPCException.INSTANCE;
                 BlockDetails result = rpc.ops_getBlockDetails(params.block);
-                res = BlockDetailsConverter.encode(result);
+                // JSON RPC spec demands that if the result member does not exist
+                // we should return an error see: https://www.jsonrpc.org/specification#response_object
+                if (result == null ) throw new NullReturnRPCException("Could not retrieve a result for ops_getBlockDetails");
+                else res = BlockDetailsConverter.encode(result);
             }else
             if(request.method.equals("getBlockTemplate")){
                 VoidParams params= VoidParamsConverter.decode(request.params);
                 if (params==null) throw InvalidParamsRPCException.INSTANCE;
                 BlockTemplate result = rpc.getBlockTemplate();
-                res = BlockTemplateConverter.encode(result);
+                // JSON RPC spec demands that if the result member does not exist
+                // we should return an error see: https://www.jsonrpc.org/specification#response_object
+                if (result == null ) throw new NullReturnRPCException("Could not retrieve a result for getBlockTemplate");
+                else res = BlockTemplateConverter.encode(result);
             }else
             if(request.method.equals("submitBlock")){
                 SubmitBlockParams params= SubmitBlockParamsConverter.decode(request.params);
                 if (params==null) throw InvalidParamsRPCException.INSTANCE;
                 SubmissionResult result = rpc.submitBlock(params.nonce,params.solution,params.headerHash);
-                res = SubmissionResultConverter.encode(result);
+                // JSON RPC spec demands that if the result member does not exist
+                // we should return an error see: https://www.jsonrpc.org/specification#response_object
+                if (result == null ) throw new NullReturnRPCException("Could not retrieve a result for submitBlock");
+                else res = SubmissionResultConverter.encode(result);
             }else
             if(request.method.equals("validateaddress")){
                 AddressParams params= AddressParamsConverter.decode(request.params);
                 if (params==null) throw InvalidParamsRPCException.INSTANCE;
                 ValidateAddressResult result = rpc.validateaddress(params.address);
-                res = ValidateAddressResultConverter.encode(result);
+                // JSON RPC spec demands that if the result member does not exist
+                // we should return an error see: https://www.jsonrpc.org/specification#response_object
+                if (result == null ) throw new NullReturnRPCException("Could not retrieve a result for validateaddress");
+                else res = ValidateAddressResultConverter.encode(result);
             }else
             if(request.method.equals("getDifficulty")){
                 VoidParams params= VoidParamsConverter.decode(request.params);
                 if (params==null) throw InvalidParamsRPCException.INSTANCE;
                 BigInteger result = rpc.getDifficulty();
-                res = Uint128HexStringConverter.encode(result);
+                // JSON RPC spec demands that if the result member does not exist
+                // we should return an error see: https://www.jsonrpc.org/specification#response_object
+                if (result == null ) throw new NullReturnRPCException("Could not retrieve a result for getDifficulty");
+                else res = Uint128HexStringConverter.encode(result);
             }else
             if(request.method.equals("getMinerStatistics")){
                 AddressParams params= AddressParamsConverter.decode(request.params);
                 if (params==null) throw InvalidParamsRPCException.INSTANCE;
                 MinerStats result = rpc.getMinerStatistics(params.address);
-                res = MinerStatsConverter.encode(result);
+                // JSON RPC spec demands that if the result member does not exist
+                // we should return an error see: https://www.jsonrpc.org/specification#response_object
+                if (result == null ) throw new NullReturnRPCException("Could not retrieve a result for getMinerStatistics");
+                else res = MinerStatsConverter.encode(result);
             }else
             if(request.method.equals("ping")){
                 VoidParams params= VoidParamsConverter.decode(request.params);
                 if (params==null) throw InvalidParamsRPCException.INSTANCE;
                 PongEnum result = rpc.ping();
-                res = PongEnumConverter.encode(result);
+                // JSON RPC spec demands that if the result member does not exist
+                // we should return an error see: https://www.jsonrpc.org/specification#response_object
+                if (result == null ) throw new NullReturnRPCException("Could not retrieve a result for ping");
+                else res = PongEnumConverter.encode(result);
             }else
             if(request.method.equals("ops_getAccountState")){
                 AddressParams params= AddressParamsConverter.decode(request.params);
                 if (params==null) throw InvalidParamsRPCException.INSTANCE;
                 AccountState result = rpc.ops_getAccountState(params.address);
-                res = AccountStateConverter.encode(result);
+                // JSON RPC spec demands that if the result member does not exist
+                // we should return an error see: https://www.jsonrpc.org/specification#response_object
+                if (result == null ) throw new NullReturnRPCException("Could not retrieve a result for ops_getAccountState");
+                else res = AccountStateConverter.encode(result);
             }else
             if(request.method.equals("ops_getTransaction")){
                 TransactionHashParams params= TransactionHashParamsConverter.decode(request.params);
                 if (params==null) throw InvalidParamsRPCException.INSTANCE;
                 OpsTransaction result = rpc.ops_getTransaction(params.hash);
-                res = OpsTransactionConverter.encode(result);
+                // JSON RPC spec demands that if the result member does not exist
+                // we should return an error see: https://www.jsonrpc.org/specification#response_object
+                if (result == null ) throw new NullReturnRPCException("Could not retrieve a result for ops_getTransaction");
+                else res = OpsTransactionConverter.encode(result);
             }else
             if(request.method.equals("ops_getBlockDetailsByNumber")){
                 BlockNumberParams params= BlockNumberParamsConverter.decode(request.params);
                 if (params==null) throw InvalidParamsRPCException.INSTANCE;
                 BlockDetails result = rpc.ops_getBlockDetailsByNumber(params.block);
-                res = BlockDetailsConverter.encode(result);
+                // JSON RPC spec demands that if the result member does not exist
+                // we should return an error see: https://www.jsonrpc.org/specification#response_object
+                if (result == null ) throw new NullReturnRPCException("Could not retrieve a result for ops_getBlockDetailsByNumber");
+                else res = BlockDetailsConverter.encode(result);
             }else
             if(request.method.equals("ops_getBlockDetailsByHash")){
                 BlockHashParams params= BlockHashParamsConverter.decode(request.params);
                 if (params==null) throw InvalidParamsRPCException.INSTANCE;
                 BlockDetails result = rpc.ops_getBlockDetailsByHash(params.block);
-                res = BlockDetailsConverter.encode(result);
+                // JSON RPC spec demands that if the result member does not exist
+                // we should return an error see: https://www.jsonrpc.org/specification#response_object
+                if (result == null ) throw new NullReturnRPCException("Could not retrieve a result for ops_getBlockDetailsByHash");
+                else res = BlockDetailsConverter.encode(result);
             }else
             if(request.method.equals("eth_getBalance")){
                 AddressBlockParams params= AddressBlockParamsConverter.decode(request.params);
                 if (params==null) throw InvalidParamsRPCException.INSTANCE;
                 BigInteger result = rpc.eth_getBalance(params.address,params.block);
-                res = Uint256HexStringConverter.encode(result);
+                // JSON RPC spec demands that if the result member does not exist
+                // we should return an error see: https://www.jsonrpc.org/specification#response_object
+                if (result == null ) throw new NullReturnRPCException("Could not retrieve a result for eth_getBalance");
+                else res = Uint256HexStringConverter.encode(result);
             }else
             if(request.method.equals("eth_getTransactionCount")){
                 AddressBlockParams params= AddressBlockParamsConverter.decode(request.params);
                 if (params==null) throw InvalidParamsRPCException.INSTANCE;
                 BigInteger result = rpc.eth_getTransactionCount(params.address,params.block);
-                res = Uint128HexStringConverter.encode(result);
+                // JSON RPC spec demands that if the result member does not exist
+                // we should return an error see: https://www.jsonrpc.org/specification#response_object
+                if (result == null ) throw new NullReturnRPCException("Could not retrieve a result for eth_getTransactionCount");
+                else res = Uint128HexStringConverter.encode(result);
             }else
             if(request.method.equals("personal_unlockAccount")){
                 UnlockAccountParams params= UnlockAccountParamsConverter.decode(request.params);
                 if (params==null) throw InvalidParamsRPCException.INSTANCE;
                 Boolean result = rpc.personal_unlockAccount(params.address,params.password,params.duration);
-                res = BoolConverter.encode(result);
+                // JSON RPC spec demands that if the result member does not exist
+                // we should return an error see: https://www.jsonrpc.org/specification#response_object
+                if (result == null ) throw new NullReturnRPCException("Could not retrieve a result for personal_unlockAccount");
+                else res = BoolConverter.encode(result);
             }else
             if(request.method.equals("personal_lockAccount")){
                 LockAccountParams params= LockAccountParamsConverter.decode(request.params);
                 if (params==null) throw InvalidParamsRPCException.INSTANCE;
                 Boolean result = rpc.personal_lockAccount(params.address,params.password);
-                res = BoolConverter.encode(result);
+                // JSON RPC spec demands that if the result member does not exist
+                // we should return an error see: https://www.jsonrpc.org/specification#response_object
+                if (result == null ) throw new NullReturnRPCException("Could not retrieve a result for personal_lockAccount");
+                else res = BoolConverter.encode(result);
             }else
             if(request.method.equals("personal_newAccount")){
                 PasswordParams params= PasswordParamsConverter.decode(request.params);
                 if (params==null) throw InvalidParamsRPCException.INSTANCE;
                 AionAddress result = rpc.personal_newAccount(params.password);
-                res = AddressConverter.encode(result);
+                // JSON RPC spec demands that if the result member does not exist
+                // we should return an error see: https://www.jsonrpc.org/specification#response_object
+                if (result == null ) throw new NullReturnRPCException("Could not retrieve a result for personal_newAccount");
+                else res = AddressConverter.encode(result);
             }else
             if(request.method.equals("personal_listAccounts")){
                 VoidParams params= VoidParamsConverter.decode(request.params);
                 if (params==null) throw InvalidParamsRPCException.INSTANCE;
                 List<AionAddress> result = rpc.personal_listAccounts();
-                res = AddressListConverter.encode(result);
+                // JSON RPC spec demands that if the result member does not exist
+                // we should return an error see: https://www.jsonrpc.org/specification#response_object
+                if (result == null ) throw new NullReturnRPCException("Could not retrieve a result for personal_listAccounts");
+                else res = AddressListConverter.encode(result);
             }else
             if(request.method.equals("eth_blockNumber")){
                 VoidParams params= VoidParamsConverter.decode(request.params);
                 if (params==null) throw InvalidParamsRPCException.INSTANCE;
                 Long result = rpc.eth_blockNumber();
-                res = LongConverter.encode(result);
+                // JSON RPC spec demands that if the result member does not exist
+                // we should return an error see: https://www.jsonrpc.org/specification#response_object
+                if (result == null ) throw new NullReturnRPCException("Could not retrieve a result for eth_blockNumber");
+                else res = LongConverter.encode(result);
             }else
             if(request.method.equals("eth_call")){
                 CallParams params= CallParamsConverter.decode(request.params);
                 if (params==null) throw InvalidParamsRPCException.INSTANCE;
                 ByteArray result = rpc.eth_call(params.transaction,params.block);
-                res = DataHexStringConverter.encode(result);
+                // JSON RPC spec demands that if the result member does not exist
+                // we should return an error see: https://www.jsonrpc.org/specification#response_object
+                if (result == null ) throw new NullReturnRPCException("Could not retrieve a result for eth_call");
+                else res = DataHexStringConverter.encode(result);
             }else
             if(request.method.equals("eth_syncing")){
                 VoidParams params= VoidParamsConverter.decode(request.params);
                 if (params==null) throw InvalidParamsRPCException.INSTANCE;
                 SyncInfoUnion result = rpc.eth_syncing();
-                res = SyncInfoUnionConverter.encode(result);
+                // JSON RPC spec demands that if the result member does not exist
+                // we should return an error see: https://www.jsonrpc.org/specification#response_object
+                if (result == null ) throw new NullReturnRPCException("Could not retrieve a result for eth_syncing");
+                else res = SyncInfoUnionConverter.encode(result);
             }else
             if(request.method.equals("eth_sendRawTransaction")){
                 SendTransactionRawParams params= SendTransactionRawParamsConverter.decode(request.params);
                 if (params==null) throw InvalidParamsRPCException.INSTANCE;
                 ByteArray result = rpc.eth_sendRawTransaction(params.transaction);
-                res = Byte32StringConverter.encode(result);
+                // JSON RPC spec demands that if the result member does not exist
+                // we should return an error see: https://www.jsonrpc.org/specification#response_object
+                if (result == null ) throw new NullReturnRPCException("Could not retrieve a result for eth_sendRawTransaction");
+                else res = Byte32StringConverter.encode(result);
             }else
             if(request.method.equals("eth_sendTransaction")){
                 SendTransactionParams params= SendTransactionParamsConverter.decode(request.params);
                 if (params==null) throw InvalidParamsRPCException.INSTANCE;
                 ByteArray result = rpc.eth_sendTransaction(params.transaction);
-                res = Byte32StringConverter.encode(result);
+                // JSON RPC spec demands that if the result member does not exist
+                // we should return an error see: https://www.jsonrpc.org/specification#response_object
+                if (result == null ) throw new NullReturnRPCException("Could not retrieve a result for eth_sendTransaction");
+                else res = Byte32StringConverter.encode(result);
             }else
                 throw MethodNotFoundRPCException.INSTANCE;
         return res;

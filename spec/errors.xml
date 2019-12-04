@@ -27,7 +27,7 @@
     <error error_class="BlockTemplateNotFound" code="-32002" message="Could not find the block template for the supplied header hash." modifiable="false"/>
     <error error_class="FailedToSealBlock" code="-32003" message="Could not seal the pow block." modifiable="false"/>
     <error error_class="FailedToComputeMetrics" code="-32004" message="Could not compute the POW metrics." modifiable="false"/>
-    <error error_class="NullReturn" code="-32005" message="Block chain rpc returned null." modifiable="true"/>
+    <error error_class="NullReturn" code="-32005" message="Block chain rpc returned null" modifiable="true"/>
     <error code="-32006" error_class="TxFailed" message="Failed to execute transaction"
         modifiable="true">
         <comment>Occurs when a transaction failed.</comment>
