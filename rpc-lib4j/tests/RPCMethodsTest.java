@@ -356,4 +356,32 @@ public class RPCMethodsTest{
         assertNotNull(resultUnion);
         resultUnion.encode();
     }
+    public void eth_getTransactionByHashTest(){
+        String method = "eth_getTransactionByHash";
+        Request successfulRequest = testUtils.eth_getTransactionByHash_succeeds();
+        ResultUnion resultUnion = testUtils.eth_getTransactionByHashRPC().execute(request);
+        assertNotNull(resultUnion);
+        resultUnion.encode();
+    }
+    public void eth_getTransactionReceiptTest(){
+        String method = "eth_getTransactionReceipt";
+        Request successfulRequest = testUtils.eth_getTransactionReceipt_succeeds();
+        ResultUnion resultUnion = testUtils.eth_getTransactionReceiptRPC().execute(request);
+        assertNotNull(resultUnion);
+        resultUnion.encode();
+    }
+    public void eth_getBlockByNumberTest(){
+        String method = "eth_getBlockByNumber";
+        Request successfulRequest = testUtils.eth_getBlockByNumber_succeeds();
+        ResultUnion resultUnion = testUtils.eth_getBlockByNumberRPC().execute(request);
+        assertNotNull(resultUnion);
+        resultUnion.encode();
+    }
+    public void eth_getBlockByHashTest(){
+        String method = "eth_getBlockByHash";
+        Request successfulRequest = testUtils.eth_getBlockByHash_succeeds();
+        ResultUnion resultUnion = testUtils.eth_getBlockByHashRPC().execute(request);
+        assertNotNull(resultUnion);
+        resultUnion.encode();
+    }
 }

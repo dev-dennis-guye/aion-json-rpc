@@ -303,7 +303,7 @@ public class RPCClientMethods{
     * 
     * @return 
     */
-    public final List<AionAddress> personal_listAccounts(){
+    public final AionAddress[] personal_listAccounts(){
         VoidParams params= new VoidParams();
         Request request = new Request(generator.generateID(), "personal_listAccounts", VoidParamsConverter.encode(params), VersionType.Version2);
 
@@ -373,6 +373,60 @@ public class RPCClientMethods{
         Request request = new Request(generator.generateID(), "eth_sendTransaction", SendTransactionParamsConverter.encode(params), VersionType.Version2);
 
         return provider.execute(request, Byte32StringConverter::decode);
+    }
+    /**
+    * 
+    * @param hash 
+
+
+    * @return 
+    */
+    public final EthTransaction eth_getTransactionByHash(ByteArray hash){
+        TransactionHashParams params= new TransactionHashParams(hash);
+        Request request = new Request(generator.generateID(), "eth_getTransactionByHash", TransactionHashParamsConverter.encode(params), VersionType.Version2);
+
+        return provider.execute(request, EthTransactionConverter::decode);
+    }
+    /**
+    * 
+    * @param hash 
+
+
+    * @return 
+    */
+    public final EthTransactionReceipt eth_getTransactionReceipt(ByteArray hash){
+        TransactionHashParams params= new TransactionHashParams(hash);
+        Request request = new Request(generator.generateID(), "eth_getTransactionReceipt", TransactionHashParamsConverter.encode(params), VersionType.Version2);
+
+        return provider.execute(request, EthTransactionReceiptConverter::decode);
+    }
+    /**
+    * 
+    * @param block 
+    * @param fullTransaction 
+
+
+    * @return 
+    */
+    public final EthBlock eth_getBlockByNumber(Long block,Boolean fullTransaction){
+        EthBlockNumberParams params= new EthBlockNumberParams(block ,fullTransaction);
+        Request request = new Request(generator.generateID(), "eth_getBlockByNumber", EthBlockNumberParamsConverter.encode(params), VersionType.Version2);
+
+        return provider.execute(request, EthBlockConverter::decode);
+    }
+    /**
+    * 
+    * @param block 
+    * @param fullTransaction 
+
+
+    * @return 
+    */
+    public final EthBlock eth_getBlockByHash(ByteArray block,Boolean fullTransaction){
+        EthBlockHashParams params= new EthBlockHashParams(block ,fullTransaction);
+        Request request = new Request(generator.generateID(), "eth_getBlockByHash", EthBlockHashParamsConverter.encode(params), VersionType.Version2);
+
+        return provider.execute(request, EthBlockConverter::decode);
     }
     /**
     * Returns the key used to sign an input string.
@@ -694,7 +748,7 @@ public class RPCClientMethods{
     * @param <O> the result type of the async task.
     * @return The result of this asynchronous request
     */
-    public final <O> CompletableFuture<O> personal_listAccounts( BiFunction<List<AionAddress>, RpcError, O> asyncTask){
+    public final <O> CompletableFuture<O> personal_listAccounts( BiFunction<AionAddress[], RpcError, O> asyncTask){
         VoidParams params= new VoidParams();
         Request request = new Request(generator.generateID(), "personal_listAccounts", VoidParamsConverter.encode(params), VersionType.Version2);
 
@@ -773,5 +827,67 @@ public class RPCClientMethods{
         Request request = new Request(generator.generateID(), "eth_sendTransaction", SendTransactionParamsConverter.encode(params), VersionType.Version2);
 
         return provider.executeAsync(request, Byte32StringConverter::decode, asyncTask);
+    }
+    /**
+    * 
+    * @param hash 
+
+
+    * @param asyncTask The task to be executed upon successfuly or exceptional completion of this RPC request.
+    * @param <O> the result type of the async task.
+    * @return The result of this asynchronous request
+    */
+    public final <O> CompletableFuture<O> eth_getTransactionByHash(ByteArray hash, BiFunction<EthTransaction, RpcError, O> asyncTask){
+        TransactionHashParams params= new TransactionHashParams(hash);
+        Request request = new Request(generator.generateID(), "eth_getTransactionByHash", TransactionHashParamsConverter.encode(params), VersionType.Version2);
+
+        return provider.executeAsync(request, EthTransactionConverter::decode, asyncTask);
+    }
+    /**
+    * 
+    * @param hash 
+
+
+    * @param asyncTask The task to be executed upon successfuly or exceptional completion of this RPC request.
+    * @param <O> the result type of the async task.
+    * @return The result of this asynchronous request
+    */
+    public final <O> CompletableFuture<O> eth_getTransactionReceipt(ByteArray hash, BiFunction<EthTransactionReceipt, RpcError, O> asyncTask){
+        TransactionHashParams params= new TransactionHashParams(hash);
+        Request request = new Request(generator.generateID(), "eth_getTransactionReceipt", TransactionHashParamsConverter.encode(params), VersionType.Version2);
+
+        return provider.executeAsync(request, EthTransactionReceiptConverter::decode, asyncTask);
+    }
+    /**
+    * 
+    * @param block 
+    * @param fullTransaction 
+
+
+    * @param asyncTask The task to be executed upon successfuly or exceptional completion of this RPC request.
+    * @param <O> the result type of the async task.
+    * @return The result of this asynchronous request
+    */
+    public final <O> CompletableFuture<O> eth_getBlockByNumber(Long block,Boolean fullTransaction, BiFunction<EthBlock, RpcError, O> asyncTask){
+        EthBlockNumberParams params= new EthBlockNumberParams(block ,fullTransaction);
+        Request request = new Request(generator.generateID(), "eth_getBlockByNumber", EthBlockNumberParamsConverter.encode(params), VersionType.Version2);
+
+        return provider.executeAsync(request, EthBlockConverter::decode, asyncTask);
+    }
+    /**
+    * 
+    * @param block 
+    * @param fullTransaction 
+
+
+    * @param asyncTask The task to be executed upon successfuly or exceptional completion of this RPC request.
+    * @param <O> the result type of the async task.
+    * @return The result of this asynchronous request
+    */
+    public final <O> CompletableFuture<O> eth_getBlockByHash(ByteArray block,Boolean fullTransaction, BiFunction<EthBlock, RpcError, O> asyncTask){
+        EthBlockHashParams params= new EthBlockHashParams(block ,fullTransaction);
+        Request request = new Request(generator.generateID(), "eth_getBlockByHash", EthBlockHashParamsConverter.encode(params), VersionType.Version2);
+
+        return provider.executeAsync(request, EthBlockConverter::decode, asyncTask);
     }
 }

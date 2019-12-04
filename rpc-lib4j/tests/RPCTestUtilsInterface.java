@@ -69,4 +69,12 @@ public interface RPCTestUtilsInterface{
     Request eth_sendTransaction_TxFailed()();
     Request eth_sendTransaction_succeeds();
     RPC eth_sendTransactionRPC();
+    Request eth_getTransactionByHash_succeeds();
+    RPC eth_getTransactionByHashRPC();
+    Request eth_getTransactionReceipt_succeeds();
+    RPC eth_getTransactionReceiptRPC();
+    Request eth_getBlockByNumber_succeeds();
+    RPC eth_getBlockByNumberRPC();
+    Request eth_getBlockByHash_succeeds();
+    RPC eth_getBlockByHashRPC();
 }

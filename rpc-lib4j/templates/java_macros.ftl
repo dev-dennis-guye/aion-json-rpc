@@ -3,7 +3,7 @@
     <#if type.baseType?has_content>
         <#return toJavaType(type.baseType)>
     <#elseif type.nestedType?has_content>
-        <#return "List<${toJavaType(type.nestedType)}>">
+        <#return "${toJavaType(type.nestedType)}[]">
     <#elseif typeName=="uint16">
         <#return "Integer">
     <#elseif typeName=="uint32">

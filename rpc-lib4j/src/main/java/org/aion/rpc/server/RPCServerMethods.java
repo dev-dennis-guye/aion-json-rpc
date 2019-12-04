@@ -211,7 +211,7 @@ public interface RPCServerMethods extends RPC{
             if(request.method.equals("personal_listAccounts")){
                 VoidParams params= VoidParamsConverter.decode(request.params);
                 if (params==null) throw InvalidParamsRPCException.INSTANCE;
-                List<AionAddress> result = rpc.personal_listAccounts();
+                AionAddress[] result = rpc.personal_listAccounts();
                 // JSON RPC spec demands that if the result member does not exist
                 // we should return an error see: https://www.jsonrpc.org/specification#response_object
                 if (result == null ) throw new NullReturnRPCException("Could not retrieve a result for personal_listAccounts");
@@ -262,6 +262,42 @@ public interface RPCServerMethods extends RPC{
                 if (result == null ) throw new NullReturnRPCException("Could not retrieve a result for eth_sendTransaction");
                 else res = Byte32StringConverter.encode(result);
             }else
+            if(request.method.equals("eth_getTransactionByHash")){
+                TransactionHashParams params= TransactionHashParamsConverter.decode(request.params);
+                if (params==null) throw InvalidParamsRPCException.INSTANCE;
+                EthTransaction result = rpc.eth_getTransactionByHash(params.hash);
+                // JSON RPC spec demands that if the result member does not exist
+                // we should return an error see: https://www.jsonrpc.org/specification#response_object
+                if (result == null ) throw new NullReturnRPCException("Could not retrieve a result for eth_getTransactionByHash");
+                else res = EthTransactionConverter.encode(result);
+            }else
+            if(request.method.equals("eth_getTransactionReceipt")){
+                TransactionHashParams params= TransactionHashParamsConverter.decode(request.params);
+                if (params==null) throw InvalidParamsRPCException.INSTANCE;
+                EthTransactionReceipt result = rpc.eth_getTransactionReceipt(params.hash);
+                // JSON RPC spec demands that if the result member does not exist
+                // we should return an error see: https://www.jsonrpc.org/specification#response_object
+                if (result == null ) throw new NullReturnRPCException("Could not retrieve a result for eth_getTransactionReceipt");
+                else res = EthTransactionReceiptConverter.encode(result);
+            }else
+            if(request.method.equals("eth_getBlockByNumber")){
+                EthBlockNumberParams params= EthBlockNumberParamsConverter.decode(request.params);
+                if (params==null) throw InvalidParamsRPCException.INSTANCE;
+                EthBlock result = rpc.eth_getBlockByNumber(params.block,params.fullTransaction);
+                // JSON RPC spec demands that if the result member does not exist
+                // we should return an error see: https://www.jsonrpc.org/specification#response_object
+                if (result == null ) throw new NullReturnRPCException("Could not retrieve a result for eth_getBlockByNumber");
+                else res = EthBlockConverter.encode(result);
+            }else
+            if(request.method.equals("eth_getBlockByHash")){
+                EthBlockHashParams params= EthBlockHashParamsConverter.decode(request.params);
+                if (params==null) throw InvalidParamsRPCException.INSTANCE;
+                EthBlock result = rpc.eth_getBlockByHash(params.block,params.fullTransaction);
+                // JSON RPC spec demands that if the result member does not exist
+                // we should return an error see: https://www.jsonrpc.org/specification#response_object
+                if (result == null ) throw new NullReturnRPCException("Could not retrieve a result for eth_getBlockByHash");
+                else res = EthBlockConverter.encode(result);
+            }else
                 throw MethodNotFoundRPCException.INSTANCE;
         return res;
     }
@@ -270,7 +306,7 @@ public interface RPCServerMethods extends RPC{
     * @return a set containing all the methods supported by this interface
     */
     static Set<String> listMethods(){
-        return Set.of( "personal_ecRecover", "getseed", "submitseed", "submitsignature", "ops_getBlockDetails", "getBlockTemplate", "submitBlock", "validateaddress", "getDifficulty", "getMinerStatistics", "ping", "ops_getAccountState", "ops_getTransaction", "ops_getBlockDetailsByNumber", "ops_getBlockDetailsByHash", "eth_getBalance", "eth_getTransactionCount", "personal_unlockAccount", "personal_lockAccount", "personal_newAccount", "personal_listAccounts", "eth_blockNumber", "eth_call", "eth_syncing", "eth_sendRawTransaction", "eth_sendTransaction");
+        return Set.of( "personal_ecRecover", "getseed", "submitseed", "submitsignature", "ops_getBlockDetails", "getBlockTemplate", "submitBlock", "validateaddress", "getDifficulty", "getMinerStatistics", "ping", "ops_getAccountState", "ops_getTransaction", "ops_getBlockDetailsByNumber", "ops_getBlockDetailsByHash", "eth_getBalance", "eth_getTransactionCount", "personal_unlockAccount", "personal_lockAccount", "personal_newAccount", "personal_listAccounts", "eth_blockNumber", "eth_call", "eth_syncing", "eth_sendRawTransaction", "eth_sendTransaction", "eth_getTransactionByHash", "eth_getTransactionReceipt", "eth_getBlockByNumber", "eth_getBlockByHash");
     }
 
     /**
@@ -451,7 +487,7 @@ public interface RPCServerMethods extends RPC{
     * 
     * @return 
     */
-    List<AionAddress> personal_listAccounts();
+    AionAddress[] personal_listAccounts();
     /**
     * Returns the block number of the last block added to the chain.
     * 
@@ -492,6 +528,40 @@ public interface RPCServerMethods extends RPC{
     * @return 
     */
     ByteArray eth_sendTransaction(TxCall transaction);
+    /**
+    * 
+    * @param hash 
+
+
+    * @return 
+    */
+    EthTransaction eth_getTransactionByHash(ByteArray hash);
+    /**
+    * 
+    * @param hash 
+
+
+    * @return 
+    */
+    EthTransactionReceipt eth_getTransactionReceipt(ByteArray hash);
+    /**
+    * 
+    * @param block 
+    * @param fullTransaction 
+
+
+    * @return 
+    */
+    EthBlock eth_getBlockByNumber(Long block,Boolean fullTransaction);
+    /**
+    * 
+    * @param block 
+    * @param fullTransaction 
+
+
+    * @return 
+    */
+    EthBlock eth_getBlockByHash(ByteArray block,Boolean fullTransaction);
 
     /**
     * @return an map that stores the method names as the key and the interface(namespace) as the value.
@@ -523,7 +593,11 @@ public interface RPCServerMethods extends RPC{
             Map.entry("eth_call", "eth"),
             Map.entry("eth_syncing", "eth"),
             Map.entry("eth_sendRawTransaction", "eth"),
-            Map.entry("eth_sendTransaction", "eth")
+            Map.entry("eth_sendTransaction", "eth"),
+            Map.entry("eth_getTransactionByHash", "eth"),
+            Map.entry("eth_getTransactionReceipt", "eth"),
+            Map.entry("eth_getBlockByNumber", "eth"),
+            Map.entry("eth_getBlockByHash", "eth")
         );
     }
 

@@ -517,6 +517,23 @@ public class RPCTypesConverter{
         }
     }
 
+    public static class TransactionUnionConverter{
+        public static TransactionUnion decode(Object str){
+             if(str==null|| str==JSONObject.NULL) return null;
+            return TransactionUnion.decode(str);
+        }
+
+        public static Object encode(TransactionUnion obj){
+            if(obj==null) return null;
+            else return obj.encode();
+        }
+
+        public static String encodeStr(TransactionUnion obj){
+            if(obj==null) return null;
+            else return obj.encode().toString();
+        }
+    }
+
     public static class RequestConverter{
         public static Request decode(Object str){
             try{
@@ -1175,6 +1192,260 @@ public class RPCTypesConverter{
         }
     }
 
+    public static class EthTransactionConverter{
+        public static EthTransaction decode(Object str){
+            try{
+                if(str==null || str.equals(JSONObject.NULL)) return null;
+                JSONObject jsonObject = str instanceof JSONObject? (JSONObject)str :new JSONObject(str.toString());
+                return new EthTransaction( Byte32StringConverter.decode(jsonObject.opt("hash")) , Uint128Converter.decode(jsonObject.opt("transactionIndex")) , Uint32HexStringConverter.decode(jsonObject.opt("nrg")) , Uint32HexStringConverter.decode(jsonObject.opt("nrgPrice")) , Uint32HexStringConverter.decode(jsonObject.opt("gas")) , Uint32HexStringConverter.decode(jsonObject.opt("gasPrice")) , AddressConverter.decode(jsonObject.opt("contractAddress")) , AddressConverter.decode(jsonObject.opt("from")) , AddressConverter.decode(jsonObject.opt("to")) , Uint32Converter.decode(jsonObject.opt("timestamp")) , DataHexStringConverter.decode(jsonObject.opt("input")) , Uint32HexStringConverter.decode(jsonObject.opt("blockNumber")) , Byte32StringConverter.decode(jsonObject.opt("blockHash")) );
+            } catch (Exception e){
+                throw ParseErrorRPCException.INSTANCE;
+            }
+        }
+
+        public static String encodeStr( EthTransaction obj){
+            try{
+                if(obj==null) return null;
+                JSONObject jsonObject = new JSONObject();
+                jsonObject.put("hash", Byte32StringConverter.encode(obj.hash));
+                jsonObject.put("transactionIndex", Uint128Converter.encode(obj.transactionIndex));
+                jsonObject.put("nrg", Uint32HexStringConverter.encode(obj.nrg));
+                jsonObject.put("nrgPrice", Uint32HexStringConverter.encode(obj.nrgPrice));
+                jsonObject.put("gas", Uint32HexStringConverter.encode(obj.gas));
+                jsonObject.put("gasPrice", Uint32HexStringConverter.encode(obj.gasPrice));
+                jsonObject.put("contractAddress", AddressConverter.encode(obj.contractAddress));
+                jsonObject.put("from", AddressConverter.encode(obj.from));
+                jsonObject.put("to", AddressConverter.encode(obj.to));
+                jsonObject.put("timestamp", Uint32Converter.encode(obj.timestamp));
+                jsonObject.put("input", DataHexStringConverter.encode(obj.input));
+                jsonObject.put("blockNumber", Uint32HexStringConverter.encode(obj.blockNumber));
+                jsonObject.put("blockHash", Byte32StringConverter.encode(obj.blockHash));
+                return jsonObject.toString();
+            }
+            catch (Exception e){
+                throw ParseErrorRPCException.INSTANCE;
+            }
+        }
+
+        public static Object encode( EthTransaction obj){
+            try{
+                if(obj==null) return null;
+                JSONObject jsonObject = new JSONObject();
+                jsonObject.put("hash", Byte32StringConverter.encode(obj.hash));
+                jsonObject.put("transactionIndex", Uint128Converter.encode(obj.transactionIndex));
+                jsonObject.put("nrg", Uint32HexStringConverter.encode(obj.nrg));
+                jsonObject.put("nrgPrice", Uint32HexStringConverter.encode(obj.nrgPrice));
+                jsonObject.put("gas", Uint32HexStringConverter.encode(obj.gas));
+                jsonObject.put("gasPrice", Uint32HexStringConverter.encode(obj.gasPrice));
+                jsonObject.put("contractAddress", AddressConverter.encode(obj.contractAddress));
+                jsonObject.put("from", AddressConverter.encode(obj.from));
+                jsonObject.put("to", AddressConverter.encode(obj.to));
+                jsonObject.put("timestamp", Uint32Converter.encode(obj.timestamp));
+                jsonObject.put("input", DataHexStringConverter.encode(obj.input));
+                jsonObject.put("blockNumber", Uint32HexStringConverter.encode(obj.blockNumber));
+                jsonObject.put("blockHash", Byte32StringConverter.encode(obj.blockHash));
+                return jsonObject;
+            }catch (Exception e){
+                throw ParseErrorRPCException.INSTANCE;
+            }
+        }
+    }
+
+    public static class EthTransactionReceiptConverter{
+        public static EthTransactionReceipt decode(Object str){
+            try{
+                if(str==null || str.equals(JSONObject.NULL)) return null;
+                JSONObject jsonObject = str instanceof JSONObject? (JSONObject)str :new JSONObject(str.toString());
+                return new EthTransactionReceipt( Byte32StringConverter.decode(jsonObject.opt("transactionHash")) , Uint16HexStringConverter.decode(jsonObject.opt("transactionIndex")) , Uint32HexStringConverter.decode(jsonObject.opt("blockNumber")) , Byte32StringConverter.decode(jsonObject.opt("blockHash")) , Uint32HexStringConverter.decode(jsonObject.opt("nrgUsed")) , Uint32HexStringConverter.decode(jsonObject.opt("nrgPrice")) , Uint32HexStringConverter.decode(jsonObject.opt("gasUsed")) , Uint32HexStringConverter.decode(jsonObject.opt("gasPrice")) , Uint32HexStringConverter.decode(jsonObject.opt("gasLimit")) , Uint32HexStringConverter.decode(jsonObject.opt("cumulativeNrgUsed")) , Uint32HexStringConverter.decode(jsonObject.opt("cumulativeGasUsed")) , AddressConverter.decode(jsonObject.opt("contractAddress")) , AddressConverter.decode(jsonObject.opt("from")) , AddressConverter.decode(jsonObject.opt("to")) , DataHexStringConverter.decode(jsonObject.opt("logsBloom")) , Byte32StringConverter.decode(jsonObject.opt("root")) , ByteHexStringConverter.decode(jsonObject.opt("status")) , EthTxReceiptLogsListConverter.decode(jsonObject.opt("logs")) );
+            } catch (Exception e){
+                throw ParseErrorRPCException.INSTANCE;
+            }
+        }
+
+        public static String encodeStr( EthTransactionReceipt obj){
+            try{
+                if(obj==null) return null;
+                JSONObject jsonObject = new JSONObject();
+                jsonObject.put("transactionHash", Byte32StringConverter.encode(obj.transactionHash));
+                jsonObject.put("transactionIndex", Uint16HexStringConverter.encode(obj.transactionIndex));
+                jsonObject.put("blockNumber", Uint32HexStringConverter.encode(obj.blockNumber));
+                jsonObject.put("blockHash", Byte32StringConverter.encode(obj.blockHash));
+                jsonObject.put("nrgUsed", Uint32HexStringConverter.encode(obj.nrgUsed));
+                jsonObject.put("nrgPrice", Uint32HexStringConverter.encode(obj.nrgPrice));
+                jsonObject.put("gasUsed", Uint32HexStringConverter.encode(obj.gasUsed));
+                jsonObject.put("gasPrice", Uint32HexStringConverter.encode(obj.gasPrice));
+                jsonObject.put("gasLimit", Uint32HexStringConverter.encode(obj.gasLimit));
+                jsonObject.put("cumulativeNrgUsed", Uint32HexStringConverter.encode(obj.cumulativeNrgUsed));
+                jsonObject.put("cumulativeGasUsed", Uint32HexStringConverter.encode(obj.cumulativeGasUsed));
+                jsonObject.put("contractAddress", AddressConverter.encode(obj.contractAddress));
+                jsonObject.put("from", AddressConverter.encode(obj.from));
+                jsonObject.put("to", AddressConverter.encode(obj.to));
+                jsonObject.put("logsBloom", DataHexStringConverter.encode(obj.logsBloom));
+                jsonObject.put("root", Byte32StringConverter.encode(obj.root));
+                jsonObject.put("status", ByteHexStringConverter.encode(obj.status));
+                jsonObject.put("logs", EthTxReceiptLogsListConverter.encode(obj.logs));
+                return jsonObject.toString();
+            }
+            catch (Exception e){
+                throw ParseErrorRPCException.INSTANCE;
+            }
+        }
+
+        public static Object encode( EthTransactionReceipt obj){
+            try{
+                if(obj==null) return null;
+                JSONObject jsonObject = new JSONObject();
+                jsonObject.put("transactionHash", Byte32StringConverter.encode(obj.transactionHash));
+                jsonObject.put("transactionIndex", Uint16HexStringConverter.encode(obj.transactionIndex));
+                jsonObject.put("blockNumber", Uint32HexStringConverter.encode(obj.blockNumber));
+                jsonObject.put("blockHash", Byte32StringConverter.encode(obj.blockHash));
+                jsonObject.put("nrgUsed", Uint32HexStringConverter.encode(obj.nrgUsed));
+                jsonObject.put("nrgPrice", Uint32HexStringConverter.encode(obj.nrgPrice));
+                jsonObject.put("gasUsed", Uint32HexStringConverter.encode(obj.gasUsed));
+                jsonObject.put("gasPrice", Uint32HexStringConverter.encode(obj.gasPrice));
+                jsonObject.put("gasLimit", Uint32HexStringConverter.encode(obj.gasLimit));
+                jsonObject.put("cumulativeNrgUsed", Uint32HexStringConverter.encode(obj.cumulativeNrgUsed));
+                jsonObject.put("cumulativeGasUsed", Uint32HexStringConverter.encode(obj.cumulativeGasUsed));
+                jsonObject.put("contractAddress", AddressConverter.encode(obj.contractAddress));
+                jsonObject.put("from", AddressConverter.encode(obj.from));
+                jsonObject.put("to", AddressConverter.encode(obj.to));
+                jsonObject.put("logsBloom", DataHexStringConverter.encode(obj.logsBloom));
+                jsonObject.put("root", Byte32StringConverter.encode(obj.root));
+                jsonObject.put("status", ByteHexStringConverter.encode(obj.status));
+                jsonObject.put("logs", EthTxReceiptLogsListConverter.encode(obj.logs));
+                return jsonObject;
+            }catch (Exception e){
+                throw ParseErrorRPCException.INSTANCE;
+            }
+        }
+    }
+
+    public static class EthTxReceiptLogsConverter{
+        public static EthTxReceiptLogs decode(Object str){
+            try{
+                if(str==null || str.equals(JSONObject.NULL)) return null;
+                JSONObject jsonObject = str instanceof JSONObject? (JSONObject)str :new JSONObject(str.toString());
+                return new EthTxReceiptLogs( AddressConverter.decode(jsonObject.opt("address")) , DataHexStringConverter.decode(jsonObject.opt("data")) , LongConverter.decode(jsonObject.opt("blockNumber")) , Uint16HexStringConverter.decode(jsonObject.opt("transactionIndex")) , Uint16HexStringConverter.decode(jsonObject.opt("logIndex")) , DataHexStringListConverter.decode(jsonObject.opt("topics")) );
+            } catch (Exception e){
+                throw ParseErrorRPCException.INSTANCE;
+            }
+        }
+
+        public static String encodeStr( EthTxReceiptLogs obj){
+            try{
+                if(obj==null) return null;
+                JSONObject jsonObject = new JSONObject();
+                jsonObject.put("address", AddressConverter.encode(obj.address));
+                jsonObject.put("data", DataHexStringConverter.encode(obj.data));
+                jsonObject.put("blockNumber", LongConverter.encode(obj.blockNumber));
+                jsonObject.put("transactionIndex", Uint16HexStringConverter.encode(obj.transactionIndex));
+                jsonObject.put("logIndex", Uint16HexStringConverter.encode(obj.logIndex));
+                jsonObject.put("topics", DataHexStringListConverter.encode(obj.topics));
+                return jsonObject.toString();
+            }
+            catch (Exception e){
+                throw ParseErrorRPCException.INSTANCE;
+            }
+        }
+
+        public static Object encode( EthTxReceiptLogs obj){
+            try{
+                if(obj==null) return null;
+                JSONObject jsonObject = new JSONObject();
+                jsonObject.put("address", AddressConverter.encode(obj.address));
+                jsonObject.put("data", DataHexStringConverter.encode(obj.data));
+                jsonObject.put("blockNumber", LongConverter.encode(obj.blockNumber));
+                jsonObject.put("transactionIndex", Uint16HexStringConverter.encode(obj.transactionIndex));
+                jsonObject.put("logIndex", Uint16HexStringConverter.encode(obj.logIndex));
+                jsonObject.put("topics", DataHexStringListConverter.encode(obj.topics));
+                return jsonObject;
+            }catch (Exception e){
+                throw ParseErrorRPCException.INSTANCE;
+            }
+        }
+    }
+
+    public static class EthBlockConverter{
+        public static EthBlock decode(Object str){
+            try{
+                if(str==null || str.equals(JSONObject.NULL)) return null;
+                JSONObject jsonObject = str instanceof JSONObject? (JSONObject)str :new JSONObject(str.toString());
+                return new EthBlock( LongConverter.decode(jsonObject.opt("number")) , Byte32StringConverter.decode(jsonObject.opt("hash")) , Byte32StringConverter.decode(jsonObject.opt("parentHash")) , ByteArrayConverter.decode(jsonObject.opt("logsBloom")) , DataHexStringConverter.decode(jsonObject.opt("transactionsRoot")) , DataHexStringConverter.decode(jsonObject.opt("stateRoot")) , DataHexStringConverter.decode(jsonObject.opt("receiptsRoot")) , BigIntHexStringConverter.decode(jsonObject.opt("difficulty")) , BigIntHexStringConverter.decode(jsonObject.opt("totalDifficulty")) , LongHexStringConverter.decode(jsonObject.opt("timestamp")) , AddressConverter.decode(jsonObject.opt("miner")) , LongHexStringConverter.decode(jsonObject.opt("gasUsed")) , LongHexStringConverter.decode(jsonObject.opt("gasLimit")) , LongHexStringConverter.decode(jsonObject.opt("nrgUsed")) , LongHexStringConverter.decode(jsonObject.opt("nrgLimit")) , ByteHexStringConverter.decode(jsonObject.opt("sealType")) , BoolConverter.decode(jsonObject.opt("mainChain")) , IntConverter.decode(jsonObject.opt("size")) , TransactionUnionConverter.decode(jsonObject.opt("transactions")) , DataHexStringConverter.decode(jsonObject.opt("nonce")) , DataHexStringConverter.decode(jsonObject.opt("solution")) , DataHexStringConverter.decode(jsonObject.opt("seed")) , DataHexStringConverter.decode(jsonObject.opt("signature")) , DataHexStringConverter.decode(jsonObject.opt("publicKey")) );
+            } catch (Exception e){
+                throw ParseErrorRPCException.INSTANCE;
+            }
+        }
+
+        public static String encodeStr( EthBlock obj){
+            try{
+                if(obj==null) return null;
+                JSONObject jsonObject = new JSONObject();
+                jsonObject.put("number", LongConverter.encode(obj.number));
+                jsonObject.put("hash", Byte32StringConverter.encode(obj.hash));
+                jsonObject.put("parentHash", Byte32StringConverter.encode(obj.parentHash));
+                jsonObject.put("logsBloom", ByteArrayConverter.encode(obj.logsBloom));
+                jsonObject.put("transactionsRoot", DataHexStringConverter.encode(obj.transactionsRoot));
+                jsonObject.put("stateRoot", DataHexStringConverter.encode(obj.stateRoot));
+                jsonObject.put("receiptsRoot", DataHexStringConverter.encode(obj.receiptsRoot));
+                jsonObject.put("difficulty", BigIntHexStringConverter.encode(obj.difficulty));
+                jsonObject.put("totalDifficulty", BigIntHexStringConverter.encode(obj.totalDifficulty));
+                jsonObject.put("timestamp", LongHexStringConverter.encode(obj.timestamp));
+                jsonObject.put("miner", AddressConverter.encode(obj.miner));
+                jsonObject.put("gasUsed", LongHexStringConverter.encode(obj.gasUsed));
+                jsonObject.put("gasLimit", LongHexStringConverter.encode(obj.gasLimit));
+                jsonObject.put("nrgUsed", LongHexStringConverter.encode(obj.nrgUsed));
+                jsonObject.put("nrgLimit", LongHexStringConverter.encode(obj.nrgLimit));
+                jsonObject.put("sealType", ByteHexStringConverter.encode(obj.sealType));
+                jsonObject.put("mainChain", BoolConverter.encode(obj.mainChain));
+                jsonObject.put("size", IntConverter.encode(obj.size));
+                jsonObject.put("transactions", TransactionUnionConverter.encode(obj.transactions));
+                jsonObject.put("nonce", DataHexStringConverter.encode(obj.nonce));
+                jsonObject.put("solution", DataHexStringConverter.encode(obj.solution));
+                jsonObject.put("seed", DataHexStringConverter.encode(obj.seed));
+                jsonObject.put("signature", DataHexStringConverter.encode(obj.signature));
+                jsonObject.put("publicKey", DataHexStringConverter.encode(obj.publicKey));
+                return jsonObject.toString();
+            }
+            catch (Exception e){
+                throw ParseErrorRPCException.INSTANCE;
+            }
+        }
+
+        public static Object encode( EthBlock obj){
+            try{
+                if(obj==null) return null;
+                JSONObject jsonObject = new JSONObject();
+                jsonObject.put("number", LongConverter.encode(obj.number));
+                jsonObject.put("hash", Byte32StringConverter.encode(obj.hash));
+                jsonObject.put("parentHash", Byte32StringConverter.encode(obj.parentHash));
+                jsonObject.put("logsBloom", ByteArrayConverter.encode(obj.logsBloom));
+                jsonObject.put("transactionsRoot", DataHexStringConverter.encode(obj.transactionsRoot));
+                jsonObject.put("stateRoot", DataHexStringConverter.encode(obj.stateRoot));
+                jsonObject.put("receiptsRoot", DataHexStringConverter.encode(obj.receiptsRoot));
+                jsonObject.put("difficulty", BigIntHexStringConverter.encode(obj.difficulty));
+                jsonObject.put("totalDifficulty", BigIntHexStringConverter.encode(obj.totalDifficulty));
+                jsonObject.put("timestamp", LongHexStringConverter.encode(obj.timestamp));
+                jsonObject.put("miner", AddressConverter.encode(obj.miner));
+                jsonObject.put("gasUsed", LongHexStringConverter.encode(obj.gasUsed));
+                jsonObject.put("gasLimit", LongHexStringConverter.encode(obj.gasLimit));
+                jsonObject.put("nrgUsed", LongHexStringConverter.encode(obj.nrgUsed));
+                jsonObject.put("nrgLimit", LongHexStringConverter.encode(obj.nrgLimit));
+                jsonObject.put("sealType", ByteHexStringConverter.encode(obj.sealType));
+                jsonObject.put("mainChain", BoolConverter.encode(obj.mainChain));
+                jsonObject.put("size", IntConverter.encode(obj.size));
+                jsonObject.put("transactions", TransactionUnionConverter.encode(obj.transactions));
+                jsonObject.put("nonce", DataHexStringConverter.encode(obj.nonce));
+                jsonObject.put("solution", DataHexStringConverter.encode(obj.solution));
+                jsonObject.put("seed", DataHexStringConverter.encode(obj.seed));
+                jsonObject.put("signature", DataHexStringConverter.encode(obj.signature));
+                jsonObject.put("publicKey", DataHexStringConverter.encode(obj.publicKey));
+                return jsonObject;
+            }catch (Exception e){
+                throw ParseErrorRPCException.INSTANCE;
+            }
+        }
+    }
+
     public static class OpsTransactionConverter{
         public static OpsTransaction decode(Object str){
             try{
@@ -1408,6 +1679,76 @@ public class RPCTypesConverter{
 
         private static boolean checkConstraints(String s){
             return regex.matcher(s).find() && s.length() >= 34 && s.length() <= 34;
+        }
+    }
+
+    public static class Uint32HexStringConverter{
+        private static final Pattern regex = Pattern.compile("^(0x)?[0-9a-fA-F]+$");
+
+        public static Long decode(Object object){
+            try{
+                if(object==null || object.equals(JSONObject.NULL)) return null;
+                else if (checkConstraints(object.toString())){
+                    return Uint32Converter.decode(object);
+                }
+                else{
+                    throw ParseErrorRPCException.INSTANCE;
+                }
+            } catch(Exception e){
+                throw ParseErrorRPCException.INSTANCE;
+            }
+        }
+
+        public static String encode(Long obj){
+            if (obj != null){
+                String result = Uint32Converter.encodeHex(obj);
+                if(checkConstraints(result))
+                    return result;
+                else
+                    throw ParseErrorRPCException.INSTANCE;
+            }
+            else{
+                return null;
+            }
+        }
+
+        private static boolean checkConstraints(String s){
+            return regex.matcher(s).find() && s.length() >= 18 && s.length() <= 18;
+        }
+    }
+
+    public static class Uint16HexStringConverter{
+        private static final Pattern regex = Pattern.compile("^(0x)?[0-9a-fA-F]+$");
+
+        public static Integer decode(Object object){
+            try{
+                if(object==null || object.equals(JSONObject.NULL)) return null;
+                else if (checkConstraints(object.toString())){
+                    return Uint16Converter.decode(object);
+                }
+                else{
+                    throw ParseErrorRPCException.INSTANCE;
+                }
+            } catch(Exception e){
+                throw ParseErrorRPCException.INSTANCE;
+            }
+        }
+
+        public static String encode(Integer obj){
+            if (obj != null){
+                String result = Uint16Converter.encodeHex(obj);
+                if(checkConstraints(result))
+                    return result;
+                else
+                    throw ParseErrorRPCException.INSTANCE;
+            }
+            else{
+                return null;
+            }
+        }
+
+        private static boolean checkConstraints(String s){
+            return regex.matcher(s).find() && s.length() >= 18 && s.length() <= 18;
         }
     }
 
@@ -2144,6 +2485,82 @@ public class RPCTypesConverter{
         }
     }
 
+    public static class EthBlockNumberParamsConverter{
+        public static EthBlockNumberParams decode(Object object){
+            if(object==null || object.equals(JSONObject.NULL)) return null;
+            String s = object.toString();
+            try{
+                EthBlockNumberParams obj;
+                if(s.startsWith("[") && s.endsWith("]")){
+                    JSONArray jsonArray = new JSONArray(s);
+                    if(jsonArray.length() > 2) throw ParseErrorRPCException.INSTANCE;
+                    else obj = new EthBlockNumberParams( LongConverter.decode(jsonArray.opt(0)), BoolConverter.decode(jsonArray.opt(1)));
+                }
+                else if(s.startsWith("{") && s.endsWith("}")){
+                    JSONObject jsonObject = new JSONObject(s);
+                    if(jsonObject.keySet().size() > 2) throw ParseErrorRPCException.INSTANCE;
+                    else obj = new EthBlockNumberParams( LongConverter.decode(jsonObject.opt("block")), BoolConverter.decode(jsonObject.opt("fullTransaction")));
+                }
+                else{
+                    throw ParseErrorRPCException.INSTANCE;
+                }
+                return obj;
+            }
+            catch(Exception e){
+                throw InvalidParamsRPCException.INSTANCE;
+            }
+        }
+
+        public static Object encode(EthBlockNumberParams obj){
+            try{
+                JSONArray arr = new JSONArray();
+                arr.put(0, LongConverter.encode(obj.block));
+                arr.put(1, BoolConverter.encode(obj.fullTransaction));
+                return arr;
+            }catch(Exception e){
+                throw ParseErrorRPCException.INSTANCE;
+            }
+        }
+    }
+
+    public static class EthBlockHashParamsConverter{
+        public static EthBlockHashParams decode(Object object){
+            if(object==null || object.equals(JSONObject.NULL)) return null;
+            String s = object.toString();
+            try{
+                EthBlockHashParams obj;
+                if(s.startsWith("[") && s.endsWith("]")){
+                    JSONArray jsonArray = new JSONArray(s);
+                    if(jsonArray.length() > 2) throw ParseErrorRPCException.INSTANCE;
+                    else obj = new EthBlockHashParams( Byte32StringConverter.decode(jsonArray.opt(0)), BoolConverter.decode(jsonArray.opt(1)));
+                }
+                else if(s.startsWith("{") && s.endsWith("}")){
+                    JSONObject jsonObject = new JSONObject(s);
+                    if(jsonObject.keySet().size() > 2) throw ParseErrorRPCException.INSTANCE;
+                    else obj = new EthBlockHashParams( Byte32StringConverter.decode(jsonObject.opt("block")), BoolConverter.decode(jsonObject.opt("fullTransaction")));
+                }
+                else{
+                    throw ParseErrorRPCException.INSTANCE;
+                }
+                return obj;
+            }
+            catch(Exception e){
+                throw InvalidParamsRPCException.INSTANCE;
+            }
+        }
+
+        public static Object encode(EthBlockHashParams obj){
+            try{
+                JSONArray arr = new JSONArray();
+                arr.put(0, Byte32StringConverter.encode(obj.block));
+                arr.put(1, BoolConverter.encode(obj.fullTransaction));
+                return arr;
+            }catch(Exception e){
+                throw ParseErrorRPCException.INSTANCE;
+            }
+        }
+    }
+
     public static class CallParamsConverter{
         public static CallParams decode(Object object){
             if(object==null || object.equals(JSONObject.NULL)) return null;
@@ -2293,217 +2710,310 @@ public class RPCTypesConverter{
     }
 
     public static class RequestListConverter{
-        public static List<Request> decode(Object object){
+        public static Request[] decode(Object object){
             if(object == null || object.equals(JSONObject.NULL)) return null;
             JSONArray arr = new JSONArray(object.toString());
             List<Request> temp = new ArrayList<>();
             for(int i=0; i < arr.length(); i++){
                 temp.add(RequestConverter.decode(arr.opt(i)));
             }
-            return Collections.unmodifiableList(temp);
+            return temp.toArray(new Request[0]);
         }
 
-        public static Object encode(List<Request> list){
+        public static Object encode(Request[] list){
             if(list==null) return null;
             JSONArray arr = new JSONArray();
 
-            for(int i=0; i < list.size();i++){
-                arr.put(RequestConverter.encode(list.get(i)));
+            for(int i=0; i < list.length;i++){
+                arr.put(RequestConverter.encode(list[i]));
             }
             return arr;
         }
 
-        public static String encodesStr(List<Request> list){
+        public static String encodesStr(Request[] list){
             if(list==null) return null;
             JSONArray arr = new JSONArray();
-            for(int i=0; i < list.size();i++){
-                arr.put(RequestConverter.encode(list.get(i)));
+            for(int i=0; i < list.length;i++){
+                arr.put(RequestConverter.encode(list[i]));
             }
             return arr.toString();
         }
     }
 
     public static class ResponseListConverter{
-        public static List<Response> decode(Object object){
+        public static Response[] decode(Object object){
             if(object == null || object.equals(JSONObject.NULL)) return null;
             JSONArray arr = new JSONArray(object.toString());
             List<Response> temp = new ArrayList<>();
             for(int i=0; i < arr.length(); i++){
                 temp.add(ResponseConverter.decode(arr.opt(i)));
             }
-            return Collections.unmodifiableList(temp);
+            return temp.toArray(new Response[0]);
         }
 
-        public static Object encode(List<Response> list){
+        public static Object encode(Response[] list){
             if(list==null) return null;
             JSONArray arr = new JSONArray();
 
-            for(int i=0; i < list.size();i++){
-                arr.put(ResponseConverter.encode(list.get(i)));
+            for(int i=0; i < list.length;i++){
+                arr.put(ResponseConverter.encode(list[i]));
             }
             return arr;
         }
 
-        public static String encodesStr(List<Response> list){
+        public static String encodesStr(Response[] list){
             if(list==null) return null;
             JSONArray arr = new JSONArray();
-            for(int i=0; i < list.size();i++){
-                arr.put(ResponseConverter.encode(list.get(i)));
+            for(int i=0; i < list.length;i++){
+                arr.put(ResponseConverter.encode(list[i]));
             }
             return arr.toString();
         }
     }
 
     public static class DataHexStringListConverter{
-        public static List<ByteArray> decode(Object object){
+        public static ByteArray[] decode(Object object){
             if(object == null || object.equals(JSONObject.NULL)) return null;
             JSONArray arr = new JSONArray(object.toString());
             List<ByteArray> temp = new ArrayList<>();
             for(int i=0; i < arr.length(); i++){
                 temp.add(DataHexStringConverter.decode(arr.opt(i)));
             }
-            return Collections.unmodifiableList(temp);
+            return temp.toArray(new ByteArray[0]);
         }
 
-        public static Object encode(List<ByteArray> list){
+        public static Object encode(ByteArray[] list){
             if(list==null) return null;
             JSONArray arr = new JSONArray();
 
-            for(int i=0; i < list.size();i++){
-                arr.put(DataHexStringConverter.encode(list.get(i)));
+            for(int i=0; i < list.length;i++){
+                arr.put(DataHexStringConverter.encode(list[i]));
             }
             return arr;
         }
 
-        public static String encodesStr(List<ByteArray> list){
+        public static String encodesStr(ByteArray[] list){
             if(list==null) return null;
             JSONArray arr = new JSONArray();
-            for(int i=0; i < list.size();i++){
-                arr.put(DataHexStringConverter.encode(list.get(i)));
+            for(int i=0; i < list.length;i++){
+                arr.put(DataHexStringConverter.encode(list[i]));
+            }
+            return arr.toString();
+        }
+    }
+
+    public static class Byte32StringListConverter{
+        public static ByteArray[] decode(Object object){
+            if(object == null || object.equals(JSONObject.NULL)) return null;
+            JSONArray arr = new JSONArray(object.toString());
+            List<ByteArray> temp = new ArrayList<>();
+            for(int i=0; i < arr.length(); i++){
+                temp.add(Byte32StringConverter.decode(arr.opt(i)));
+            }
+            return temp.toArray(new ByteArray[0]);
+        }
+
+        public static Object encode(ByteArray[] list){
+            if(list==null) return null;
+            JSONArray arr = new JSONArray();
+
+            for(int i=0; i < list.length;i++){
+                arr.put(Byte32StringConverter.encode(list[i]));
+            }
+            return arr;
+        }
+
+        public static String encodesStr(ByteArray[] list){
+            if(list==null) return null;
+            JSONArray arr = new JSONArray();
+            for(int i=0; i < list.length;i++){
+                arr.put(Byte32StringConverter.encode(list[i]));
             }
             return arr.toString();
         }
     }
 
     public static class AddressListConverter{
-        public static List<AionAddress> decode(Object object){
+        public static AionAddress[] decode(Object object){
             if(object == null || object.equals(JSONObject.NULL)) return null;
             JSONArray arr = new JSONArray(object.toString());
             List<AionAddress> temp = new ArrayList<>();
             for(int i=0; i < arr.length(); i++){
                 temp.add(AddressConverter.decode(arr.opt(i)));
             }
-            return Collections.unmodifiableList(temp);
+            return temp.toArray(new AionAddress[0]);
         }
 
-        public static Object encode(List<AionAddress> list){
+        public static Object encode(AionAddress[] list){
             if(list==null) return null;
             JSONArray arr = new JSONArray();
 
-            for(int i=0; i < list.size();i++){
-                arr.put(AddressConverter.encode(list.get(i)));
+            for(int i=0; i < list.length;i++){
+                arr.put(AddressConverter.encode(list[i]));
             }
             return arr;
         }
 
-        public static String encodesStr(List<AionAddress> list){
+        public static String encodesStr(AionAddress[] list){
             if(list==null) return null;
             JSONArray arr = new JSONArray();
-            for(int i=0; i < list.size();i++){
-                arr.put(AddressConverter.encode(list.get(i)));
+            for(int i=0; i < list.length;i++){
+                arr.put(AddressConverter.encode(list[i]));
             }
             return arr.toString();
         }
     }
 
     public static class TxLogDetailsListConverter{
-        public static List<TxLogDetails> decode(Object object){
+        public static TxLogDetails[] decode(Object object){
             if(object == null || object.equals(JSONObject.NULL)) return null;
             JSONArray arr = new JSONArray(object.toString());
             List<TxLogDetails> temp = new ArrayList<>();
             for(int i=0; i < arr.length(); i++){
                 temp.add(TxLogDetailsConverter.decode(arr.opt(i)));
             }
-            return Collections.unmodifiableList(temp);
+            return temp.toArray(new TxLogDetails[0]);
         }
 
-        public static Object encode(List<TxLogDetails> list){
+        public static Object encode(TxLogDetails[] list){
             if(list==null) return null;
             JSONArray arr = new JSONArray();
 
-            for(int i=0; i < list.size();i++){
-                arr.put(TxLogDetailsConverter.encode(list.get(i)));
+            for(int i=0; i < list.length;i++){
+                arr.put(TxLogDetailsConverter.encode(list[i]));
             }
             return arr;
         }
 
-        public static String encodesStr(List<TxLogDetails> list){
+        public static String encodesStr(TxLogDetails[] list){
             if(list==null) return null;
             JSONArray arr = new JSONArray();
-            for(int i=0; i < list.size();i++){
-                arr.put(TxLogDetailsConverter.encode(list.get(i)));
+            for(int i=0; i < list.length;i++){
+                arr.put(TxLogDetailsConverter.encode(list[i]));
             }
             return arr.toString();
         }
     }
 
     public static class TxLogListConverter{
-        public static List<TxLog> decode(Object object){
+        public static TxLog[] decode(Object object){
             if(object == null || object.equals(JSONObject.NULL)) return null;
             JSONArray arr = new JSONArray(object.toString());
             List<TxLog> temp = new ArrayList<>();
             for(int i=0; i < arr.length(); i++){
                 temp.add(TxLogConverter.decode(arr.opt(i)));
             }
-            return Collections.unmodifiableList(temp);
+            return temp.toArray(new TxLog[0]);
         }
 
-        public static Object encode(List<TxLog> list){
+        public static Object encode(TxLog[] list){
             if(list==null) return null;
             JSONArray arr = new JSONArray();
 
-            for(int i=0; i < list.size();i++){
-                arr.put(TxLogConverter.encode(list.get(i)));
+            for(int i=0; i < list.length;i++){
+                arr.put(TxLogConverter.encode(list[i]));
             }
             return arr;
         }
 
-        public static String encodesStr(List<TxLog> list){
+        public static String encodesStr(TxLog[] list){
             if(list==null) return null;
             JSONArray arr = new JSONArray();
-            for(int i=0; i < list.size();i++){
-                arr.put(TxLogConverter.encode(list.get(i)));
+            for(int i=0; i < list.length;i++){
+                arr.put(TxLogConverter.encode(list[i]));
             }
             return arr.toString();
         }
     }
 
     public static class TxDetailsListConverter{
-        public static List<TxDetails> decode(Object object){
+        public static TxDetails[] decode(Object object){
             if(object == null || object.equals(JSONObject.NULL)) return null;
             JSONArray arr = new JSONArray(object.toString());
             List<TxDetails> temp = new ArrayList<>();
             for(int i=0; i < arr.length(); i++){
                 temp.add(TxDetailsConverter.decode(arr.opt(i)));
             }
-            return Collections.unmodifiableList(temp);
+            return temp.toArray(new TxDetails[0]);
         }
 
-        public static Object encode(List<TxDetails> list){
+        public static Object encode(TxDetails[] list){
             if(list==null) return null;
             JSONArray arr = new JSONArray();
 
-            for(int i=0; i < list.size();i++){
-                arr.put(TxDetailsConverter.encode(list.get(i)));
+            for(int i=0; i < list.length;i++){
+                arr.put(TxDetailsConverter.encode(list[i]));
             }
             return arr;
         }
 
-        public static String encodesStr(List<TxDetails> list){
+        public static String encodesStr(TxDetails[] list){
             if(list==null) return null;
             JSONArray arr = new JSONArray();
-            for(int i=0; i < list.size();i++){
-                arr.put(TxDetailsConverter.encode(list.get(i)));
+            for(int i=0; i < list.length;i++){
+                arr.put(TxDetailsConverter.encode(list[i]));
+            }
+            return arr.toString();
+        }
+    }
+
+    public static class EthTxReceiptLogsListConverter{
+        public static EthTxReceiptLogs[] decode(Object object){
+            if(object == null || object.equals(JSONObject.NULL)) return null;
+            JSONArray arr = new JSONArray(object.toString());
+            List<EthTxReceiptLogs> temp = new ArrayList<>();
+            for(int i=0; i < arr.length(); i++){
+                temp.add(EthTxReceiptLogsConverter.decode(arr.opt(i)));
+            }
+            return temp.toArray(new EthTxReceiptLogs[0]);
+        }
+
+        public static Object encode(EthTxReceiptLogs[] list){
+            if(list==null) return null;
+            JSONArray arr = new JSONArray();
+
+            for(int i=0; i < list.length;i++){
+                arr.put(EthTxReceiptLogsConverter.encode(list[i]));
+            }
+            return arr;
+        }
+
+        public static String encodesStr(EthTxReceiptLogs[] list){
+            if(list==null) return null;
+            JSONArray arr = new JSONArray();
+            for(int i=0; i < list.length;i++){
+                arr.put(EthTxReceiptLogsConverter.encode(list[i]));
+            }
+            return arr.toString();
+        }
+    }
+
+    public static class EthTransactionListConverter{
+        public static EthTransaction[] decode(Object object){
+            if(object == null || object.equals(JSONObject.NULL)) return null;
+            JSONArray arr = new JSONArray(object.toString());
+            List<EthTransaction> temp = new ArrayList<>();
+            for(int i=0; i < arr.length(); i++){
+                temp.add(EthTransactionConverter.decode(arr.opt(i)));
+            }
+            return temp.toArray(new EthTransaction[0]);
+        }
+
+        public static Object encode(EthTransaction[] list){
+            if(list==null) return null;
+            JSONArray arr = new JSONArray();
+
+            for(int i=0; i < list.length;i++){
+                arr.put(EthTransactionConverter.encode(list[i]));
+            }
+            return arr;
+        }
+
+        public static String encodesStr(EthTransaction[] list){
+            if(list==null) return null;
+            JSONArray arr = new JSONArray();
+            for(int i=0; i < list.length;i++){
+                arr.put(EthTransactionConverter.encode(list[i]));
             }
             return arr.toString();
         }

@@ -259,8 +259,8 @@ public class RPCTypes{
         public final PongEnum pongEnum;
         public final AccountState accountState;
         public final OpsTransaction opsTransaction;
-        public final List<AionAddress> addressArray;
-        private ResultUnion(BlockDetails blockDetails ,AionAddress address ,ByteArray byteArray ,Boolean bool ,BlockTemplate blockTemplate ,SubmissionResult submissionResult ,ValidateAddressResult validateAddressResult ,BigInteger bigInt ,MinerStats minerStats ,PongEnum pongEnum ,AccountState accountState ,OpsTransaction opsTransaction ,List<AionAddress> addressArray ){
+        public final AionAddress[] addressArray;
+        private ResultUnion(BlockDetails blockDetails ,AionAddress address ,ByteArray byteArray ,Boolean bool ,BlockTemplate blockTemplate ,SubmissionResult submissionResult ,ValidateAddressResult validateAddressResult ,BigInteger bigInt ,MinerStats minerStats ,PongEnum pongEnum ,AccountState accountState ,OpsTransaction opsTransaction ,AionAddress[] addressArray ){
             this.blockDetails=blockDetails;
             this.address=address;
             this.byteArray=byteArray;
@@ -324,7 +324,7 @@ public class RPCTypes{
             this(null,null,null,null,null,null,null,null,null,null,null,opsTransaction,null);
             if(opsTransaction == null) throw ParseErrorRPCException.INSTANCE;
         }
-        public ResultUnion(List<AionAddress> addressArray){
+        public ResultUnion(AionAddress[] addressArray){
             this(null,null,null,null,null,null,null,null,null,null,null,null,addressArray);
             if(addressArray == null) throw ParseErrorRPCException.INSTANCE;
         }
@@ -377,7 +377,7 @@ public class RPCTypes{
             if(opsTransaction == null) throw ParseErrorRPCException.INSTANCE;
             else return new ResultUnion(opsTransaction);
         }
-        public static ResultUnion wrap(List<AionAddress> addressArray){
+        public static ResultUnion wrap(AionAddress[] addressArray){
             if(addressArray == null) throw ParseErrorRPCException.INSTANCE;
             else return new ResultUnion(addressArray);
         }
@@ -643,6 +643,49 @@ public class RPCTypes{
         }
     }
 
+    public static final class TransactionUnion{
+        public final EthTransaction[] transactionList;
+        public final ByteArray[] transactionHashes;
+        private TransactionUnion(EthTransaction[] transactionList ,ByteArray[] transactionHashes ){
+            this.transactionList=transactionList;
+            this.transactionHashes=transactionHashes;
+        }
+
+        public TransactionUnion(EthTransaction[] transactionList){
+            this(transactionList,null);
+            if(transactionList == null) throw ParseErrorRPCException.INSTANCE;
+        }
+        public TransactionUnion(ByteArray[] transactionHashes){
+            this(null,transactionHashes);
+            if(transactionHashes == null) throw ParseErrorRPCException.INSTANCE;
+        }
+
+        public static TransactionUnion wrap(EthTransaction[] transactionList){
+            if(transactionList == null) throw ParseErrorRPCException.INSTANCE;
+            else return new TransactionUnion(transactionList);
+        }
+        public static TransactionUnion wrap(ByteArray[] transactionHashes){
+            if(transactionHashes == null) throw ParseErrorRPCException.INSTANCE;
+            else return new TransactionUnion(transactionHashes);
+        }
+
+        public Object encode(){
+            if(this.transactionList != null) return EthTransactionListConverter.encode(transactionList);
+            if(this.transactionHashes != null) return Byte32StringListConverter.encode(transactionHashes);
+            throw ParseErrorRPCException.INSTANCE;
+        }
+
+        public static TransactionUnion decode(Object object){
+            try{
+                return new TransactionUnion(EthTransactionListConverter.decode(object));
+            }catch(Exception e){}
+            try{
+                return new TransactionUnion(Byte32StringListConverter.decode(object));
+            }catch(Exception e){}
+            throw ParseErrorRPCException.INSTANCE;
+        }
+    }
+
     /**
     * This is the standard request body for a JSON RPC Request
     */
@@ -712,10 +755,10 @@ public class RPCTypes{
         public final AionAddress address;
         public final Integer transactionIndex;
         public final ByteArray data;
-        public final List<ByteArray> topics;
+        public final ByteArray[] topics;
         public final Long blockNumber;
 
-        public TxLogDetails(AionAddress address ,Integer transactionIndex ,ByteArray data ,List<ByteArray> topics ,Long blockNumber ){
+        public TxLogDetails(AionAddress address ,Integer transactionIndex ,ByteArray data ,ByteArray[] topics ,Long blockNumber ){
             if(address==null) throw ParseErrorRPCException.INSTANCE;
             this.address=address;
             if(transactionIndex==null) throw ParseErrorRPCException.INSTANCE;
@@ -749,10 +792,10 @@ public class RPCTypes{
         public final Long nrgUsed;
         public final Long gasUsed;
         public final Boolean hasInternalTransactions;
-        public final List<TxLogDetails> logs;
+        public final TxLogDetails[] logs;
         public final ByteArray beaconHash;
 
-        public TxDetails(AionAddress contractAddress ,ByteArray hash ,Integer transactionIndex ,BigInteger value ,Long nrg ,Long nrgPrice ,Long gas ,Long gasPrice ,Long nonce ,AionAddress from ,AionAddress to ,Long timestamp ,ByteArray input ,Long blockNumber ,ByteArray blockHash ,String error ,Byte type ,Long nrgUsed ,Long gasUsed ,Boolean hasInternalTransactions ,List<TxLogDetails> logs ,ByteArray beaconHash ){
+        public TxDetails(AionAddress contractAddress ,ByteArray hash ,Integer transactionIndex ,BigInteger value ,Long nrg ,Long nrgPrice ,Long gas ,Long gasPrice ,Long nonce ,AionAddress from ,AionAddress to ,Long timestamp ,ByteArray input ,Long blockNumber ,ByteArray blockHash ,String error ,Byte type ,Long nrgUsed ,Long gasUsed ,Boolean hasInternalTransactions ,TxLogDetails[] logs ,ByteArray beaconHash ){
             this.contractAddress=contractAddress;
             if(hash==null) throw ParseErrorRPCException.INSTANCE;
             this.hash=hash;
@@ -844,7 +887,7 @@ public class RPCTypes{
         public final Integer numTransactions;
         public final ByteArray txTrieRoot;
         public final BigInteger blockReward;
-        public final List<TxDetails> transactions;
+        public final TxDetails[] transactions;
         public final ByteArray nonce;
         public final ByteArray solution;
         public final ByteArray seed;
@@ -852,7 +895,7 @@ public class RPCTypes{
         public final ByteArray publicKey;
         public final Integer blockTime;
 
-        public BlockDetails(Long number ,ByteArray hash ,ByteArray parentHash ,ByteArray logsBloom ,ByteArray transactionsRoot ,ByteArray stateRoot ,ByteArray receiptsRoot ,BigInteger difficulty ,BigInteger totalDifficulty ,AionAddress miner ,Long timestamp ,Long gasUsed ,Long gasLimit ,Long nrgUsed ,Long nrgLimit ,Byte sealType ,Boolean mainChain ,ByteArray extraData ,Integer size ,Integer numTransactions ,ByteArray txTrieRoot ,BigInteger blockReward ,List<TxDetails> transactions ,ByteArray nonce ,ByteArray solution ,ByteArray seed ,ByteArray signature ,ByteArray publicKey ,Integer blockTime ){
+        public BlockDetails(Long number ,ByteArray hash ,ByteArray parentHash ,ByteArray logsBloom ,ByteArray transactionsRoot ,ByteArray stateRoot ,ByteArray receiptsRoot ,BigInteger difficulty ,BigInteger totalDifficulty ,AionAddress miner ,Long timestamp ,Long gasUsed ,Long gasLimit ,Long nrgUsed ,Long nrgLimit ,Byte sealType ,Boolean mainChain ,ByteArray extraData ,Integer size ,Integer numTransactions ,ByteArray txTrieRoot ,BigInteger blockReward ,TxDetails[] transactions ,ByteArray nonce ,ByteArray solution ,ByteArray seed ,ByteArray signature ,ByteArray publicKey ,Integer blockTime ){
             if(number==null) throw ParseErrorRPCException.INSTANCE;
             this.number=number;
             if(hash==null) throw ParseErrorRPCException.INSTANCE;
@@ -970,9 +1013,9 @@ public class RPCTypes{
         public final AionAddress address;
         public final Integer transactionIndex;
         public final ByteArray data;
-        public final List<ByteArray> topics;
+        public final ByteArray[] topics;
 
-        public TxLog(AionAddress address ,Integer transactionIndex ,ByteArray data ,List<ByteArray> topics ){
+        public TxLog(AionAddress address ,Integer transactionIndex ,ByteArray data ,ByteArray[] topics ){
             if(address==null) throw ParseErrorRPCException.INSTANCE;
             this.address=address;
             if(transactionIndex==null) throw ParseErrorRPCException.INSTANCE;
@@ -1000,6 +1043,199 @@ public class RPCTypes{
             this.nonce=nonce;
         }
     }
+    public static final class EthTransaction {
+        public final ByteArray hash;
+        public final BigInteger transactionIndex;
+        public final Long nrg;
+        public final Long nrgPrice;
+        public final Long gas;
+        public final Long gasPrice;
+        public final AionAddress contractAddress;
+        public final AionAddress from;
+        public final AionAddress to;
+        public final Long timestamp;
+        public final ByteArray input;
+        public static final ByteArray inputDefaultValue=DataHexStringConverter.decode("0x");
+        public final Long blockNumber;
+        public final ByteArray blockHash;
+
+        public EthTransaction(ByteArray hash ,BigInteger transactionIndex ,Long nrg ,Long nrgPrice ,Long gas ,Long gasPrice ,AionAddress contractAddress ,AionAddress from ,AionAddress to ,Long timestamp ,ByteArray input ,Long blockNumber ,ByteArray blockHash ){
+            if(hash==null) throw ParseErrorRPCException.INSTANCE;
+            this.hash=hash;
+            this.transactionIndex=transactionIndex;
+            if(nrg==null) throw ParseErrorRPCException.INSTANCE;
+            this.nrg=nrg;
+            if(nrgPrice==null) throw ParseErrorRPCException.INSTANCE;
+            this.nrgPrice=nrgPrice;
+            if(gas==null) throw ParseErrorRPCException.INSTANCE;
+            this.gas=gas;
+            if(gasPrice==null) throw ParseErrorRPCException.INSTANCE;
+            this.gasPrice=gasPrice;
+            this.contractAddress=contractAddress;
+            if(from==null) throw ParseErrorRPCException.INSTANCE;
+            this.from=from;
+            this.to=to;
+            if(timestamp==null) throw ParseErrorRPCException.INSTANCE;
+            this.timestamp=timestamp;
+            this.input=input==null? inputDefaultValue:input;
+            if(blockNumber==null) throw ParseErrorRPCException.INSTANCE;
+            this.blockNumber=blockNumber;
+            if(blockHash==null) throw ParseErrorRPCException.INSTANCE;
+            this.blockHash=blockHash;
+        }
+    }
+    public static final class EthTransactionReceipt {
+        public final ByteArray transactionHash;
+        public final Integer transactionIndex;
+        public final Long blockNumber;
+        public final ByteArray blockHash;
+        public final Long nrgUsed;
+        public final Long nrgPrice;
+        public final Long gasUsed;
+        public final Long gasPrice;
+        public final Long gasLimit;
+        public final Long cumulativeNrgUsed;
+        public final Long cumulativeGasUsed;
+        public final AionAddress contractAddress;
+        public final AionAddress from;
+        public final AionAddress to;
+        public final ByteArray logsBloom;
+        public final ByteArray root;
+        public final Byte status;
+        public final EthTxReceiptLogs[] logs;
+
+        public EthTransactionReceipt(ByteArray transactionHash ,Integer transactionIndex ,Long blockNumber ,ByteArray blockHash ,Long nrgUsed ,Long nrgPrice ,Long gasUsed ,Long gasPrice ,Long gasLimit ,Long cumulativeNrgUsed ,Long cumulativeGasUsed ,AionAddress contractAddress ,AionAddress from ,AionAddress to ,ByteArray logsBloom ,ByteArray root ,Byte status ,EthTxReceiptLogs[] logs ){
+            if(transactionHash==null) throw ParseErrorRPCException.INSTANCE;
+            this.transactionHash=transactionHash;
+            if(transactionIndex==null) throw ParseErrorRPCException.INSTANCE;
+            this.transactionIndex=transactionIndex;
+            if(blockNumber==null) throw ParseErrorRPCException.INSTANCE;
+            this.blockNumber=blockNumber;
+            if(blockHash==null) throw ParseErrorRPCException.INSTANCE;
+            this.blockHash=blockHash;
+            if(nrgUsed==null) throw ParseErrorRPCException.INSTANCE;
+            this.nrgUsed=nrgUsed;
+            if(nrgPrice==null) throw ParseErrorRPCException.INSTANCE;
+            this.nrgPrice=nrgPrice;
+            if(gasUsed==null) throw ParseErrorRPCException.INSTANCE;
+            this.gasUsed=gasUsed;
+            if(gasPrice==null) throw ParseErrorRPCException.INSTANCE;
+            this.gasPrice=gasPrice;
+            if(gasLimit==null) throw ParseErrorRPCException.INSTANCE;
+            this.gasLimit=gasLimit;
+            if(cumulativeNrgUsed==null) throw ParseErrorRPCException.INSTANCE;
+            this.cumulativeNrgUsed=cumulativeNrgUsed;
+            if(cumulativeGasUsed==null) throw ParseErrorRPCException.INSTANCE;
+            this.cumulativeGasUsed=cumulativeGasUsed;
+            this.contractAddress=contractAddress;
+            if(from==null) throw ParseErrorRPCException.INSTANCE;
+            this.from=from;
+            this.to=to;
+            if(logsBloom==null) throw ParseErrorRPCException.INSTANCE;
+            this.logsBloom=logsBloom;
+            if(root==null) throw ParseErrorRPCException.INSTANCE;
+            this.root=root;
+            if(status==null) throw ParseErrorRPCException.INSTANCE;
+            this.status=status;
+            if(logs==null) throw ParseErrorRPCException.INSTANCE;
+            this.logs=logs;
+        }
+    }
+    public static final class EthTxReceiptLogs {
+        public final AionAddress address;
+        public final ByteArray data;
+        public final Long blockNumber;
+        public final Integer transactionIndex;
+        public final Integer logIndex;
+        public final ByteArray[] topics;
+
+        public EthTxReceiptLogs(AionAddress address ,ByteArray data ,Long blockNumber ,Integer transactionIndex ,Integer logIndex ,ByteArray[] topics ){
+            if(address==null) throw ParseErrorRPCException.INSTANCE;
+            this.address=address;
+            if(data==null) throw ParseErrorRPCException.INSTANCE;
+            this.data=data;
+            if(blockNumber==null) throw ParseErrorRPCException.INSTANCE;
+            this.blockNumber=blockNumber;
+            if(transactionIndex==null) throw ParseErrorRPCException.INSTANCE;
+            this.transactionIndex=transactionIndex;
+            if(logIndex==null) throw ParseErrorRPCException.INSTANCE;
+            this.logIndex=logIndex;
+            if(topics==null) throw ParseErrorRPCException.INSTANCE;
+            this.topics=topics;
+        }
+    }
+    public static final class EthBlock {
+        public final Long number;
+        public final ByteArray hash;
+        public final ByteArray parentHash;
+        public final ByteArray logsBloom;
+        public final ByteArray transactionsRoot;
+        public final ByteArray stateRoot;
+        public final ByteArray receiptsRoot;
+        public final BigInteger difficulty;
+        public final BigInteger totalDifficulty;
+        public final Long timestamp;
+        public final AionAddress miner;
+        public final Long gasUsed;
+        public final Long gasLimit;
+        public final Long nrgUsed;
+        public final Long nrgLimit;
+        public final Byte sealType;
+        public final Boolean mainChain;
+        public final Integer size;
+        public final TransactionUnion transactions;
+        public final ByteArray nonce;
+        public final ByteArray solution;
+        public final ByteArray seed;
+        public final ByteArray signature;
+        public final ByteArray publicKey;
+
+        public EthBlock(Long number ,ByteArray hash ,ByteArray parentHash ,ByteArray logsBloom ,ByteArray transactionsRoot ,ByteArray stateRoot ,ByteArray receiptsRoot ,BigInteger difficulty ,BigInteger totalDifficulty ,Long timestamp ,AionAddress miner ,Long gasUsed ,Long gasLimit ,Long nrgUsed ,Long nrgLimit ,Byte sealType ,Boolean mainChain ,Integer size ,TransactionUnion transactions ,ByteArray nonce ,ByteArray solution ,ByteArray seed ,ByteArray signature ,ByteArray publicKey ){
+            if(number==null) throw ParseErrorRPCException.INSTANCE;
+            this.number=number;
+            if(hash==null) throw ParseErrorRPCException.INSTANCE;
+            this.hash=hash;
+            if(parentHash==null) throw ParseErrorRPCException.INSTANCE;
+            this.parentHash=parentHash;
+            if(logsBloom==null) throw ParseErrorRPCException.INSTANCE;
+            this.logsBloom=logsBloom;
+            if(transactionsRoot==null) throw ParseErrorRPCException.INSTANCE;
+            this.transactionsRoot=transactionsRoot;
+            if(stateRoot==null) throw ParseErrorRPCException.INSTANCE;
+            this.stateRoot=stateRoot;
+            if(receiptsRoot==null) throw ParseErrorRPCException.INSTANCE;
+            this.receiptsRoot=receiptsRoot;
+            if(difficulty==null) throw ParseErrorRPCException.INSTANCE;
+            this.difficulty=difficulty;
+            if(totalDifficulty==null) throw ParseErrorRPCException.INSTANCE;
+            this.totalDifficulty=totalDifficulty;
+            if(timestamp==null) throw ParseErrorRPCException.INSTANCE;
+            this.timestamp=timestamp;
+            if(miner==null) throw ParseErrorRPCException.INSTANCE;
+            this.miner=miner;
+            if(gasUsed==null) throw ParseErrorRPCException.INSTANCE;
+            this.gasUsed=gasUsed;
+            if(gasLimit==null) throw ParseErrorRPCException.INSTANCE;
+            this.gasLimit=gasLimit;
+            if(nrgUsed==null) throw ParseErrorRPCException.INSTANCE;
+            this.nrgUsed=nrgUsed;
+            if(nrgLimit==null) throw ParseErrorRPCException.INSTANCE;
+            this.nrgLimit=nrgLimit;
+            if(sealType==null) throw ParseErrorRPCException.INSTANCE;
+            this.sealType=sealType;
+            if(mainChain==null) throw ParseErrorRPCException.INSTANCE;
+            this.mainChain=mainChain;
+            if(size==null) throw ParseErrorRPCException.INSTANCE;
+            this.size=size;
+            if(transactions==null) throw ParseErrorRPCException.INSTANCE;
+            this.transactions=transactions;
+            this.nonce=nonce;
+            this.solution=solution;
+            this.seed=seed;
+            this.signature=signature;
+            this.publicKey=publicKey;
+        }
+    }
     public static final class OpsTransaction {
         public final Long timestampVal;
         public final ByteArray transactionHash;
@@ -1014,9 +1250,9 @@ public class RPCTypes{
         public final ByteArray data;
         public final Integer transactionIndex;
         public final ByteArray beaconHash;
-        public final List<TxLog> logs;
+        public final TxLog[] logs;
 
-        public OpsTransaction(Long timestampVal ,ByteArray transactionHash ,Long blockNumber ,ByteArray blockHash ,BigInteger nonce ,AionAddress fromAddr ,AionAddress toAddr ,BigInteger value ,Long nrgPrice ,Long nrgConsumed ,ByteArray data ,Integer transactionIndex ,ByteArray beaconHash ,List<TxLog> logs ){
+        public OpsTransaction(Long timestampVal ,ByteArray transactionHash ,Long blockNumber ,ByteArray blockHash ,BigInteger nonce ,AionAddress fromAddr ,AionAddress toAddr ,BigInteger value ,Long nrgPrice ,Long nrgConsumed ,ByteArray data ,Integer transactionIndex ,ByteArray beaconHash ,TxLog[] logs ){
             if(timestampVal==null) throw ParseErrorRPCException.INSTANCE;
             this.timestampVal=timestampVal;
             if(transactionHash==null) throw ParseErrorRPCException.INSTANCE;
@@ -1274,6 +1510,30 @@ public class RPCTypes{
         public BlockNumberParams(Long block ){
             if(block==null) throw ParseErrorRPCException.INSTANCE;
             this.block= block;
+        }
+    }
+    public static final class EthBlockNumberParams {
+        public final Long block;
+        
+        public final Boolean fullTransaction;
+        public static final Boolean fullTransactionDefaultValue=BoolConverter.decode("false");
+
+        public EthBlockNumberParams(Long block ,Boolean fullTransaction ){
+            if(block==null) throw ParseErrorRPCException.INSTANCE;
+            this.block= block;
+            this.fullTransaction= fullTransaction==null? fullTransactionDefaultValue: fullTransaction;
+        }
+    }
+    public static final class EthBlockHashParams {
+        public final ByteArray block;
+        
+        public final Boolean fullTransaction;
+        public static final Boolean fullTransactionDefaultValue=BoolConverter.decode("false");
+
+        public EthBlockHashParams(ByteArray block ,Boolean fullTransaction ){
+            if(block==null) throw ParseErrorRPCException.INSTANCE;
+            this.block= block;
+            this.fullTransaction= fullTransaction==null? fullTransactionDefaultValue: fullTransaction;
         }
     }
     public static final class CallParams {

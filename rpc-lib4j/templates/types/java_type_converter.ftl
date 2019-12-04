@@ -588,19 +588,19 @@ public class RPCTypesConverter{
         public static ${macros.toJavaType(arrayType)} decode(Object object){
             if(object == null || object.equals(JSONObject.NULL)) return null;
             JSONArray arr = new JSONArray(object.toString());
-            ${macros.toJavaType(arrayType)} temp = new ArrayList<>();
+            List<${macros.toJavaType(arrayType.nestedType)}> temp = new ArrayList<>();
             for(int i=0; i < arr.length(); i++){
                 temp.add(${macros.toJavaConverter(arrayType.nestedType)}.decode(arr.opt(i)));
             }
-            return Collections.unmodifiableList(temp);
+            return temp.toArray(new ${macros.toJavaType(arrayType.nestedType)}[0]);
         }
 
         public static Object encode(${macros.toJavaType(arrayType)} list){
             if(list==null) return null;
             JSONArray arr = new JSONArray();
 
-            for(int i=0; i < list.size();i++){
-                arr.put(${macros.toJavaConverter(arrayType.nestedType)}.encode(list.get(i)));
+            for(int i=0; i < list.length;i++){
+                arr.put(${macros.toJavaConverter(arrayType.nestedType)}.encode(list[i]));
             }
             return arr;
         }
@@ -608,8 +608,8 @@ public class RPCTypesConverter{
         public static String encodesStr(${macros.toJavaType(arrayType)} list){
             if(list==null) return null;
             JSONArray arr = new JSONArray();
-            for(int i=0; i < list.size();i++){
-                arr.put(${macros.toJavaConverter(arrayType.nestedType)}.encode(list.get(i)));
+            for(int i=0; i < list.length;i++){
+                arr.put(${macros.toJavaConverter(arrayType.nestedType)}.encode(list[i]));
             }
             return arr.toString();
         }

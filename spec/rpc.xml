@@ -98,5 +98,13 @@
                 <error value="TxFailed"/>
             </errors>
         </method>
+        <method name="eth_getTransactionByHash" param="transactionHashParams"
+            returnType="ethTransaction" namespace="eth"/>
+        <method name="eth_getTransactionReceipt" param="transactionHashParams"
+            returnType="ethTransactionReceipt" namespace="eth"/>
+        <method name="eth_getBlockByNumber" param="ethBlockNumberParams"
+            returnType="ethBlock" namespace="eth"/>
+        <method name="eth_getBlockByHash" param="ethBlockHashParams"
+            returnType="ethBlock" namespace="eth"/>
     </methods>
 </rpc>
