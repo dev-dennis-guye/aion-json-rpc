@@ -49,6 +49,7 @@ We have defined several types from a view of template, which include
 - `Union Type`
 - `Composite Type`
 - `List Type`
+- `Enum Type`
 - `Primitive Types`
 
 and `params type` is just a wrapper of types defined above, `constrained type` is a further restriction of the existing types.
@@ -58,6 +59,7 @@ The data type definitions in Rust are as follows:
 - `Union Type` => an algebraic form of enum which acts like a tagged union in C.
 - `Composite Type` => struct
 - `List Type` => vector
+- `Enum Type` => enum that wraps one specific type
 - `Primitive Types`
     - `any` => to be removed?
     - `bool` => bool

@@ -72,8 +72,18 @@ impl ${macros.toRustType(composite_type)} {
 </#if>
 pub enum ${macros.toRustType(enum)} {
     <#list enum.values as value>
-    ${value.name} = "${value.value}"<#if value_has_next>,</#if></#list>,
+    ${value.name}(${macros.toRustType(enum.internalType)})<#if value_has_next>,</#if></#list>,
 }
+
+impl Into<${macros.toRustType(enum.internalType)}> for ${macros.toRustType(enum)} {
+    fn into(self) -> ${macros.toRustType(enum.internalType)} {
+        match self {
+            <#list enum.values as value>
+            ${macros.toRustType(enum)}::${value.name} => "${value.name}".into(),<#if value_has_next>,</#if></#list>
+        }
+    }
+}
+
 </#list>
 
 <#list paramTypes as paramType>
