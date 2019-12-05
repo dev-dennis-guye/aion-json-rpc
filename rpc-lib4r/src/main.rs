@@ -1,7 +1,7 @@
-//mod types;
-//mod server;
-//mod errors;
-//mod client;
+mod types;
+mod traits;
+mod impl;
+mod errors;
 
 fn main() {
     println!("Hello, world!");

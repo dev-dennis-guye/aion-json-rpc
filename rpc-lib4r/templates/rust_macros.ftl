@@ -17,7 +17,7 @@
     <#elseif typeName == "error">
         <#return "RPCError">
     <#elseif type.nestedType?has_content>
-        <#return "List<${toRustType(type.nestedType)}>">
+        <#return "Vector<${toRustType(type.nestedType)}>">
     <#elseif typeName == "byte">
         <#return "u8">
     <#elseif typeName == "bool">
