@@ -4,3 +4,11 @@ build
 /generator/bin/
 /generator/lib/
 /out/
+*.class
+target
+rpc-gen
+.classpath
+.project
+.settings
+.vscode
+*.iml
