@@ -224,8 +224,8 @@
             <field fieldName="height" type="long" required="true"/>
             <field fieldName="target" type="uint256HexString" required="true"/>
             <field fieldName="headerHash" type="byte32String" required="true"/>
-            <field fieldName="blockBaseReward" type="bigIntHexString" required="true"/>
-            <field fieldName="blockTxFee" type="bigIntHexString" required="true"/>
+            <field fieldName="blockBaseReward" type="uint128HexString" required="true"/>
+            <field fieldName="blockTxFee" type="uint128HexString" required="true"/>
         </type-composite>
         <type-composite typeName="submissionResult">
             <field fieldName="result" type="bool" required="true"/>

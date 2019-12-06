@@ -18,7 +18,7 @@ import org.json.JSONObject;
 *
 * AUTO-GENERATED SOURCE FILE.  DO NOT EDIT MANUALLY -- YOUR CHANGES WILL
 * BE WIPED OUT WHEN THIS FILE GETS RE-GENERATED OR UPDATED.
-* GENERATED: 2019-12-02
+* GENERATED: 2019-12-06
 *
 *****************************************************************************/
 public class RPCTypesConverter{
@@ -835,7 +835,7 @@ public class RPCTypesConverter{
             try{
                 if(str==null || str.equals(JSONObject.NULL)) return null;
                 JSONObject jsonObject = str instanceof JSONObject? (JSONObject)str :new JSONObject(str.toString());
-                return new BlockTemplate( Byte32StringConverter.decode(jsonObject.opt("previousblockhash")) , LongConverter.decode(jsonObject.opt("height")) , Uint256HexStringConverter.decode(jsonObject.opt("target")) , Byte32StringConverter.decode(jsonObject.opt("headerHash")) , BigIntHexStringConverter.decode(jsonObject.opt("blockBaseReward")) , BigIntHexStringConverter.decode(jsonObject.opt("blockTxFee")) );
+                return new BlockTemplate( Byte32StringConverter.decode(jsonObject.opt("previousblockhash")) , LongConverter.decode(jsonObject.opt("height")) , Uint256HexStringConverter.decode(jsonObject.opt("target")) , Byte32StringConverter.decode(jsonObject.opt("headerHash")) , Uint128HexStringConverter.decode(jsonObject.opt("blockBaseReward")) , Uint128HexStringConverter.decode(jsonObject.opt("blockTxFee")) );
             } catch (Exception e){
                 throw ParseErrorRPCException.INSTANCE;
             }
@@ -849,8 +849,8 @@ public class RPCTypesConverter{
                 jsonObject.put("height", LongConverter.encode(obj.height));
                 jsonObject.put("target", Uint256HexStringConverter.encode(obj.target));
                 jsonObject.put("headerHash", Byte32StringConverter.encode(obj.headerHash));
-                jsonObject.put("blockBaseReward", BigIntHexStringConverter.encode(obj.blockBaseReward));
-                jsonObject.put("blockTxFee", BigIntHexStringConverter.encode(obj.blockTxFee));
+                jsonObject.put("blockBaseReward", Uint128HexStringConverter.encode(obj.blockBaseReward));
+                jsonObject.put("blockTxFee", Uint128HexStringConverter.encode(obj.blockTxFee));
                 return jsonObject.toString();
             }
             catch (Exception e){
@@ -866,8 +866,8 @@ public class RPCTypesConverter{
                 jsonObject.put("height", LongConverter.encode(obj.height));
                 jsonObject.put("target", Uint256HexStringConverter.encode(obj.target));
                 jsonObject.put("headerHash", Byte32StringConverter.encode(obj.headerHash));
-                jsonObject.put("blockBaseReward", BigIntHexStringConverter.encode(obj.blockBaseReward));
-                jsonObject.put("blockTxFee", BigIntHexStringConverter.encode(obj.blockTxFee));
+                jsonObject.put("blockBaseReward", Uint128HexStringConverter.encode(obj.blockBaseReward));
+                jsonObject.put("blockTxFee", Uint128HexStringConverter.encode(obj.blockTxFee));
                 return jsonObject;
             }catch (Exception e){
                 throw ParseErrorRPCException.INSTANCE;
