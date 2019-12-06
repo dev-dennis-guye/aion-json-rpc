@@ -215,6 +215,7 @@
             <field fieldName="gas" required="false" type="long"/>
             <field fieldName="gasPrice" required="false" type="long"/>
             <field fieldName="beaconHash" required="false" type="byte32String"/>
+            <field fieldName="type" required="false" type="byte" defaultValue="0x01"/>
         </type-composite>
         <type-composite typeName="blockDetails">
             <field fieldName="number" required="true" type="long"/>

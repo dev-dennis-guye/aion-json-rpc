@@ -851,8 +851,10 @@ public class RPCTypes{
         public final Long gas;
         public final Long gasPrice;
         public final ByteArray beaconHash;
+        public final Byte type;
+        public static final Byte typeDefaultValue=ByteConverter.decode("0x01");
 
-        public TxCall(AionAddress from ,AionAddress to ,ByteArray data ,BigInteger nonce ,BigInteger value ,Long gas ,Long gasPrice ,ByteArray beaconHash ){
+        public TxCall(AionAddress from ,AionAddress to ,ByteArray data ,BigInteger nonce ,BigInteger value ,Long gas ,Long gasPrice ,ByteArray beaconHash ,Byte type ){
             if(from==null) throw ParseErrorRPCException.INSTANCE;
             this.from=from;
             this.to=to;
@@ -862,6 +864,7 @@ public class RPCTypes{
             this.gas=gas;
             this.gasPrice=gasPrice;
             this.beaconHash=beaconHash;
+            this.type=type==null? typeDefaultValue:type;
         }
     }
     public static final class BlockDetails {

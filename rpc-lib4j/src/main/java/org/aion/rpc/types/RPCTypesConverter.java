@@ -817,7 +817,7 @@ public class RPCTypesConverter{
             try{
                 if(str==null || str.equals(JSONObject.NULL)) return null;
                 JSONObject jsonObject = str instanceof JSONObject? (JSONObject)str :new JSONObject(str.toString());
-                return new TxCall( AddressConverter.decode(jsonObject.opt("from")) , AddressConverter.decode(jsonObject.opt("to")) , DataHexStringConverter.decode(jsonObject.opt("data")) , BigIntConverter.decode(jsonObject.opt("nonce")) , BigIntConverter.decode(jsonObject.opt("value")) , LongConverter.decode(jsonObject.opt("gas")) , LongConverter.decode(jsonObject.opt("gasPrice")) , Byte32StringConverter.decode(jsonObject.opt("beaconHash")) );
+                return new TxCall( AddressConverter.decode(jsonObject.opt("from")) , AddressConverter.decode(jsonObject.opt("to")) , DataHexStringConverter.decode(jsonObject.opt("data")) , BigIntConverter.decode(jsonObject.opt("nonce")) , BigIntConverter.decode(jsonObject.opt("value")) , LongConverter.decode(jsonObject.opt("gas")) , LongConverter.decode(jsonObject.opt("gasPrice")) , Byte32StringConverter.decode(jsonObject.opt("beaconHash")) , ByteConverter.decode(jsonObject.opt("type")) );
             } catch (Exception e){
                 throw ParseErrorRPCException.INSTANCE;
             }
@@ -835,6 +835,7 @@ public class RPCTypesConverter{
                 jsonObject.put("gas", LongConverter.encode(obj.gas));
                 jsonObject.put("gasPrice", LongConverter.encode(obj.gasPrice));
                 jsonObject.put("beaconHash", Byte32StringConverter.encode(obj.beaconHash));
+                jsonObject.put("type", ByteConverter.encode(obj.type));
                 return jsonObject.toString();
             }
             catch (Exception e){
@@ -854,6 +855,7 @@ public class RPCTypesConverter{
                 jsonObject.put("gas", LongConverter.encode(obj.gas));
                 jsonObject.put("gasPrice", LongConverter.encode(obj.gasPrice));
                 jsonObject.put("beaconHash", Byte32StringConverter.encode(obj.beaconHash));
+                jsonObject.put("type", ByteConverter.encode(obj.type));
                 return jsonObject;
             }catch (Exception e){
                 throw ParseErrorRPCException.INSTANCE;
