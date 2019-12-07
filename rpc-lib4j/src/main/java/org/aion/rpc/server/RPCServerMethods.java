@@ -12,7 +12,7 @@ import org.aion.util.types.ByteArrayWrapper;
 *
 * AUTO-GENERATED SOURCE FILE.  DO NOT EDIT MANUALLY -- YOUR CHANGES WILL
 * BE WIPED OUT WHEN THIS FILE GETS RE-GENERATED OR UPDATED.
-* GENERATED: 2019-12-06
+* GENERATED: 2019-12-07
 *
 *****************************************************************************/
 public interface RPCServerMethods extends RPC{
@@ -55,16 +55,16 @@ public interface RPCServerMethods extends RPC{
                 BlockDetails result = rpc.ops_getBlockDetails(params.block);
                 res = BlockDetailsConverter.encode(result);
             }else
-            if(request.method.equals("getblocktemplate")){
+            if(request.method.equals("getBlockTemplate")){
                 VoidParams params= VoidParamsConverter.decode(request.params);
                 if (params==null) throw InvalidParamsRPCException.INSTANCE;
-                BlockTemplate result = rpc.getblocktemplate();
+                BlockTemplate result = rpc.getBlockTemplate();
                 res = BlockTemplateConverter.encode(result);
             }else
-            if(request.method.equals("submitblock")){
+            if(request.method.equals("submitBlock")){
                 SubmitBlockParams params= SubmitBlockParamsConverter.decode(request.params);
                 if (params==null) throw InvalidParamsRPCException.INSTANCE;
-                SubmissionResult result = rpc.submitblock(params.nonce,params.solution,params.headerHash);
+                SubmissionResult result = rpc.submitBlock(params.nonce,params.solution,params.headerHash);
                 res = SubmissionResultConverter.encode(result);
             }else
             if(request.method.equals("validateaddress")){
@@ -79,10 +79,10 @@ public interface RPCServerMethods extends RPC{
                 BigInteger result = rpc.getDifficulty();
                 res = BigIntHexStringConverter.encode(result);
             }else
-            if(request.method.equals("getMinerStats")){
+            if(request.method.equals("getMinerStatistics")){
                 AddressParams params= AddressParamsConverter.decode(request.params);
                 if (params==null) throw InvalidParamsRPCException.INSTANCE;
-                MinerStats result = rpc.getMinerStats(params.address);
+                MinerStats result = rpc.getMinerStatistics(params.address);
                 res = MinerStatsConverter.encode(result);
             }else
             if(request.method.equals("ping")){
@@ -159,7 +159,7 @@ public interface RPCServerMethods extends RPC{
     * @return a set containing all the methods supported by this interface
     */
     static Set<String> listMethods(){
-        return Set.of( "personal_ecRecover", "getseed", "submitseed", "submitsignature", "ops_getBlockDetails", "getblocktemplate", "submitblock", "validateaddress", "getDifficulty", "getMinerStats", "ping", "ops_getAccountState", "ops_getTransaction", "ops_getBlockDetailsByNumber", "ops_getBlockDetailsByHash", "eth_getBalance", "eth_getTransactionCount", "personal_unlockAccount", "personal_lockAccount", "personal_newAccount", "personal_listAccounts");
+        return Set.of( "personal_ecRecover", "getseed", "submitseed", "submitsignature", "ops_getBlockDetails", "getBlockTemplate", "submitBlock", "validateaddress", "getDifficulty", "getMinerStatistics", "ping", "ops_getAccountState", "ops_getTransaction", "ops_getBlockDetailsByNumber", "ops_getBlockDetailsByHash", "eth_getBalance", "eth_getTransactionCount", "personal_unlockAccount", "personal_lockAccount", "personal_newAccount", "personal_listAccounts");
     }
 
     /**
@@ -212,7 +212,7 @@ public interface RPCServerMethods extends RPC{
     * 
     * @return 
     */
-    BlockTemplate getblocktemplate();
+    BlockTemplate getBlockTemplate();
     /**
     * 
     * @param nonce 
@@ -222,7 +222,7 @@ public interface RPCServerMethods extends RPC{
 
     * @return 
     */
-    SubmissionResult submitblock(ByteArray nonce,ByteArray solution,ByteArray headerHash);
+    SubmissionResult submitBlock(ByteArray nonce,ByteArray solution,ByteArray headerHash);
     /**
     * 
     * @param address 
@@ -243,7 +243,7 @@ public interface RPCServerMethods extends RPC{
 
     * @return 
     */
-    MinerStats getMinerStats(AionAddress address);
+    MinerStats getMinerStatistics(AionAddress address);
     /**
     * 
     * @return 
@@ -352,11 +352,11 @@ public interface RPCServerMethods extends RPC{
             Map.entry("submitseed", "stratum"),
             Map.entry("submitsignature", "stratum"),
             Map.entry("ops_getBlockDetails", "ops"),
-            Map.entry("getblocktemplate", "stratum"),
-            Map.entry("submitblock", "stratum"),
+            Map.entry("getBlockTemplate", "stratum"),
+            Map.entry("submitBlock", "stratum"),
             Map.entry("validateaddress", "stratum"),
             Map.entry("getDifficulty", "stratum"),
-            Map.entry("getMinerStats", "stratum"),
+            Map.entry("getMinerStatistics", "stratum"),
             Map.entry("ping", ""),
             Map.entry("ops_getAccountState", "ops"),
             Map.entry("ops_getTransaction", "ops"),

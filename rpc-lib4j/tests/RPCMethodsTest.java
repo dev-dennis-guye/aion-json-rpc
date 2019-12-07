@@ -79,7 +79,7 @@ import org.junit.Test;
 *
 * AUTO-GENERATED SOURCE FILE.  DO NOT EDIT MANUALLY -- YOUR CHANGES WILL
 * BE WIPED OUT WHEN THIS FILE GETS RE-GENERATED OR UPDATED.
-* GENERATED: 2019-12-06
+* GENERATED: 2019-12-07
 *
 *****************************************************************************/
 public class RPCMethodsTest{
@@ -155,35 +155,35 @@ public class RPCMethodsTest{
         assertNotNull(resultUnion);
         resultUnion.encode();
     }
-    public void getblocktemplateTest(){
-        String method = "getblocktemplate";
-        Request successfulRequest = testUtils.getblocktemplate_succeeds();
-        ResultUnion resultUnion = testUtils.getblocktemplateRPC().execute(request);
+    public void getBlockTemplateTest(){
+        String method = "getBlockTemplate";
+        Request successfulRequest = testUtils.getBlockTemplate_succeeds();
+        ResultUnion resultUnion = testUtils.getBlockTemplateRPC().execute(request);
         assertNotNull(resultUnion);
         resultUnion.encode();
     }
-    public void submitblockTestErrorsBlockTemplateNotFoundRPCException(){
-        String method = "submitblock";
+    public void submitBlockTestErrorsBlockTemplateNotFoundRPCException(){
+        String method = "submitBlock";
         try{
-            Request request = testUtils.submitblock_BlockTemplateNotFound();
-            testUtils.submitblockRPC().execute(request);
+            Request request = testUtils.submitBlock_BlockTemplateNotFound();
+            testUtils.submitBlockRPC().execute(request);
             fail();
         }catch(BlockTemplateNotFoundRPCException e){/*We expect this error*/}
     }
 
-    public void submitblockTestErrorsFailedToSealBlockRPCException(){
-        String method = "submitblock";
+    public void submitBlockTestErrorsFailedToSealBlockRPCException(){
+        String method = "submitBlock";
         try{
-            Request request = testUtils.submitblock_FailedToSealBlock();
-            testUtils.submitblockRPC().execute(request);
+            Request request = testUtils.submitBlock_FailedToSealBlock();
+            testUtils.submitBlockRPC().execute(request);
             fail();
         }catch(FailedToSealBlockRPCException e){/*We expect this error*/}
     }
 
-    public void submitblockTest(){
-        String method = "submitblock";
-        Request successfulRequest = testUtils.submitblock_succeeds();
-        ResultUnion resultUnion = testUtils.submitblockRPC().execute(request);
+    public void submitBlockTest(){
+        String method = "submitBlock";
+        Request successfulRequest = testUtils.submitBlock_succeeds();
+        ResultUnion resultUnion = testUtils.submitBlockRPC().execute(request);
         assertNotNull(resultUnion);
         resultUnion.encode();
     }
@@ -201,19 +201,19 @@ public class RPCMethodsTest{
         assertNotNull(resultUnion);
         resultUnion.encode();
     }
-    public void getMinerStatsTestErrorsFailedToComputeMetricsRPCException(){
-        String method = "getMinerStats";
+    public void getMinerStatisticsTestErrorsFailedToComputeMetricsRPCException(){
+        String method = "getMinerStatistics";
         try{
-            Request request = testUtils.getMinerStats_FailedToComputeMetrics();
-            testUtils.getMinerStatsRPC().execute(request);
+            Request request = testUtils.getMinerStatistics_FailedToComputeMetrics();
+            testUtils.getMinerStatisticsRPC().execute(request);
             fail();
         }catch(FailedToComputeMetricsRPCException e){/*We expect this error*/}
     }
 
-    public void getMinerStatsTest(){
-        String method = "getMinerStats";
-        Request successfulRequest = testUtils.getMinerStats_succeeds();
-        ResultUnion resultUnion = testUtils.getMinerStatsRPC().execute(request);
+    public void getMinerStatisticsTest(){
+        String method = "getMinerStatistics";
+        Request successfulRequest = testUtils.getMinerStatistics_succeeds();
+        ResultUnion resultUnion = testUtils.getMinerStatisticsRPC().execute(request);
         assertNotNull(resultUnion);
         resultUnion.encode();
     }

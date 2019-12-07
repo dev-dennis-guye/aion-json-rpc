@@ -44,8 +44,8 @@
         <method name="ops_getBlockDetails" param="blockSpecifierParams" returnType="blockDetails" namespace="ops">
             <comment>Returns the details of the specified block.</comment>
         </method>
-        <method name="getblocktemplate" param="voidParams" returnType="blockTemplate" namespace="stratum"/>
-        <method name="submitblock" param="submitBlockParams" returnType="submissionResult" namespace="stratum">
+        <method name="getBlockTemplate" param="voidParams" returnType="blockTemplate" namespace="stratum"/>
+        <method name="submitBlock" param="submitBlockParams" returnType="submissionResult" namespace="stratum">
             <errors>
                 <error value="BlockTemplateNotFound"/>
                 <error value="FailedToSealBlock"/>
@@ -53,7 +53,7 @@
         </method>
         <method name="validateaddress" param="addressParams" returnType="validateAddressResult" namespace="stratum"/>
         <method name="getDifficulty" param="voidParams" returnType="bigIntHexString" namespace="stratum"/>
-        <method name="getMinerStats" param="addressParams" returnType="minerStats" namespace="stratum">
+        <method name="getMinerStatistics" param="addressParams" returnType="minerStats" namespace="stratum">
             <errors>
                 <error value="FailedToComputeMetrics"/>
             </errors>

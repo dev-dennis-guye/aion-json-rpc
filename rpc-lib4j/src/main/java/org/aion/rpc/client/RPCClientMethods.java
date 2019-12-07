@@ -13,7 +13,7 @@ import org.aion.util.types.ByteArrayWrapper;
 *
 * AUTO-GENERATED SOURCE FILE.  DO NOT EDIT MANUALLY -- YOUR CHANGES WILL
 * BE WIPED OUT WHEN THIS FILE GETS RE-GENERATED OR UPDATED.
-* GENERATED: 2019-12-06
+* GENERATED: 2019-12-07
 *
 *****************************************************************************/
 public class RPCClientMethods{
@@ -100,9 +100,9 @@ public class RPCClientMethods{
     * 
     * @return 
     */
-    public final BlockTemplate getblocktemplate(){
+    public final BlockTemplate getBlockTemplate(){
         VoidParams params= new VoidParams();
-        Request request = new Request(generator.generateID(), "getblocktemplate", VoidParamsConverter.encode(params), VersionType.Version2);
+        Request request = new Request(generator.generateID(), "getBlockTemplate", VoidParamsConverter.encode(params), VersionType.Version2);
 
         return provider.execute(request, BlockTemplateConverter::decode);
     }
@@ -115,9 +115,9 @@ public class RPCClientMethods{
 
     * @return 
     */
-    public final SubmissionResult submitblock(ByteArray nonce,ByteArray solution,ByteArray headerHash){
+    public final SubmissionResult submitBlock(ByteArray nonce,ByteArray solution,ByteArray headerHash){
         SubmitBlockParams params= new SubmitBlockParams(nonce ,solution ,headerHash);
-        Request request = new Request(generator.generateID(), "submitblock", SubmitBlockParamsConverter.encode(params), VersionType.Version2);
+        Request request = new Request(generator.generateID(), "submitBlock", SubmitBlockParamsConverter.encode(params), VersionType.Version2);
 
         return provider.execute(request, SubmissionResultConverter::decode);
     }
@@ -151,9 +151,9 @@ public class RPCClientMethods{
 
     * @return 
     */
-    public final MinerStats getMinerStats(AionAddress address){
+    public final MinerStats getMinerStatistics(AionAddress address){
         AddressParams params= new AddressParams(address);
-        Request request = new Request(generator.generateID(), "getMinerStats", AddressParamsConverter.encode(params), VersionType.Version2);
+        Request request = new Request(generator.generateID(), "getMinerStatistics", AddressParamsConverter.encode(params), VersionType.Version2);
 
         return provider.execute(request, MinerStatsConverter::decode);
     }
@@ -396,9 +396,9 @@ public class RPCClientMethods{
     * @param <O> the result type of the async task.
     * @return The result of this asynchronous request
     */
-    public final <O> CompletableFuture<O> getblocktemplate( BiFunction<BlockTemplate, RpcError, O> asyncTask){
+    public final <O> CompletableFuture<O> getBlockTemplate( BiFunction<BlockTemplate, RpcError, O> asyncTask){
         VoidParams params= new VoidParams();
-        Request request = new Request(generator.generateID(), "getblocktemplate", VoidParamsConverter.encode(params), VersionType.Version2);
+        Request request = new Request(generator.generateID(), "getBlockTemplate", VoidParamsConverter.encode(params), VersionType.Version2);
 
         return provider.executeAsync(request, BlockTemplateConverter::decode, asyncTask);
     }
@@ -413,9 +413,9 @@ public class RPCClientMethods{
     * @param <O> the result type of the async task.
     * @return The result of this asynchronous request
     */
-    public final <O> CompletableFuture<O> submitblock(ByteArray nonce,ByteArray solution,ByteArray headerHash, BiFunction<SubmissionResult, RpcError, O> asyncTask){
+    public final <O> CompletableFuture<O> submitBlock(ByteArray nonce,ByteArray solution,ByteArray headerHash, BiFunction<SubmissionResult, RpcError, O> asyncTask){
         SubmitBlockParams params= new SubmitBlockParams(nonce ,solution ,headerHash);
-        Request request = new Request(generator.generateID(), "submitblock", SubmitBlockParamsConverter.encode(params), VersionType.Version2);
+        Request request = new Request(generator.generateID(), "submitBlock", SubmitBlockParamsConverter.encode(params), VersionType.Version2);
 
         return provider.executeAsync(request, SubmissionResultConverter::decode, asyncTask);
     }
@@ -455,9 +455,9 @@ public class RPCClientMethods{
     * @param <O> the result type of the async task.
     * @return The result of this asynchronous request
     */
-    public final <O> CompletableFuture<O> getMinerStats(AionAddress address, BiFunction<MinerStats, RpcError, O> asyncTask){
+    public final <O> CompletableFuture<O> getMinerStatistics(AionAddress address, BiFunction<MinerStats, RpcError, O> asyncTask){
         AddressParams params= new AddressParams(address);
-        Request request = new Request(generator.generateID(), "getMinerStats", AddressParamsConverter.encode(params), VersionType.Version2);
+        Request request = new Request(generator.generateID(), "getMinerStatistics", AddressParamsConverter.encode(params), VersionType.Version2);
 
         return provider.executeAsync(request, MinerStatsConverter::decode, asyncTask);
     }
