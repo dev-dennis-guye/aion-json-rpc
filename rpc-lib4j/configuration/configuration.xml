@@ -15,6 +15,7 @@
         <template outputfile="RPCClientMethods.java" templatefile="java_rpc_client.ftl"/>
         <template outputfile="RPCMethodsTest.java" templatefile="java_test.ftl"/>
         <template outputfile="RPCTestUtilsInterface.java" templatefile="java_testUtils.ftl"/>
+        <template outputfile="Method.java" templatefile="java_methodNames.ftl"/>
     </rpc-templates>
     <type-templates dir="types"> <!--For use with type.xml-->
         <template outputfile="RPCTypes.java" templatefile="java_types.ftl"/>

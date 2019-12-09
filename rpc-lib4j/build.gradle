@@ -57,8 +57,15 @@ task copyJavaTests(type:Copy){
     outputs.upToDateWhen{ false }
 }
 
+task copyJavaConstants(type:Copy){
+    from "${generatedFolderPath}/rpc"
+    into "${javaLibraryPath}/constants"
+    include "Method.java"
+    outputs.upToDateWhen{ false }
+}
+
 task copyAllGeneratedJava(type:Copy){
-    dependsOn  'copyJavaExceptions', 'copyJavaClientMethods', 'copyJavaServerMethods', 'copyJavaTypes', 'copyJavaTests'
+    dependsOn  'copyJavaExceptions', 'copyJavaClientMethods', 'copyJavaServerMethods', 'copyJavaTypes', 'copyJavaTests', 'copyJavaConstants'
 }
 
 task docs4J(type: Zip){
