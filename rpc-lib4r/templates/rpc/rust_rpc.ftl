@@ -12,7 +12,7 @@ build_rpc_trait! {
     pub trait RpcServer {
         <#list methods as method>
         #[rpc(name = "${method.name}")]
-        fn ${method.name}(&self, ${macros.toRustType(method.param)}) -> Result<${macros.toRustType(method.returnType)}>;
+        fn ${macros.toSnakeCase(method.name)}(&self, ${macros.toRustType(method.param)}) -> Result<${macros.toRustType(method.returnType)}>;
 
         </#list>
     }

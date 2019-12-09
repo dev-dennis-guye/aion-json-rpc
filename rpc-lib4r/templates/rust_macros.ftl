@@ -257,3 +257,18 @@
 <#function paramsExtractorFromName name>
     <#return name>
 </#function>
+
+<#function toSnakeCase name>
+    <#if name?matches(r"[a-z_]+")>
+        <#return name>
+    <#else>
+        <#assign res_matches = name?matches("([a-z_]+)([A-Z])")>
+        <#assign res = "" >
+        <#list res_matches as m>
+            <#assign res = "${res}${m?groups[1]}_${m?groups[2]?lower_case}" >
+        </#list>
+        <#assign tail_matches = name?matches(r"[a-z_A-Z]+[A-Z]([a-z_]+)")>
+        <#return "${res}${tail_matches?groups[1]}">
+
+    </#if>
+</#function>
