@@ -52,7 +52,7 @@
             </errors>
         </method>
         <method name="validateaddress" param="addressParams" returnType="validateAddressResult" namespace="stratum"/>
-        <method name="getDifficulty" param="voidParams" returnType="bigIntHexString" namespace="stratum"/>
+        <method name="getDifficulty" param="voidParams" returnType="uint128HexString" namespace="stratum"/>
         <method name="getMinerStatistics" param="addressParams" returnType="minerStats" namespace="stratum">
             <errors>
                 <error value="FailedToComputeMetrics"/>
