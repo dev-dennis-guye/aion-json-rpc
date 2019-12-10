@@ -74,7 +74,7 @@
         <regex name="unsignedHexPattern" value="^0x([0-9a-fA-F]{2})+$" comment="Validates that a number is encoded as a hex string. This is different from hex pattern since this validates that the string correctly encodes a byte array."/>
         <regex name="decPattern" value="^[-+]?[0-9]+$" comment="Validates a signed decimal string."/>
         <regex name="booleanPattern" value="^([Tt]rue|[Ff]alse)$" comment="Validates a boolean string."/>
-        <regex name="byteArrayPattern" value="^0x([0-9a-fA-F]{2})*$" comment="Validates a byte hex string. This is different from unsignedHexPattern since empty byte arrays are allowed here."/>
+        <regex name="byteArrayPattern" value="^(0x)?([0-9a-fA-F]{2})*$" comment="Validates a byte hex string. This is different from unsignedHexPattern since empty byte arrays are allowed here."/>
         <regex name="aionAddressPattern" value="^(0x)?([a-fA-F0-9]{64})$"
             comment="Validates that an aion address is valid"/>
     </regexes>
@@ -333,7 +333,7 @@
         <type-composite typeName="ethTxReceiptLogs">
             <field fieldName="address" required="true" type="address"/>
             <field fieldName="data" required="true" type="dataHexString"/>
-            <field fieldName="blockNumber" required="true" type="long"/>
+            <field fieldName="blockNumber" required="true" type="uint32HexString"/>
             <field fieldName="transactionIndex" required="true" type="uint16HexString"/>
             <field fieldName="logIndex" required="true" type="uint16HexString"/>
             <field fieldName="topics" required="true" type="dataHexString_array"/>
@@ -403,15 +403,15 @@
             min="2" regex=".*" typeName="dataHexString"/>
         <type-constrained baseType="bigInt" max="infinity" min="3" regex="^(0x)?[0-9a-fA-F]+$"
             typeName="bigIntHexString"/>
-        <type-constrained baseType="uint256" max="66" min="66" regex="^(0x)?[0-9a-fA-F]+$"
+        <type-constrained baseType="uint256" max="66" min="2" regex="^(0x)?[0-9a-fA-F]+$"
             typeName="uint256HexString"/>
-        <type-constrained baseType="uint64" max="18" min="18" regex="^(0x)?[0-9a-fA-F]+$"
+        <type-constrained baseType="uint64" max="18" min="2" regex="^(0x)?[0-9a-fA-F]+$"
             typeName="uint64HexString"/>
-        <type-constrained baseType="uint128" max="34" min="34" regex="^(0x)?[0-9a-fA-F]+$"
+        <type-constrained baseType="uint128" max="34" min="2" regex="^(0x)?[0-9a-fA-F]+$"
             typeName="uint128HexString"/>
-        <type-constrained baseType="uint32" max="18" min="18" regex="^(0x)?[0-9a-fA-F]+$"
+        <type-constrained baseType="uint32" max="18" min="2" regex="^(0x)?[0-9a-fA-F]+$"
             typeName="uint32HexString"/>
-        <type-constrained baseType="uint16" max="18" min="18" regex="^(0x)?[0-9a-fA-F]+$"
+        <type-constrained baseType="uint16" max="18" min="2" regex="^(0x)?[0-9a-fA-F]+$"
             typeName="uint16HexString"/>
         <type-constrained baseType="long" min="3" max="18" regex="^(0x)?[0-9a-fA-F]+$"
             typeName="longHexString"/>
@@ -419,10 +419,10 @@
             typeName="intHexString"/>
         <type-constrained baseType="byte" min="3" max="4" regex="^(0x)?[0-9a-fA-F]+$"
             typeName="byteHexString"/>
-        <type-constrained baseType="dataHexString" typeName="byte32String" max="66" min="66"
-            regex=".*"/>
-        <type-constrained baseType="dataHexString" typeName="byte64String" max="130" min="130"
-            regex=".*"/>
+        <type-constrained baseType="dataHexString" typeName="byte32String" max="66" min="64"
+            regex="^(0x)?[a-fA-F0-9]{64}$"/>
+        <type-constrained baseType="dataHexString" typeName="byte64String" max="130" min="128"
+            regex="^(0x)?[a-fA-F0-9]{128}$"/>
         <type-constrained baseType="string" typeName="decimalstring"
             regex="^([+-]([1-9][0-9]*|[0-9]+[.][0-9])|[0-9]+([.][0-9])?)[0-9]*$" min="1"
             max="infinity"/>
