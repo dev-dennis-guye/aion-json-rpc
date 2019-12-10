@@ -25,7 +25,7 @@ public class RPCTypes{
 
         public ByteArray(byte[] bytes) {
             if (bytes == null) {
-                throw new NullPointerException("Byte array is null");
+                throw new  NullPointerException("Byte array is null");
             }
             this.bytes = bytes;
         }
@@ -33,7 +33,7 @@ public class RPCTypes{
         * @param hexString a hexadecimal string that encodes a byte array.
         */
         public ByteArray(String hexString){
-            if (hexString == null) throw new NullPointerException("Hex String is null");
+            if (hexString == null) throw new  NullPointerException("Hex String is null");
             this.bytes = ByteUtil.hexStringToBytes(hexString);
         }
 
@@ -94,27 +94,27 @@ public class RPCTypes{
 
         public BlockSpecifierUnion(ByteArray hash){
             this(hash,null,null);
-            if(hash == null) throw ParseErrorRPCException.INSTANCE;
+            if(hash == null) throw new ParseErrorRPCException();
         }
         public BlockSpecifierUnion(Long blockNumber){
             this(null,blockNumber,null);
-            if(blockNumber == null) throw ParseErrorRPCException.INSTANCE;
+            if(blockNumber == null) throw new ParseErrorRPCException();
         }
         public BlockSpecifierUnion(BlockEnum blockEnum){
             this(null,null,blockEnum);
-            if(blockEnum == null) throw ParseErrorRPCException.INSTANCE;
+            if(blockEnum == null) throw new ParseErrorRPCException();
         }
 
         public static BlockSpecifierUnion wrap(ByteArray hash){
-            if(hash == null) throw ParseErrorRPCException.INSTANCE;
+            if(hash == null) throw new ParseErrorRPCException();
             else return new BlockSpecifierUnion(hash);
         }
         public static BlockSpecifierUnion wrap(Long blockNumber){
-            if(blockNumber == null) throw ParseErrorRPCException.INSTANCE;
+            if(blockNumber == null) throw new ParseErrorRPCException();
             else return new BlockSpecifierUnion(blockNumber);
         }
         public static BlockSpecifierUnion wrap(BlockEnum blockEnum){
-            if(blockEnum == null) throw ParseErrorRPCException.INSTANCE;
+            if(blockEnum == null) throw new ParseErrorRPCException();
             else return new BlockSpecifierUnion(blockEnum);
         }
 
@@ -122,7 +122,7 @@ public class RPCTypes{
             if(this.hash != null) return ByteArrayConverter.encode(hash);
             if(this.blockNumber != null) return LongConverter.encode(blockNumber);
             if(this.blockEnum != null) return BlockEnumConverter.encode(blockEnum);
-            throw ParseErrorRPCException.INSTANCE;
+            throw new ParseErrorRPCException();
         }
 
         public static BlockSpecifierUnion decode(Object object){
@@ -135,7 +135,7 @@ public class RPCTypes{
             try{
                 return new BlockSpecifierUnion(BlockEnumConverter.decode(object));
             }catch(Exception e){}
-            throw ParseErrorRPCException.INSTANCE;
+            throw new ParseErrorRPCException();
         }
     }
 
@@ -160,26 +160,26 @@ public class RPCTypes{
 
         public SyncInfoUnion(SyncInfo syncInfo){
             this(syncInfo,null);
-            if(syncInfo == null) throw ParseErrorRPCException.INSTANCE;
+            if(syncInfo == null) throw new ParseErrorRPCException();
         }
         public SyncInfoUnion(Boolean done){
             this(null,done);
-            if(done == null) throw ParseErrorRPCException.INSTANCE;
+            if(done == null) throw new ParseErrorRPCException();
         }
 
         public static SyncInfoUnion wrap(SyncInfo syncInfo){
-            if(syncInfo == null) throw ParseErrorRPCException.INSTANCE;
+            if(syncInfo == null) throw new ParseErrorRPCException();
             else return new SyncInfoUnion(syncInfo);
         }
         public static SyncInfoUnion wrap(Boolean done){
-            if(done == null) throw ParseErrorRPCException.INSTANCE;
+            if(done == null) throw new ParseErrorRPCException();
             else return new SyncInfoUnion(done);
         }
 
         public Object encode(){
             if(this.syncInfo != null) return SyncInfoConverter.encode(syncInfo);
             if(this.done != null) return BoolConverter.encode(done);
-            throw ParseErrorRPCException.INSTANCE;
+            throw new ParseErrorRPCException();
         }
 
         public static SyncInfoUnion decode(Object object){
@@ -189,7 +189,7 @@ public class RPCTypes{
             try{
                 return new SyncInfoUnion(BoolConverter.decode(object));
             }catch(Exception e){}
-            throw ParseErrorRPCException.INSTANCE;
+            throw new ParseErrorRPCException();
         }
     }
 
@@ -210,26 +210,26 @@ public class RPCTypes{
 
         public BlockNumberEnumUnion(Long blockNumber){
             this(blockNumber,null);
-            if(blockNumber == null) throw ParseErrorRPCException.INSTANCE;
+            if(blockNumber == null) throw new ParseErrorRPCException();
         }
         public BlockNumberEnumUnion(BlockEnum blockEnum){
             this(null,blockEnum);
-            if(blockEnum == null) throw ParseErrorRPCException.INSTANCE;
+            if(blockEnum == null) throw new ParseErrorRPCException();
         }
 
         public static BlockNumberEnumUnion wrap(Long blockNumber){
-            if(blockNumber == null) throw ParseErrorRPCException.INSTANCE;
+            if(blockNumber == null) throw new ParseErrorRPCException();
             else return new BlockNumberEnumUnion(blockNumber);
         }
         public static BlockNumberEnumUnion wrap(BlockEnum blockEnum){
-            if(blockEnum == null) throw ParseErrorRPCException.INSTANCE;
+            if(blockEnum == null) throw new ParseErrorRPCException();
             else return new BlockNumberEnumUnion(blockEnum);
         }
 
         public Object encode(){
             if(this.blockNumber != null) return Uint32Converter.encode(blockNumber);
             if(this.blockEnum != null) return BlockEnumConverter.encode(blockEnum);
-            throw ParseErrorRPCException.INSTANCE;
+            throw new ParseErrorRPCException();
         }
 
         public static BlockNumberEnumUnion decode(Object object){
@@ -239,7 +239,7 @@ public class RPCTypes{
             try{
                 return new BlockNumberEnumUnion(BlockEnumConverter.decode(object));
             }catch(Exception e){}
-            throw ParseErrorRPCException.INSTANCE;
+            throw new ParseErrorRPCException();
         }
     }
 
@@ -278,107 +278,107 @@ public class RPCTypes{
 
         public ResultUnion(BlockDetails blockDetails){
             this(blockDetails,null,null,null,null,null,null,null,null,null,null,null,null);
-            if(blockDetails == null) throw ParseErrorRPCException.INSTANCE;
+            if(blockDetails == null) throw new ParseErrorRPCException();
         }
         public ResultUnion(AionAddress address){
             this(null,address,null,null,null,null,null,null,null,null,null,null,null);
-            if(address == null) throw ParseErrorRPCException.INSTANCE;
+            if(address == null) throw new ParseErrorRPCException();
         }
         public ResultUnion(ByteArray byteArray){
             this(null,null,byteArray,null,null,null,null,null,null,null,null,null,null);
-            if(byteArray == null) throw ParseErrorRPCException.INSTANCE;
+            if(byteArray == null) throw new ParseErrorRPCException();
         }
         public ResultUnion(Boolean bool){
             this(null,null,null,bool,null,null,null,null,null,null,null,null,null);
-            if(bool == null) throw ParseErrorRPCException.INSTANCE;
+            if(bool == null) throw new ParseErrorRPCException();
         }
         public ResultUnion(BlockTemplate blockTemplate){
             this(null,null,null,null,blockTemplate,null,null,null,null,null,null,null,null);
-            if(blockTemplate == null) throw ParseErrorRPCException.INSTANCE;
+            if(blockTemplate == null) throw new ParseErrorRPCException();
         }
         public ResultUnion(SubmissionResult submissionResult){
             this(null,null,null,null,null,submissionResult,null,null,null,null,null,null,null);
-            if(submissionResult == null) throw ParseErrorRPCException.INSTANCE;
+            if(submissionResult == null) throw new ParseErrorRPCException();
         }
         public ResultUnion(ValidateAddressResult validateAddressResult){
             this(null,null,null,null,null,null,validateAddressResult,null,null,null,null,null,null);
-            if(validateAddressResult == null) throw ParseErrorRPCException.INSTANCE;
+            if(validateAddressResult == null) throw new ParseErrorRPCException();
         }
         public ResultUnion(BigInteger bigInt){
             this(null,null,null,null,null,null,null,bigInt,null,null,null,null,null);
-            if(bigInt == null) throw ParseErrorRPCException.INSTANCE;
+            if(bigInt == null) throw new ParseErrorRPCException();
         }
         public ResultUnion(MinerStats minerStats){
             this(null,null,null,null,null,null,null,null,minerStats,null,null,null,null);
-            if(minerStats == null) throw ParseErrorRPCException.INSTANCE;
+            if(minerStats == null) throw new ParseErrorRPCException();
         }
         public ResultUnion(PongEnum pongEnum){
             this(null,null,null,null,null,null,null,null,null,pongEnum,null,null,null);
-            if(pongEnum == null) throw ParseErrorRPCException.INSTANCE;
+            if(pongEnum == null) throw new ParseErrorRPCException();
         }
         public ResultUnion(AccountState accountState){
             this(null,null,null,null,null,null,null,null,null,null,accountState,null,null);
-            if(accountState == null) throw ParseErrorRPCException.INSTANCE;
+            if(accountState == null) throw new ParseErrorRPCException();
         }
         public ResultUnion(OpsTransaction opsTransaction){
             this(null,null,null,null,null,null,null,null,null,null,null,opsTransaction,null);
-            if(opsTransaction == null) throw ParseErrorRPCException.INSTANCE;
+            if(opsTransaction == null) throw new ParseErrorRPCException();
         }
         public ResultUnion(AionAddress[] addressArray){
             this(null,null,null,null,null,null,null,null,null,null,null,null,addressArray);
-            if(addressArray == null) throw ParseErrorRPCException.INSTANCE;
+            if(addressArray == null) throw new ParseErrorRPCException();
         }
 
         public static ResultUnion wrap(BlockDetails blockDetails){
-            if(blockDetails == null) throw ParseErrorRPCException.INSTANCE;
+            if(blockDetails == null) throw new ParseErrorRPCException();
             else return new ResultUnion(blockDetails);
         }
         public static ResultUnion wrap(AionAddress address){
-            if(address == null) throw ParseErrorRPCException.INSTANCE;
+            if(address == null) throw new ParseErrorRPCException();
             else return new ResultUnion(address);
         }
         public static ResultUnion wrap(ByteArray byteArray){
-            if(byteArray == null) throw ParseErrorRPCException.INSTANCE;
+            if(byteArray == null) throw new ParseErrorRPCException();
             else return new ResultUnion(byteArray);
         }
         public static ResultUnion wrap(Boolean bool){
-            if(bool == null) throw ParseErrorRPCException.INSTANCE;
+            if(bool == null) throw new ParseErrorRPCException();
             else return new ResultUnion(bool);
         }
         public static ResultUnion wrap(BlockTemplate blockTemplate){
-            if(blockTemplate == null) throw ParseErrorRPCException.INSTANCE;
+            if(blockTemplate == null) throw new ParseErrorRPCException();
             else return new ResultUnion(blockTemplate);
         }
         public static ResultUnion wrap(SubmissionResult submissionResult){
-            if(submissionResult == null) throw ParseErrorRPCException.INSTANCE;
+            if(submissionResult == null) throw new ParseErrorRPCException();
             else return new ResultUnion(submissionResult);
         }
         public static ResultUnion wrap(ValidateAddressResult validateAddressResult){
-            if(validateAddressResult == null) throw ParseErrorRPCException.INSTANCE;
+            if(validateAddressResult == null) throw new ParseErrorRPCException();
             else return new ResultUnion(validateAddressResult);
         }
         public static ResultUnion wrap(BigInteger bigInt){
-            if(bigInt == null) throw ParseErrorRPCException.INSTANCE;
+            if(bigInt == null) throw new ParseErrorRPCException();
             else return new ResultUnion(bigInt);
         }
         public static ResultUnion wrap(MinerStats minerStats){
-            if(minerStats == null) throw ParseErrorRPCException.INSTANCE;
+            if(minerStats == null) throw new ParseErrorRPCException();
             else return new ResultUnion(minerStats);
         }
         public static ResultUnion wrap(PongEnum pongEnum){
-            if(pongEnum == null) throw ParseErrorRPCException.INSTANCE;
+            if(pongEnum == null) throw new ParseErrorRPCException();
             else return new ResultUnion(pongEnum);
         }
         public static ResultUnion wrap(AccountState accountState){
-            if(accountState == null) throw ParseErrorRPCException.INSTANCE;
+            if(accountState == null) throw new ParseErrorRPCException();
             else return new ResultUnion(accountState);
         }
         public static ResultUnion wrap(OpsTransaction opsTransaction){
-            if(opsTransaction == null) throw ParseErrorRPCException.INSTANCE;
+            if(opsTransaction == null) throw new ParseErrorRPCException();
             else return new ResultUnion(opsTransaction);
         }
         public static ResultUnion wrap(AionAddress[] addressArray){
-            if(addressArray == null) throw ParseErrorRPCException.INSTANCE;
+            if(addressArray == null) throw new ParseErrorRPCException();
             else return new ResultUnion(addressArray);
         }
 
@@ -396,7 +396,7 @@ public class RPCTypes{
             if(this.accountState != null) return AccountStateConverter.encode(accountState);
             if(this.opsTransaction != null) return OpsTransactionConverter.encode(opsTransaction);
             if(this.addressArray != null) return AddressListConverter.encode(addressArray);
-            throw ParseErrorRPCException.INSTANCE;
+            throw new ParseErrorRPCException();
         }
 
         public static ResultUnion decode(Object object){
@@ -439,7 +439,7 @@ public class RPCTypes{
             try{
                 return new ResultUnion(AddressListConverter.decode(object));
             }catch(Exception e){}
-            throw ParseErrorRPCException.INSTANCE;
+            throw new ParseErrorRPCException();
         }
     }
 
@@ -478,107 +478,107 @@ public class RPCTypes{
 
         public ParamUnion(VoidParams voidParams){
             this(voidParams,null,null,null,null,null,null,null,null,null,null,null,null);
-            if(voidParams == null) throw ParseErrorRPCException.INSTANCE;
+            if(voidParams == null) throw new ParseErrorRPCException();
         }
         public ParamUnion(EcRecoverParams ecRecoverParams){
             this(null,ecRecoverParams,null,null,null,null,null,null,null,null,null,null,null);
-            if(ecRecoverParams == null) throw ParseErrorRPCException.INSTANCE;
+            if(ecRecoverParams == null) throw new ParseErrorRPCException();
         }
         public ParamUnion(SubmitSeedParams submitSeedParams){
             this(null,null,submitSeedParams,null,null,null,null,null,null,null,null,null,null);
-            if(submitSeedParams == null) throw ParseErrorRPCException.INSTANCE;
+            if(submitSeedParams == null) throw new ParseErrorRPCException();
         }
         public ParamUnion(SubmitSignatureParams submitSignatureParams){
             this(null,null,null,submitSignatureParams,null,null,null,null,null,null,null,null,null);
-            if(submitSignatureParams == null) throw ParseErrorRPCException.INSTANCE;
+            if(submitSignatureParams == null) throw new ParseErrorRPCException();
         }
         public ParamUnion(SubmitBlockParams submitBlockParams){
             this(null,null,null,null,submitBlockParams,null,null,null,null,null,null,null,null);
-            if(submitBlockParams == null) throw ParseErrorRPCException.INSTANCE;
+            if(submitBlockParams == null) throw new ParseErrorRPCException();
         }
         public ParamUnion(AddressParams addressParams){
             this(null,null,null,null,null,addressParams,null,null,null,null,null,null,null);
-            if(addressParams == null) throw ParseErrorRPCException.INSTANCE;
+            if(addressParams == null) throw new ParseErrorRPCException();
         }
         public ParamUnion(BlockSpecifierParams blockSpecifierParams){
             this(null,null,null,null,null,null,blockSpecifierParams,null,null,null,null,null,null);
-            if(blockSpecifierParams == null) throw ParseErrorRPCException.INSTANCE;
+            if(blockSpecifierParams == null) throw new ParseErrorRPCException();
         }
         public ParamUnion(TransactionHashParams transactionHashParams){
             this(null,null,null,null,null,null,null,transactionHashParams,null,null,null,null,null);
-            if(transactionHashParams == null) throw ParseErrorRPCException.INSTANCE;
+            if(transactionHashParams == null) throw new ParseErrorRPCException();
         }
         public ParamUnion(BlockNumberParams blockNumberParams){
             this(null,null,null,null,null,null,null,null,blockNumberParams,null,null,null,null);
-            if(blockNumberParams == null) throw ParseErrorRPCException.INSTANCE;
+            if(blockNumberParams == null) throw new ParseErrorRPCException();
         }
         public ParamUnion(BlockHashParams blockHashParams){
             this(null,null,null,null,null,null,null,null,null,blockHashParams,null,null,null);
-            if(blockHashParams == null) throw ParseErrorRPCException.INSTANCE;
+            if(blockHashParams == null) throw new ParseErrorRPCException();
         }
         public ParamUnion(UnlockAccountParams unlockAccountParams){
             this(null,null,null,null,null,null,null,null,null,null,unlockAccountParams,null,null);
-            if(unlockAccountParams == null) throw ParseErrorRPCException.INSTANCE;
+            if(unlockAccountParams == null) throw new ParseErrorRPCException();
         }
         public ParamUnion(LockAccountParams lockAccountParams){
             this(null,null,null,null,null,null,null,null,null,null,null,lockAccountParams,null);
-            if(lockAccountParams == null) throw ParseErrorRPCException.INSTANCE;
+            if(lockAccountParams == null) throw new ParseErrorRPCException();
         }
         public ParamUnion(PasswordParams passwordParams){
             this(null,null,null,null,null,null,null,null,null,null,null,null,passwordParams);
-            if(passwordParams == null) throw ParseErrorRPCException.INSTANCE;
+            if(passwordParams == null) throw new ParseErrorRPCException();
         }
 
         public static ParamUnion wrap(VoidParams voidParams){
-            if(voidParams == null) throw ParseErrorRPCException.INSTANCE;
+            if(voidParams == null) throw new ParseErrorRPCException();
             else return new ParamUnion(voidParams);
         }
         public static ParamUnion wrap(EcRecoverParams ecRecoverParams){
-            if(ecRecoverParams == null) throw ParseErrorRPCException.INSTANCE;
+            if(ecRecoverParams == null) throw new ParseErrorRPCException();
             else return new ParamUnion(ecRecoverParams);
         }
         public static ParamUnion wrap(SubmitSeedParams submitSeedParams){
-            if(submitSeedParams == null) throw ParseErrorRPCException.INSTANCE;
+            if(submitSeedParams == null) throw new ParseErrorRPCException();
             else return new ParamUnion(submitSeedParams);
         }
         public static ParamUnion wrap(SubmitSignatureParams submitSignatureParams){
-            if(submitSignatureParams == null) throw ParseErrorRPCException.INSTANCE;
+            if(submitSignatureParams == null) throw new ParseErrorRPCException();
             else return new ParamUnion(submitSignatureParams);
         }
         public static ParamUnion wrap(SubmitBlockParams submitBlockParams){
-            if(submitBlockParams == null) throw ParseErrorRPCException.INSTANCE;
+            if(submitBlockParams == null) throw new ParseErrorRPCException();
             else return new ParamUnion(submitBlockParams);
         }
         public static ParamUnion wrap(AddressParams addressParams){
-            if(addressParams == null) throw ParseErrorRPCException.INSTANCE;
+            if(addressParams == null) throw new ParseErrorRPCException();
             else return new ParamUnion(addressParams);
         }
         public static ParamUnion wrap(BlockSpecifierParams blockSpecifierParams){
-            if(blockSpecifierParams == null) throw ParseErrorRPCException.INSTANCE;
+            if(blockSpecifierParams == null) throw new ParseErrorRPCException();
             else return new ParamUnion(blockSpecifierParams);
         }
         public static ParamUnion wrap(TransactionHashParams transactionHashParams){
-            if(transactionHashParams == null) throw ParseErrorRPCException.INSTANCE;
+            if(transactionHashParams == null) throw new ParseErrorRPCException();
             else return new ParamUnion(transactionHashParams);
         }
         public static ParamUnion wrap(BlockNumberParams blockNumberParams){
-            if(blockNumberParams == null) throw ParseErrorRPCException.INSTANCE;
+            if(blockNumberParams == null) throw new ParseErrorRPCException();
             else return new ParamUnion(blockNumberParams);
         }
         public static ParamUnion wrap(BlockHashParams blockHashParams){
-            if(blockHashParams == null) throw ParseErrorRPCException.INSTANCE;
+            if(blockHashParams == null) throw new ParseErrorRPCException();
             else return new ParamUnion(blockHashParams);
         }
         public static ParamUnion wrap(UnlockAccountParams unlockAccountParams){
-            if(unlockAccountParams == null) throw ParseErrorRPCException.INSTANCE;
+            if(unlockAccountParams == null) throw new ParseErrorRPCException();
             else return new ParamUnion(unlockAccountParams);
         }
         public static ParamUnion wrap(LockAccountParams lockAccountParams){
-            if(lockAccountParams == null) throw ParseErrorRPCException.INSTANCE;
+            if(lockAccountParams == null) throw new ParseErrorRPCException();
             else return new ParamUnion(lockAccountParams);
         }
         public static ParamUnion wrap(PasswordParams passwordParams){
-            if(passwordParams == null) throw ParseErrorRPCException.INSTANCE;
+            if(passwordParams == null) throw new ParseErrorRPCException();
             else return new ParamUnion(passwordParams);
         }
 
@@ -596,7 +596,7 @@ public class RPCTypes{
             if(this.unlockAccountParams != null) return UnlockAccountParamsConverter.encode(unlockAccountParams);
             if(this.lockAccountParams != null) return LockAccountParamsConverter.encode(lockAccountParams);
             if(this.passwordParams != null) return PasswordParamsConverter.encode(passwordParams);
-            throw ParseErrorRPCException.INSTANCE;
+            throw new ParseErrorRPCException();
         }
 
         public static ParamUnion decode(Object object){
@@ -639,7 +639,7 @@ public class RPCTypes{
             try{
                 return new ParamUnion(PasswordParamsConverter.decode(object));
             }catch(Exception e){}
-            throw ParseErrorRPCException.INSTANCE;
+            throw new ParseErrorRPCException();
         }
     }
 
@@ -653,26 +653,26 @@ public class RPCTypes{
 
         public TransactionUnion(EthTransactionForBlock[] transactionList){
             this(transactionList,null);
-            if(transactionList == null) throw ParseErrorRPCException.INSTANCE;
+            if(transactionList == null) throw new ParseErrorRPCException();
         }
         public TransactionUnion(ByteArray[] transactionHashes){
             this(null,transactionHashes);
-            if(transactionHashes == null) throw ParseErrorRPCException.INSTANCE;
+            if(transactionHashes == null) throw new ParseErrorRPCException();
         }
 
         public static TransactionUnion wrap(EthTransactionForBlock[] transactionList){
-            if(transactionList == null) throw ParseErrorRPCException.INSTANCE;
+            if(transactionList == null) throw new ParseErrorRPCException();
             else return new TransactionUnion(transactionList);
         }
         public static TransactionUnion wrap(ByteArray[] transactionHashes){
-            if(transactionHashes == null) throw ParseErrorRPCException.INSTANCE;
+            if(transactionHashes == null) throw new ParseErrorRPCException();
             else return new TransactionUnion(transactionHashes);
         }
 
         public Object encode(){
             if(this.transactionList != null) return EthTransactionForBlockListConverter.encode(transactionList);
             if(this.transactionHashes != null) return Byte32StringListConverter.encode(transactionHashes);
-            throw ParseErrorRPCException.INSTANCE;
+            throw new ParseErrorRPCException();
         }
 
         public static TransactionUnion decode(Object object){
@@ -682,7 +682,7 @@ public class RPCTypes{
             try{
                 return new TransactionUnion(Byte32StringListConverter.decode(object));
             }catch(Exception e){}
-            throw ParseErrorRPCException.INSTANCE;
+            throw new ParseErrorRPCException();
         }
     }
 
@@ -700,7 +700,7 @@ public class RPCTypes{
 
         public Request(Integer id ,String method ,Object params ,VersionType jsonrpc ){
             this.id=id;
-            if(method==null) throw ParseErrorRPCException.INSTANCE;
+            if(method==null) throw new  ParseErrorRPCException("Missing field(method) on type(Request)");
             this.method=method;
             this.params=params;
             this.jsonrpc=jsonrpc;
@@ -712,11 +712,11 @@ public class RPCTypes{
         public final Long highestBlock;
 
         public SyncInfo(Long startingBlock ,Long currentBlock ,Long highestBlock ){
-            if(startingBlock==null) throw ParseErrorRPCException.INSTANCE;
+            if(startingBlock==null) throw new  ParseErrorRPCException("Missing field(startingBlock) on type(SyncInfo)");
             this.startingBlock=startingBlock;
-            if(currentBlock==null) throw ParseErrorRPCException.INSTANCE;
+            if(currentBlock==null) throw new  ParseErrorRPCException("Missing field(currentBlock) on type(SyncInfo)");
             this.currentBlock=currentBlock;
-            if(highestBlock==null) throw ParseErrorRPCException.INSTANCE;
+            if(highestBlock==null) throw new  ParseErrorRPCException("Missing field(highestBlock) on type(SyncInfo)");
             this.highestBlock=highestBlock;
         }
     }
@@ -733,7 +733,7 @@ public class RPCTypes{
             this.id=id;
             this.result=result;
             this.error=error;
-            if(jsonrpc==null) throw ParseErrorRPCException.INSTANCE;
+            if(jsonrpc==null) throw new  ParseErrorRPCException("Missing field(jsonrpc) on type(Response)");
             this.jsonrpc=jsonrpc;
         }
     }
@@ -745,9 +745,9 @@ public class RPCTypes{
         public final String message;
 
         public RpcError(Integer code ,String message ){
-            if(code==null) throw ParseErrorRPCException.INSTANCE;
+            if(code==null) throw new  ParseErrorRPCException("Missing field(code) on type(RpcError)");
             this.code=code;
-            if(message==null) throw ParseErrorRPCException.INSTANCE;
+            if(message==null) throw new  ParseErrorRPCException("Missing field(message) on type(RpcError)");
             this.message=message;
         }
     }
@@ -759,15 +759,15 @@ public class RPCTypes{
         public final Long blockNumber;
 
         public TxLogDetails(AionAddress address ,Integer transactionIndex ,ByteArray data ,ByteArray[] topics ,Long blockNumber ){
-            if(address==null) throw ParseErrorRPCException.INSTANCE;
+            if(address==null) throw new  ParseErrorRPCException("Missing field(address) on type(TxLogDetails)");
             this.address=address;
-            if(transactionIndex==null) throw ParseErrorRPCException.INSTANCE;
+            if(transactionIndex==null) throw new  ParseErrorRPCException("Missing field(transactionIndex) on type(TxLogDetails)");
             this.transactionIndex=transactionIndex;
-            if(data==null) throw ParseErrorRPCException.INSTANCE;
+            if(data==null) throw new  ParseErrorRPCException("Missing field(data) on type(TxLogDetails)");
             this.data=data;
-            if(topics==null) throw ParseErrorRPCException.INSTANCE;
+            if(topics==null) throw new  ParseErrorRPCException("Missing field(topics) on type(TxLogDetails)");
             this.topics=topics;
-            if(blockNumber==null) throw ParseErrorRPCException.INSTANCE;
+            if(blockNumber==null) throw new  ParseErrorRPCException("Missing field(blockNumber) on type(TxLogDetails)");
             this.blockNumber=blockNumber;
         }
     }
@@ -797,44 +797,44 @@ public class RPCTypes{
 
         public TxDetails(AionAddress contractAddress ,ByteArray hash ,Integer transactionIndex ,BigInteger value ,Long nrg ,Long nrgPrice ,Long gas ,Long gasPrice ,Long nonce ,AionAddress from ,AionAddress to ,Long timestamp ,ByteArray input ,Long blockNumber ,ByteArray blockHash ,String error ,Byte type ,Long nrgUsed ,Long gasUsed ,Boolean hasInternalTransactions ,TxLogDetails[] logs ,ByteArray beaconHash ){
             this.contractAddress=contractAddress;
-            if(hash==null) throw ParseErrorRPCException.INSTANCE;
+            if(hash==null) throw new  ParseErrorRPCException("Missing field(hash) on type(TxDetails)");
             this.hash=hash;
-            if(transactionIndex==null) throw ParseErrorRPCException.INSTANCE;
+            if(transactionIndex==null) throw new  ParseErrorRPCException("Missing field(transactionIndex) on type(TxDetails)");
             this.transactionIndex=transactionIndex;
-            if(value==null) throw ParseErrorRPCException.INSTANCE;
+            if(value==null) throw new  ParseErrorRPCException("Missing field(value) on type(TxDetails)");
             this.value=value;
-            if(nrg==null) throw ParseErrorRPCException.INSTANCE;
+            if(nrg==null) throw new  ParseErrorRPCException("Missing field(nrg) on type(TxDetails)");
             this.nrg=nrg;
-            if(nrgPrice==null) throw ParseErrorRPCException.INSTANCE;
+            if(nrgPrice==null) throw new  ParseErrorRPCException("Missing field(nrgPrice) on type(TxDetails)");
             this.nrgPrice=nrgPrice;
-            if(gas==null) throw ParseErrorRPCException.INSTANCE;
+            if(gas==null) throw new  ParseErrorRPCException("Missing field(gas) on type(TxDetails)");
             this.gas=gas;
-            if(gasPrice==null) throw ParseErrorRPCException.INSTANCE;
+            if(gasPrice==null) throw new  ParseErrorRPCException("Missing field(gasPrice) on type(TxDetails)");
             this.gasPrice=gasPrice;
-            if(nonce==null) throw ParseErrorRPCException.INSTANCE;
+            if(nonce==null) throw new  ParseErrorRPCException("Missing field(nonce) on type(TxDetails)");
             this.nonce=nonce;
-            if(from==null) throw ParseErrorRPCException.INSTANCE;
+            if(from==null) throw new  ParseErrorRPCException("Missing field(from) on type(TxDetails)");
             this.from=from;
             this.to=to;
-            if(timestamp==null) throw ParseErrorRPCException.INSTANCE;
+            if(timestamp==null) throw new  ParseErrorRPCException("Missing field(timestamp) on type(TxDetails)");
             this.timestamp=timestamp;
-            if(input==null) throw ParseErrorRPCException.INSTANCE;
+            if(input==null) throw new  ParseErrorRPCException("Missing field(input) on type(TxDetails)");
             this.input=input;
-            if(blockNumber==null) throw ParseErrorRPCException.INSTANCE;
+            if(blockNumber==null) throw new  ParseErrorRPCException("Missing field(blockNumber) on type(TxDetails)");
             this.blockNumber=blockNumber;
-            if(blockHash==null) throw ParseErrorRPCException.INSTANCE;
+            if(blockHash==null) throw new  ParseErrorRPCException("Missing field(blockHash) on type(TxDetails)");
             this.blockHash=blockHash;
-            if(error==null) throw ParseErrorRPCException.INSTANCE;
+            if(error==null) throw new  ParseErrorRPCException("Missing field(error) on type(TxDetails)");
             this.error=error;
-            if(type==null) throw ParseErrorRPCException.INSTANCE;
+            if(type==null) throw new  ParseErrorRPCException("Missing field(type) on type(TxDetails)");
             this.type=type;
-            if(nrgUsed==null) throw ParseErrorRPCException.INSTANCE;
+            if(nrgUsed==null) throw new  ParseErrorRPCException("Missing field(nrgUsed) on type(TxDetails)");
             this.nrgUsed=nrgUsed;
-            if(gasUsed==null) throw ParseErrorRPCException.INSTANCE;
+            if(gasUsed==null) throw new  ParseErrorRPCException("Missing field(gasUsed) on type(TxDetails)");
             this.gasUsed=gasUsed;
-            if(hasInternalTransactions==null) throw ParseErrorRPCException.INSTANCE;
+            if(hasInternalTransactions==null) throw new  ParseErrorRPCException("Missing field(hasInternalTransactions) on type(TxDetails)");
             this.hasInternalTransactions=hasInternalTransactions;
-            if(logs==null) throw ParseErrorRPCException.INSTANCE;
+            if(logs==null) throw new  ParseErrorRPCException("Missing field(logs) on type(TxDetails)");
             this.logs=logs;
             this.beaconHash=beaconHash;
         }
@@ -855,7 +855,7 @@ public class RPCTypes{
         public static final Byte typeDefaultValue=ByteConverter.decode("0x01");
 
         public TxCall(AionAddress from ,AionAddress to ,ByteArray data ,BigInteger nonce ,BigInteger value ,Long gas ,Long gasPrice ,ByteArray beaconHash ,Byte type ){
-            if(from==null) throw ParseErrorRPCException.INSTANCE;
+            if(from==null) throw new  ParseErrorRPCException("Missing field(from) on type(TxCall)");
             this.from=from;
             this.to=to;
             this.data=data==null? dataDefaultValue:data;
@@ -899,51 +899,51 @@ public class RPCTypes{
         public final Integer blockTime;
 
         public BlockDetails(Long number ,ByteArray hash ,ByteArray parentHash ,ByteArray logsBloom ,ByteArray transactionsRoot ,ByteArray stateRoot ,ByteArray receiptsRoot ,BigInteger difficulty ,BigInteger totalDifficulty ,AionAddress miner ,Long timestamp ,Long gasUsed ,Long gasLimit ,Long nrgUsed ,Long nrgLimit ,Byte sealType ,Boolean mainChain ,ByteArray extraData ,Integer size ,Integer numTransactions ,ByteArray txTrieRoot ,BigInteger blockReward ,TxDetails[] transactions ,ByteArray nonce ,ByteArray solution ,ByteArray seed ,ByteArray signature ,ByteArray publicKey ,Integer blockTime ){
-            if(number==null) throw ParseErrorRPCException.INSTANCE;
+            if(number==null) throw new  ParseErrorRPCException("Missing field(number) on type(BlockDetails)");
             this.number=number;
-            if(hash==null) throw ParseErrorRPCException.INSTANCE;
+            if(hash==null) throw new  ParseErrorRPCException("Missing field(hash) on type(BlockDetails)");
             this.hash=hash;
-            if(parentHash==null) throw ParseErrorRPCException.INSTANCE;
+            if(parentHash==null) throw new  ParseErrorRPCException("Missing field(parentHash) on type(BlockDetails)");
             this.parentHash=parentHash;
-            if(logsBloom==null) throw ParseErrorRPCException.INSTANCE;
+            if(logsBloom==null) throw new  ParseErrorRPCException("Missing field(logsBloom) on type(BlockDetails)");
             this.logsBloom=logsBloom;
-            if(transactionsRoot==null) throw ParseErrorRPCException.INSTANCE;
+            if(transactionsRoot==null) throw new  ParseErrorRPCException("Missing field(transactionsRoot) on type(BlockDetails)");
             this.transactionsRoot=transactionsRoot;
-            if(stateRoot==null) throw ParseErrorRPCException.INSTANCE;
+            if(stateRoot==null) throw new  ParseErrorRPCException("Missing field(stateRoot) on type(BlockDetails)");
             this.stateRoot=stateRoot;
-            if(receiptsRoot==null) throw ParseErrorRPCException.INSTANCE;
+            if(receiptsRoot==null) throw new  ParseErrorRPCException("Missing field(receiptsRoot) on type(BlockDetails)");
             this.receiptsRoot=receiptsRoot;
-            if(difficulty==null) throw ParseErrorRPCException.INSTANCE;
+            if(difficulty==null) throw new  ParseErrorRPCException("Missing field(difficulty) on type(BlockDetails)");
             this.difficulty=difficulty;
-            if(totalDifficulty==null) throw ParseErrorRPCException.INSTANCE;
+            if(totalDifficulty==null) throw new  ParseErrorRPCException("Missing field(totalDifficulty) on type(BlockDetails)");
             this.totalDifficulty=totalDifficulty;
-            if(miner==null) throw ParseErrorRPCException.INSTANCE;
+            if(miner==null) throw new  ParseErrorRPCException("Missing field(miner) on type(BlockDetails)");
             this.miner=miner;
-            if(timestamp==null) throw ParseErrorRPCException.INSTANCE;
+            if(timestamp==null) throw new  ParseErrorRPCException("Missing field(timestamp) on type(BlockDetails)");
             this.timestamp=timestamp;
-            if(gasUsed==null) throw ParseErrorRPCException.INSTANCE;
+            if(gasUsed==null) throw new  ParseErrorRPCException("Missing field(gasUsed) on type(BlockDetails)");
             this.gasUsed=gasUsed;
-            if(gasLimit==null) throw ParseErrorRPCException.INSTANCE;
+            if(gasLimit==null) throw new  ParseErrorRPCException("Missing field(gasLimit) on type(BlockDetails)");
             this.gasLimit=gasLimit;
-            if(nrgUsed==null) throw ParseErrorRPCException.INSTANCE;
+            if(nrgUsed==null) throw new  ParseErrorRPCException("Missing field(nrgUsed) on type(BlockDetails)");
             this.nrgUsed=nrgUsed;
-            if(nrgLimit==null) throw ParseErrorRPCException.INSTANCE;
+            if(nrgLimit==null) throw new  ParseErrorRPCException("Missing field(nrgLimit) on type(BlockDetails)");
             this.nrgLimit=nrgLimit;
-            if(sealType==null) throw ParseErrorRPCException.INSTANCE;
+            if(sealType==null) throw new  ParseErrorRPCException("Missing field(sealType) on type(BlockDetails)");
             this.sealType=sealType;
-            if(mainChain==null) throw ParseErrorRPCException.INSTANCE;
+            if(mainChain==null) throw new  ParseErrorRPCException("Missing field(mainChain) on type(BlockDetails)");
             this.mainChain=mainChain;
-            if(extraData==null) throw ParseErrorRPCException.INSTANCE;
+            if(extraData==null) throw new  ParseErrorRPCException("Missing field(extraData) on type(BlockDetails)");
             this.extraData=extraData;
-            if(size==null) throw ParseErrorRPCException.INSTANCE;
+            if(size==null) throw new  ParseErrorRPCException("Missing field(size) on type(BlockDetails)");
             this.size=size;
-            if(numTransactions==null) throw ParseErrorRPCException.INSTANCE;
+            if(numTransactions==null) throw new  ParseErrorRPCException("Missing field(numTransactions) on type(BlockDetails)");
             this.numTransactions=numTransactions;
-            if(txTrieRoot==null) throw ParseErrorRPCException.INSTANCE;
+            if(txTrieRoot==null) throw new  ParseErrorRPCException("Missing field(txTrieRoot) on type(BlockDetails)");
             this.txTrieRoot=txTrieRoot;
-            if(blockReward==null) throw ParseErrorRPCException.INSTANCE;
+            if(blockReward==null) throw new  ParseErrorRPCException("Missing field(blockReward) on type(BlockDetails)");
             this.blockReward=blockReward;
-            if(transactions==null) throw ParseErrorRPCException.INSTANCE;
+            if(transactions==null) throw new  ParseErrorRPCException("Missing field(transactions) on type(BlockDetails)");
             this.transactions=transactions;
             this.nonce=nonce;
             this.solution=solution;
@@ -962,17 +962,17 @@ public class RPCTypes{
         public final BigInteger blockTxFee;
 
         public BlockTemplate(ByteArray previousblockhash ,Long height ,BigInteger target ,ByteArray headerHash ,BigInteger blockBaseReward ,BigInteger blockTxFee ){
-            if(previousblockhash==null) throw ParseErrorRPCException.INSTANCE;
+            if(previousblockhash==null) throw new  ParseErrorRPCException("Missing field(previousblockhash) on type(BlockTemplate)");
             this.previousblockhash=previousblockhash;
-            if(height==null) throw ParseErrorRPCException.INSTANCE;
+            if(height==null) throw new  ParseErrorRPCException("Missing field(height) on type(BlockTemplate)");
             this.height=height;
-            if(target==null) throw ParseErrorRPCException.INSTANCE;
+            if(target==null) throw new  ParseErrorRPCException("Missing field(target) on type(BlockTemplate)");
             this.target=target;
-            if(headerHash==null) throw ParseErrorRPCException.INSTANCE;
+            if(headerHash==null) throw new  ParseErrorRPCException("Missing field(headerHash) on type(BlockTemplate)");
             this.headerHash=headerHash;
-            if(blockBaseReward==null) throw ParseErrorRPCException.INSTANCE;
+            if(blockBaseReward==null) throw new  ParseErrorRPCException("Missing field(blockBaseReward) on type(BlockTemplate)");
             this.blockBaseReward=blockBaseReward;
-            if(blockTxFee==null) throw ParseErrorRPCException.INSTANCE;
+            if(blockTxFee==null) throw new  ParseErrorRPCException("Missing field(blockTxFee) on type(BlockTemplate)");
             this.blockTxFee=blockTxFee;
         }
     }
@@ -980,7 +980,7 @@ public class RPCTypes{
         public final Boolean result;
 
         public SubmissionResult(Boolean result ){
-            if(result==null) throw ParseErrorRPCException.INSTANCE;
+            if(result==null) throw new  ParseErrorRPCException("Missing field(result) on type(SubmissionResult)");
             this.result=result;
         }
     }
@@ -990,11 +990,11 @@ public class RPCTypes{
         public final Boolean ismine;
 
         public ValidateAddressResult(Boolean isvalid ,AionAddress address ,Boolean ismine ){
-            if(isvalid==null) throw ParseErrorRPCException.INSTANCE;
+            if(isvalid==null) throw new  ParseErrorRPCException("Missing field(isvalid) on type(ValidateAddressResult)");
             this.isvalid=isvalid;
-            if(address==null) throw ParseErrorRPCException.INSTANCE;
+            if(address==null) throw new  ParseErrorRPCException("Missing field(address) on type(ValidateAddressResult)");
             this.address=address;
-            if(ismine==null) throw ParseErrorRPCException.INSTANCE;
+            if(ismine==null) throw new  ParseErrorRPCException("Missing field(ismine) on type(ValidateAddressResult)");
             this.ismine=ismine;
         }
     }
@@ -1004,11 +1004,11 @@ public class RPCTypes{
         public final String minerHashrateShare;
 
         public MinerStats(String networkHashRate ,String minerHashrate ,String minerHashrateShare ){
-            if(networkHashRate==null) throw ParseErrorRPCException.INSTANCE;
+            if(networkHashRate==null) throw new  ParseErrorRPCException("Missing field(networkHashRate) on type(MinerStats)");
             this.networkHashRate=networkHashRate;
-            if(minerHashrate==null) throw ParseErrorRPCException.INSTANCE;
+            if(minerHashrate==null) throw new  ParseErrorRPCException("Missing field(minerHashrate) on type(MinerStats)");
             this.minerHashrate=minerHashrate;
-            if(minerHashrateShare==null) throw ParseErrorRPCException.INSTANCE;
+            if(minerHashrateShare==null) throw new  ParseErrorRPCException("Missing field(minerHashrateShare) on type(MinerStats)");
             this.minerHashrateShare=minerHashrateShare;
         }
     }
@@ -1019,13 +1019,13 @@ public class RPCTypes{
         public final ByteArray[] topics;
 
         public TxLog(AionAddress address ,Integer transactionIndex ,ByteArray data ,ByteArray[] topics ){
-            if(address==null) throw ParseErrorRPCException.INSTANCE;
+            if(address==null) throw new  ParseErrorRPCException("Missing field(address) on type(TxLog)");
             this.address=address;
-            if(transactionIndex==null) throw ParseErrorRPCException.INSTANCE;
+            if(transactionIndex==null) throw new  ParseErrorRPCException("Missing field(transactionIndex) on type(TxLog)");
             this.transactionIndex=transactionIndex;
-            if(data==null) throw ParseErrorRPCException.INSTANCE;
+            if(data==null) throw new  ParseErrorRPCException("Missing field(data) on type(TxLog)");
             this.data=data;
-            if(topics==null) throw ParseErrorRPCException.INSTANCE;
+            if(topics==null) throw new  ParseErrorRPCException("Missing field(topics) on type(TxLog)");
             this.topics=topics;
         }
     }
@@ -1036,13 +1036,13 @@ public class RPCTypes{
         public final BigInteger nonce;
 
         public AccountState(AionAddress address ,Long blockNumber ,BigInteger balance ,BigInteger nonce ){
-            if(address==null) throw ParseErrorRPCException.INSTANCE;
+            if(address==null) throw new  ParseErrorRPCException("Missing field(address) on type(AccountState)");
             this.address=address;
-            if(blockNumber==null) throw ParseErrorRPCException.INSTANCE;
+            if(blockNumber==null) throw new  ParseErrorRPCException("Missing field(blockNumber) on type(AccountState)");
             this.blockNumber=blockNumber;
-            if(balance==null) throw ParseErrorRPCException.INSTANCE;
+            if(balance==null) throw new  ParseErrorRPCException("Missing field(balance) on type(AccountState)");
             this.balance=balance;
-            if(nonce==null) throw ParseErrorRPCException.INSTANCE;
+            if(nonce==null) throw new  ParseErrorRPCException("Missing field(nonce) on type(AccountState)");
             this.nonce=nonce;
         }
     }
@@ -1063,27 +1063,27 @@ public class RPCTypes{
         public final ByteArray blockHash;
 
         public EthTransaction(ByteArray hash ,Integer transactionIndex ,Long nrg ,Long nrgPrice ,Long gas ,Long gasPrice ,AionAddress contractAddress ,AionAddress from ,AionAddress to ,Long timestamp ,ByteArray input ,Long blockNumber ,ByteArray blockHash ){
-            if(hash==null) throw ParseErrorRPCException.INSTANCE;
+            if(hash==null) throw new  ParseErrorRPCException("Missing field(hash) on type(EthTransaction)");
             this.hash=hash;
             this.transactionIndex=transactionIndex;
-            if(nrg==null) throw ParseErrorRPCException.INSTANCE;
+            if(nrg==null) throw new  ParseErrorRPCException("Missing field(nrg) on type(EthTransaction)");
             this.nrg=nrg;
-            if(nrgPrice==null) throw ParseErrorRPCException.INSTANCE;
+            if(nrgPrice==null) throw new  ParseErrorRPCException("Missing field(nrgPrice) on type(EthTransaction)");
             this.nrgPrice=nrgPrice;
-            if(gas==null) throw ParseErrorRPCException.INSTANCE;
+            if(gas==null) throw new  ParseErrorRPCException("Missing field(gas) on type(EthTransaction)");
             this.gas=gas;
-            if(gasPrice==null) throw ParseErrorRPCException.INSTANCE;
+            if(gasPrice==null) throw new  ParseErrorRPCException("Missing field(gasPrice) on type(EthTransaction)");
             this.gasPrice=gasPrice;
             this.contractAddress=contractAddress;
-            if(from==null) throw ParseErrorRPCException.INSTANCE;
+            if(from==null) throw new  ParseErrorRPCException("Missing field(from) on type(EthTransaction)");
             this.from=from;
             this.to=to;
-            if(timestamp==null) throw ParseErrorRPCException.INSTANCE;
+            if(timestamp==null) throw new  ParseErrorRPCException("Missing field(timestamp) on type(EthTransaction)");
             this.timestamp=timestamp;
             this.input=input==null? inputDefaultValue:input;
-            if(blockNumber==null) throw ParseErrorRPCException.INSTANCE;
+            if(blockNumber==null) throw new  ParseErrorRPCException("Missing field(blockNumber) on type(EthTransaction)");
             this.blockNumber=blockNumber;
-            if(blockHash==null) throw ParseErrorRPCException.INSTANCE;
+            if(blockHash==null) throw new  ParseErrorRPCException("Missing field(blockHash) on type(EthTransaction)");
             this.blockHash=blockHash;
         }
     }
@@ -1103,25 +1103,25 @@ public class RPCTypes{
         public final Long blockNumber;
 
         public EthTransactionForBlock(ByteArray hash ,Integer transactionIndex ,Long nrg ,Long nrgPrice ,Long gas ,Long gasPrice ,AionAddress contractAddress ,AionAddress from ,AionAddress to ,Long timestamp ,ByteArray input ,Long blockNumber ){
-            if(hash==null) throw ParseErrorRPCException.INSTANCE;
+            if(hash==null) throw new  ParseErrorRPCException("Missing field(hash) on type(EthTransactionForBlock)");
             this.hash=hash;
             this.transactionIndex=transactionIndex;
-            if(nrg==null) throw ParseErrorRPCException.INSTANCE;
+            if(nrg==null) throw new  ParseErrorRPCException("Missing field(nrg) on type(EthTransactionForBlock)");
             this.nrg=nrg;
-            if(nrgPrice==null) throw ParseErrorRPCException.INSTANCE;
+            if(nrgPrice==null) throw new  ParseErrorRPCException("Missing field(nrgPrice) on type(EthTransactionForBlock)");
             this.nrgPrice=nrgPrice;
-            if(gas==null) throw ParseErrorRPCException.INSTANCE;
+            if(gas==null) throw new  ParseErrorRPCException("Missing field(gas) on type(EthTransactionForBlock)");
             this.gas=gas;
-            if(gasPrice==null) throw ParseErrorRPCException.INSTANCE;
+            if(gasPrice==null) throw new  ParseErrorRPCException("Missing field(gasPrice) on type(EthTransactionForBlock)");
             this.gasPrice=gasPrice;
             this.contractAddress=contractAddress;
-            if(from==null) throw ParseErrorRPCException.INSTANCE;
+            if(from==null) throw new  ParseErrorRPCException("Missing field(from) on type(EthTransactionForBlock)");
             this.from=from;
             this.to=to;
-            if(timestamp==null) throw ParseErrorRPCException.INSTANCE;
+            if(timestamp==null) throw new  ParseErrorRPCException("Missing field(timestamp) on type(EthTransactionForBlock)");
             this.timestamp=timestamp;
             this.input=input==null? inputDefaultValue:input;
-            if(blockNumber==null) throw ParseErrorRPCException.INSTANCE;
+            if(blockNumber==null) throw new  ParseErrorRPCException("Missing field(blockNumber) on type(EthTransactionForBlock)");
             this.blockNumber=blockNumber;
         }
     }
@@ -1146,39 +1146,39 @@ public class RPCTypes{
         public final EthTxReceiptLogs[] logs;
 
         public EthTransactionReceipt(ByteArray transactionHash ,Integer transactionIndex ,Long blockNumber ,ByteArray blockHash ,Long nrgUsed ,Long nrgPrice ,Long gasUsed ,Long gasPrice ,Long gasLimit ,Long cumulativeNrgUsed ,Long cumulativeGasUsed ,AionAddress contractAddress ,AionAddress from ,AionAddress to ,ByteArray logsBloom ,ByteArray root ,Byte status ,EthTxReceiptLogs[] logs ){
-            if(transactionHash==null) throw ParseErrorRPCException.INSTANCE;
+            if(transactionHash==null) throw new  ParseErrorRPCException("Missing field(transactionHash) on type(EthTransactionReceipt)");
             this.transactionHash=transactionHash;
-            if(transactionIndex==null) throw ParseErrorRPCException.INSTANCE;
+            if(transactionIndex==null) throw new  ParseErrorRPCException("Missing field(transactionIndex) on type(EthTransactionReceipt)");
             this.transactionIndex=transactionIndex;
-            if(blockNumber==null) throw ParseErrorRPCException.INSTANCE;
+            if(blockNumber==null) throw new  ParseErrorRPCException("Missing field(blockNumber) on type(EthTransactionReceipt)");
             this.blockNumber=blockNumber;
-            if(blockHash==null) throw ParseErrorRPCException.INSTANCE;
+            if(blockHash==null) throw new  ParseErrorRPCException("Missing field(blockHash) on type(EthTransactionReceipt)");
             this.blockHash=blockHash;
-            if(nrgUsed==null) throw ParseErrorRPCException.INSTANCE;
+            if(nrgUsed==null) throw new  ParseErrorRPCException("Missing field(nrgUsed) on type(EthTransactionReceipt)");
             this.nrgUsed=nrgUsed;
-            if(nrgPrice==null) throw ParseErrorRPCException.INSTANCE;
+            if(nrgPrice==null) throw new  ParseErrorRPCException("Missing field(nrgPrice) on type(EthTransactionReceipt)");
             this.nrgPrice=nrgPrice;
-            if(gasUsed==null) throw ParseErrorRPCException.INSTANCE;
+            if(gasUsed==null) throw new  ParseErrorRPCException("Missing field(gasUsed) on type(EthTransactionReceipt)");
             this.gasUsed=gasUsed;
-            if(gasPrice==null) throw ParseErrorRPCException.INSTANCE;
+            if(gasPrice==null) throw new  ParseErrorRPCException("Missing field(gasPrice) on type(EthTransactionReceipt)");
             this.gasPrice=gasPrice;
-            if(gasLimit==null) throw ParseErrorRPCException.INSTANCE;
+            if(gasLimit==null) throw new  ParseErrorRPCException("Missing field(gasLimit) on type(EthTransactionReceipt)");
             this.gasLimit=gasLimit;
-            if(cumulativeNrgUsed==null) throw ParseErrorRPCException.INSTANCE;
+            if(cumulativeNrgUsed==null) throw new  ParseErrorRPCException("Missing field(cumulativeNrgUsed) on type(EthTransactionReceipt)");
             this.cumulativeNrgUsed=cumulativeNrgUsed;
-            if(cumulativeGasUsed==null) throw ParseErrorRPCException.INSTANCE;
+            if(cumulativeGasUsed==null) throw new  ParseErrorRPCException("Missing field(cumulativeGasUsed) on type(EthTransactionReceipt)");
             this.cumulativeGasUsed=cumulativeGasUsed;
             this.contractAddress=contractAddress;
-            if(from==null) throw ParseErrorRPCException.INSTANCE;
+            if(from==null) throw new  ParseErrorRPCException("Missing field(from) on type(EthTransactionReceipt)");
             this.from=from;
             this.to=to;
-            if(logsBloom==null) throw ParseErrorRPCException.INSTANCE;
+            if(logsBloom==null) throw new  ParseErrorRPCException("Missing field(logsBloom) on type(EthTransactionReceipt)");
             this.logsBloom=logsBloom;
-            if(root==null) throw ParseErrorRPCException.INSTANCE;
+            if(root==null) throw new  ParseErrorRPCException("Missing field(root) on type(EthTransactionReceipt)");
             this.root=root;
-            if(status==null) throw ParseErrorRPCException.INSTANCE;
+            if(status==null) throw new  ParseErrorRPCException("Missing field(status) on type(EthTransactionReceipt)");
             this.status=status;
-            if(logs==null) throw ParseErrorRPCException.INSTANCE;
+            if(logs==null) throw new  ParseErrorRPCException("Missing field(logs) on type(EthTransactionReceipt)");
             this.logs=logs;
         }
     }
@@ -1191,17 +1191,17 @@ public class RPCTypes{
         public final ByteArray[] topics;
 
         public EthTxReceiptLogs(AionAddress address ,ByteArray data ,Long blockNumber ,Integer transactionIndex ,Integer logIndex ,ByteArray[] topics ){
-            if(address==null) throw ParseErrorRPCException.INSTANCE;
+            if(address==null) throw new  ParseErrorRPCException("Missing field(address) on type(EthTxReceiptLogs)");
             this.address=address;
-            if(data==null) throw ParseErrorRPCException.INSTANCE;
+            if(data==null) throw new  ParseErrorRPCException("Missing field(data) on type(EthTxReceiptLogs)");
             this.data=data;
-            if(blockNumber==null) throw ParseErrorRPCException.INSTANCE;
+            if(blockNumber==null) throw new  ParseErrorRPCException("Missing field(blockNumber) on type(EthTxReceiptLogs)");
             this.blockNumber=blockNumber;
-            if(transactionIndex==null) throw ParseErrorRPCException.INSTANCE;
+            if(transactionIndex==null) throw new  ParseErrorRPCException("Missing field(transactionIndex) on type(EthTxReceiptLogs)");
             this.transactionIndex=transactionIndex;
-            if(logIndex==null) throw ParseErrorRPCException.INSTANCE;
+            if(logIndex==null) throw new  ParseErrorRPCException("Missing field(logIndex) on type(EthTxReceiptLogs)");
             this.logIndex=logIndex;
-            if(topics==null) throw ParseErrorRPCException.INSTANCE;
+            if(topics==null) throw new  ParseErrorRPCException("Missing field(topics) on type(EthTxReceiptLogs)");
             this.topics=topics;
         }
     }
@@ -1232,43 +1232,43 @@ public class RPCTypes{
         public final ByteArray publicKey;
 
         public EthBlock(Long number ,ByteArray hash ,ByteArray parentHash ,ByteArray logsBloom ,ByteArray transactionsRoot ,ByteArray stateRoot ,ByteArray receiptsRoot ,BigInteger difficulty ,BigInteger totalDifficulty ,Long timestamp ,AionAddress miner ,Long gasUsed ,Long gasLimit ,Long nrgUsed ,Long nrgLimit ,Byte sealType ,Boolean mainChain ,Integer size ,TransactionUnion transactions ,ByteArray nonce ,ByteArray solution ,ByteArray seed ,ByteArray signature ,ByteArray publicKey ){
-            if(number==null) throw ParseErrorRPCException.INSTANCE;
+            if(number==null) throw new  ParseErrorRPCException("Missing field(number) on type(EthBlock)");
             this.number=number;
-            if(hash==null) throw ParseErrorRPCException.INSTANCE;
+            if(hash==null) throw new  ParseErrorRPCException("Missing field(hash) on type(EthBlock)");
             this.hash=hash;
-            if(parentHash==null) throw ParseErrorRPCException.INSTANCE;
+            if(parentHash==null) throw new  ParseErrorRPCException("Missing field(parentHash) on type(EthBlock)");
             this.parentHash=parentHash;
-            if(logsBloom==null) throw ParseErrorRPCException.INSTANCE;
+            if(logsBloom==null) throw new  ParseErrorRPCException("Missing field(logsBloom) on type(EthBlock)");
             this.logsBloom=logsBloom;
-            if(transactionsRoot==null) throw ParseErrorRPCException.INSTANCE;
+            if(transactionsRoot==null) throw new  ParseErrorRPCException("Missing field(transactionsRoot) on type(EthBlock)");
             this.transactionsRoot=transactionsRoot;
-            if(stateRoot==null) throw ParseErrorRPCException.INSTANCE;
+            if(stateRoot==null) throw new  ParseErrorRPCException("Missing field(stateRoot) on type(EthBlock)");
             this.stateRoot=stateRoot;
-            if(receiptsRoot==null) throw ParseErrorRPCException.INSTANCE;
+            if(receiptsRoot==null) throw new  ParseErrorRPCException("Missing field(receiptsRoot) on type(EthBlock)");
             this.receiptsRoot=receiptsRoot;
-            if(difficulty==null) throw ParseErrorRPCException.INSTANCE;
+            if(difficulty==null) throw new  ParseErrorRPCException("Missing field(difficulty) on type(EthBlock)");
             this.difficulty=difficulty;
-            if(totalDifficulty==null) throw ParseErrorRPCException.INSTANCE;
+            if(totalDifficulty==null) throw new  ParseErrorRPCException("Missing field(totalDifficulty) on type(EthBlock)");
             this.totalDifficulty=totalDifficulty;
-            if(timestamp==null) throw ParseErrorRPCException.INSTANCE;
+            if(timestamp==null) throw new  ParseErrorRPCException("Missing field(timestamp) on type(EthBlock)");
             this.timestamp=timestamp;
-            if(miner==null) throw ParseErrorRPCException.INSTANCE;
+            if(miner==null) throw new  ParseErrorRPCException("Missing field(miner) on type(EthBlock)");
             this.miner=miner;
-            if(gasUsed==null) throw ParseErrorRPCException.INSTANCE;
+            if(gasUsed==null) throw new  ParseErrorRPCException("Missing field(gasUsed) on type(EthBlock)");
             this.gasUsed=gasUsed;
-            if(gasLimit==null) throw ParseErrorRPCException.INSTANCE;
+            if(gasLimit==null) throw new  ParseErrorRPCException("Missing field(gasLimit) on type(EthBlock)");
             this.gasLimit=gasLimit;
-            if(nrgUsed==null) throw ParseErrorRPCException.INSTANCE;
+            if(nrgUsed==null) throw new  ParseErrorRPCException("Missing field(nrgUsed) on type(EthBlock)");
             this.nrgUsed=nrgUsed;
-            if(nrgLimit==null) throw ParseErrorRPCException.INSTANCE;
+            if(nrgLimit==null) throw new  ParseErrorRPCException("Missing field(nrgLimit) on type(EthBlock)");
             this.nrgLimit=nrgLimit;
-            if(sealType==null) throw ParseErrorRPCException.INSTANCE;
+            if(sealType==null) throw new  ParseErrorRPCException("Missing field(sealType) on type(EthBlock)");
             this.sealType=sealType;
-            if(mainChain==null) throw ParseErrorRPCException.INSTANCE;
+            if(mainChain==null) throw new  ParseErrorRPCException("Missing field(mainChain) on type(EthBlock)");
             this.mainChain=mainChain;
-            if(size==null) throw ParseErrorRPCException.INSTANCE;
+            if(size==null) throw new  ParseErrorRPCException("Missing field(size) on type(EthBlock)");
             this.size=size;
-            if(transactions==null) throw ParseErrorRPCException.INSTANCE;
+            if(transactions==null) throw new  ParseErrorRPCException("Missing field(transactions) on type(EthBlock)");
             this.transactions=transactions;
             this.nonce=nonce;
             this.solution=solution;
@@ -1294,33 +1294,33 @@ public class RPCTypes{
         public final TxLog[] logs;
 
         public OpsTransaction(Long timestampVal ,ByteArray transactionHash ,Long blockNumber ,ByteArray blockHash ,BigInteger nonce ,AionAddress fromAddr ,AionAddress toAddr ,BigInteger value ,Long nrgPrice ,Long nrgConsumed ,ByteArray data ,Integer transactionIndex ,ByteArray beaconHash ,TxLog[] logs ){
-            if(timestampVal==null) throw ParseErrorRPCException.INSTANCE;
+            if(timestampVal==null) throw new  ParseErrorRPCException("Missing field(timestampVal) on type(OpsTransaction)");
             this.timestampVal=timestampVal;
-            if(transactionHash==null) throw ParseErrorRPCException.INSTANCE;
+            if(transactionHash==null) throw new  ParseErrorRPCException("Missing field(transactionHash) on type(OpsTransaction)");
             this.transactionHash=transactionHash;
-            if(blockNumber==null) throw ParseErrorRPCException.INSTANCE;
+            if(blockNumber==null) throw new  ParseErrorRPCException("Missing field(blockNumber) on type(OpsTransaction)");
             this.blockNumber=blockNumber;
-            if(blockHash==null) throw ParseErrorRPCException.INSTANCE;
+            if(blockHash==null) throw new  ParseErrorRPCException("Missing field(blockHash) on type(OpsTransaction)");
             this.blockHash=blockHash;
-            if(nonce==null) throw ParseErrorRPCException.INSTANCE;
+            if(nonce==null) throw new  ParseErrorRPCException("Missing field(nonce) on type(OpsTransaction)");
             this.nonce=nonce;
-            if(fromAddr==null) throw ParseErrorRPCException.INSTANCE;
+            if(fromAddr==null) throw new  ParseErrorRPCException("Missing field(fromAddr) on type(OpsTransaction)");
             this.fromAddr=fromAddr;
-            if(toAddr==null) throw ParseErrorRPCException.INSTANCE;
+            if(toAddr==null) throw new  ParseErrorRPCException("Missing field(toAddr) on type(OpsTransaction)");
             this.toAddr=toAddr;
-            if(value==null) throw ParseErrorRPCException.INSTANCE;
+            if(value==null) throw new  ParseErrorRPCException("Missing field(value) on type(OpsTransaction)");
             this.value=value;
-            if(nrgPrice==null) throw ParseErrorRPCException.INSTANCE;
+            if(nrgPrice==null) throw new  ParseErrorRPCException("Missing field(nrgPrice) on type(OpsTransaction)");
             this.nrgPrice=nrgPrice;
-            if(nrgConsumed==null) throw ParseErrorRPCException.INSTANCE;
+            if(nrgConsumed==null) throw new  ParseErrorRPCException("Missing field(nrgConsumed) on type(OpsTransaction)");
             this.nrgConsumed=nrgConsumed;
-            if(data==null) throw ParseErrorRPCException.INSTANCE;
+            if(data==null) throw new  ParseErrorRPCException("Missing field(data) on type(OpsTransaction)");
             this.data=data;
-            if(transactionIndex==null) throw ParseErrorRPCException.INSTANCE;
+            if(transactionIndex==null) throw new  ParseErrorRPCException("Missing field(transactionIndex) on type(OpsTransaction)");
             this.transactionIndex=transactionIndex;
-            if(beaconHash==null) throw ParseErrorRPCException.INSTANCE;
+            if(beaconHash==null) throw new  ParseErrorRPCException("Missing field(beaconHash) on type(OpsTransaction)");
             this.beaconHash=beaconHash;
-            if(logs==null) throw ParseErrorRPCException.INSTANCE;
+            if(logs==null) throw new  ParseErrorRPCException("Missing field(logs) on type(OpsTransaction)");
             this.logs=logs;
         }
     }
@@ -1333,11 +1333,11 @@ public class RPCTypes{
         }
 
         public static VersionType fromString(String x){
-            if(x==null) throw ParseErrorRPCException.INSTANCE;
+            if(x==null) throw new ParseErrorRPCException();
             if(x.equals("2.0")){
                 return Version2;
             }else
-                throw ParseErrorRPCException.INSTANCE;
+                throw new ParseErrorRPCException();
         }
     }
     public enum BlockEnum{
@@ -1348,11 +1348,11 @@ public class RPCTypes{
         }
 
         public static BlockEnum fromString(String x){
-            if(x==null) throw ParseErrorRPCException.INSTANCE;
+            if(x==null) throw new ParseErrorRPCException();
             if(x.equals("latest")){
                 return LATEST;
             }else
-                throw ParseErrorRPCException.INSTANCE;
+                throw new ParseErrorRPCException();
         }
     }
     public enum PongEnum{
@@ -1363,11 +1363,11 @@ public class RPCTypes{
         }
 
         public static PongEnum fromString(String x){
-            if(x==null) throw ParseErrorRPCException.INSTANCE;
+            if(x==null) throw new ParseErrorRPCException();
             if(x.equals("pong")){
                 return PONG;
             }else
-                throw ParseErrorRPCException.INSTANCE;
+                throw new ParseErrorRPCException();
         }
     }
 
@@ -1378,9 +1378,9 @@ public class RPCTypes{
         
 
         public EcRecoverParams(ByteArray dataThatWasSigned ,ByteArray signature ){
-            if(dataThatWasSigned==null) throw ParseErrorRPCException.INSTANCE;
+            if(dataThatWasSigned==null) throw new  ParseErrorRPCException("Missing field(dataThatWasSigned) on rpc param type(EcRecoverParams)");
             this.dataThatWasSigned= dataThatWasSigned;
-            if(signature==null) throw ParseErrorRPCException.INSTANCE;
+            if(signature==null) throw new  ParseErrorRPCException("Missing field(signature) on rpc param type(EcRecoverParams)");
             this.signature= signature;
         }
     }
@@ -1397,7 +1397,7 @@ public class RPCTypes{
         
 
         public BlockSpecifierParams(BlockSpecifierUnion block ){
-            if(block==null) throw ParseErrorRPCException.INSTANCE;
+            if(block==null) throw new  ParseErrorRPCException("Missing field(block) on rpc param type(BlockSpecifierParams)");
             this.block= block;
         }
     }
@@ -1410,11 +1410,11 @@ public class RPCTypes{
         
 
         public SubmitSeedParams(ByteArray newSeed ,ByteArray signingPublicKey ,AionAddress coinbase ){
-            if(newSeed==null) throw ParseErrorRPCException.INSTANCE;
+            if(newSeed==null) throw new  ParseErrorRPCException("Missing field(newSeed) on rpc param type(SubmitSeedParams)");
             this.newSeed= newSeed;
-            if(signingPublicKey==null) throw ParseErrorRPCException.INSTANCE;
+            if(signingPublicKey==null) throw new  ParseErrorRPCException("Missing field(signingPublicKey) on rpc param type(SubmitSeedParams)");
             this.signingPublicKey= signingPublicKey;
-            if(coinbase==null) throw ParseErrorRPCException.INSTANCE;
+            if(coinbase==null) throw new  ParseErrorRPCException("Missing field(coinbase) on rpc param type(SubmitSeedParams)");
             this.coinbase= coinbase;
         }
     }
@@ -1425,9 +1425,9 @@ public class RPCTypes{
         
 
         public SubmitSignatureParams(ByteArray signature ,ByteArray sealHash ){
-            if(signature==null) throw ParseErrorRPCException.INSTANCE;
+            if(signature==null) throw new  ParseErrorRPCException("Missing field(signature) on rpc param type(SubmitSignatureParams)");
             this.signature= signature;
-            if(sealHash==null) throw ParseErrorRPCException.INSTANCE;
+            if(sealHash==null) throw new  ParseErrorRPCException("Missing field(sealHash) on rpc param type(SubmitSignatureParams)");
             this.sealHash= sealHash;
         }
     }
@@ -1445,11 +1445,11 @@ public class RPCTypes{
         
 
         public SubmitBlockParams(ByteArray nonce ,ByteArray solution ,ByteArray headerHash ){
-            if(nonce==null) throw ParseErrorRPCException.INSTANCE;
+            if(nonce==null) throw new  ParseErrorRPCException("Missing field(nonce) on rpc param type(SubmitBlockParams)");
             this.nonce= nonce;
-            if(solution==null) throw ParseErrorRPCException.INSTANCE;
+            if(solution==null) throw new  ParseErrorRPCException("Missing field(solution) on rpc param type(SubmitBlockParams)");
             this.solution= solution;
-            if(headerHash==null) throw ParseErrorRPCException.INSTANCE;
+            if(headerHash==null) throw new  ParseErrorRPCException("Missing field(headerHash) on rpc param type(SubmitBlockParams)");
             this.headerHash= headerHash;
         }
     }
@@ -1458,7 +1458,7 @@ public class RPCTypes{
         
 
         public AddressParams(AionAddress address ){
-            if(address==null) throw ParseErrorRPCException.INSTANCE;
+            if(address==null) throw new  ParseErrorRPCException("Missing field(address) on rpc param type(AddressParams)");
             this.address= address;
         }
     }
@@ -1483,7 +1483,7 @@ public class RPCTypes{
         public static final BlockNumberEnumUnion blockDefaultValue=BlockNumberEnumUnionConverter.decode("latest");
 
         public AddressBlockParams(AionAddress address ,BlockNumberEnumUnion block ){
-            if(address==null) throw ParseErrorRPCException.INSTANCE;
+            if(address==null) throw new  ParseErrorRPCException("Missing field(address) on rpc param type(AddressBlockParams)");
             this.address= address;
             this.block= block==null? blockDefaultValue: block;
         }
@@ -1497,9 +1497,9 @@ public class RPCTypes{
         public static final Integer durationDefaultValue=IntConverter.decode("300");
 
         public UnlockAccountParams(AionAddress address ,String password ,Integer duration ){
-            if(address==null) throw ParseErrorRPCException.INSTANCE;
+            if(address==null) throw new  ParseErrorRPCException("Missing field(address) on rpc param type(UnlockAccountParams)");
             this.address= address;
-            if(password==null) throw ParseErrorRPCException.INSTANCE;
+            if(password==null) throw new  ParseErrorRPCException("Missing field(password) on rpc param type(UnlockAccountParams)");
             this.password= password;
             this.duration= duration==null? durationDefaultValue: duration;
         }
@@ -1511,9 +1511,9 @@ public class RPCTypes{
         
 
         public LockAccountParams(AionAddress address ,String password ){
-            if(address==null) throw ParseErrorRPCException.INSTANCE;
+            if(address==null) throw new  ParseErrorRPCException("Missing field(address) on rpc param type(LockAccountParams)");
             this.address= address;
-            if(password==null) throw ParseErrorRPCException.INSTANCE;
+            if(password==null) throw new  ParseErrorRPCException("Missing field(password) on rpc param type(LockAccountParams)");
             this.password= password;
         }
     }
@@ -1522,7 +1522,7 @@ public class RPCTypes{
         
 
         public BlockHashParams(ByteArray block ){
-            if(block==null) throw ParseErrorRPCException.INSTANCE;
+            if(block==null) throw new  ParseErrorRPCException("Missing field(block) on rpc param type(BlockHashParams)");
             this.block= block;
         }
     }
@@ -1531,7 +1531,7 @@ public class RPCTypes{
         
 
         public TransactionHashParams(ByteArray hash ){
-            if(hash==null) throw ParseErrorRPCException.INSTANCE;
+            if(hash==null) throw new  ParseErrorRPCException("Missing field(hash) on rpc param type(TransactionHashParams)");
             this.hash= hash;
         }
     }
@@ -1540,7 +1540,7 @@ public class RPCTypes{
         
 
         public PasswordParams(String password ){
-            if(password==null) throw ParseErrorRPCException.INSTANCE;
+            if(password==null) throw new  ParseErrorRPCException("Missing field(password) on rpc param type(PasswordParams)");
             this.password= password;
         }
     }
@@ -1549,7 +1549,7 @@ public class RPCTypes{
         
 
         public BlockNumberParams(Long block ){
-            if(block==null) throw ParseErrorRPCException.INSTANCE;
+            if(block==null) throw new  ParseErrorRPCException("Missing field(block) on rpc param type(BlockNumberParams)");
             this.block= block;
         }
     }
@@ -1560,7 +1560,7 @@ public class RPCTypes{
         public static final Boolean fullTransactionDefaultValue=BoolConverter.decode("false");
 
         public EthBlockNumberParams(Long block ,Boolean fullTransaction ){
-            if(block==null) throw ParseErrorRPCException.INSTANCE;
+            if(block==null) throw new  ParseErrorRPCException("Missing field(block) on rpc param type(EthBlockNumberParams)");
             this.block= block;
             this.fullTransaction= fullTransaction==null? fullTransactionDefaultValue: fullTransaction;
         }
@@ -1572,7 +1572,7 @@ public class RPCTypes{
         public static final Boolean fullTransactionDefaultValue=BoolConverter.decode("false");
 
         public EthBlockHashParams(ByteArray block ,Boolean fullTransaction ){
-            if(block==null) throw ParseErrorRPCException.INSTANCE;
+            if(block==null) throw new  ParseErrorRPCException("Missing field(block) on rpc param type(EthBlockHashParams)");
             this.block= block;
             this.fullTransaction= fullTransaction==null? fullTransactionDefaultValue: fullTransaction;
         }
@@ -1584,7 +1584,7 @@ public class RPCTypes{
         public static final BlockNumberEnumUnion blockDefaultValue=BlockNumberEnumUnionConverter.decode("latest");
 
         public CallParams(TxCall transaction ,BlockNumberEnumUnion block ){
-            if(transaction==null) throw ParseErrorRPCException.INSTANCE;
+            if(transaction==null) throw new  ParseErrorRPCException("Missing field(transaction) on rpc param type(CallParams)");
             this.transaction= transaction;
             this.block= block==null? blockDefaultValue: block;
         }
@@ -1594,7 +1594,7 @@ public class RPCTypes{
         
 
         public SendTransactionParams(TxCall transaction ){
-            if(transaction==null) throw ParseErrorRPCException.INSTANCE;
+            if(transaction==null) throw new  ParseErrorRPCException("Missing field(transaction) on rpc param type(SendTransactionParams)");
             this.transaction= transaction;
         }
     }
@@ -1603,7 +1603,7 @@ public class RPCTypes{
         
 
         public SendTransactionRawParams(ByteArray transaction ){
-            if(transaction==null) throw ParseErrorRPCException.INSTANCE;
+            if(transaction==null) throw new  ParseErrorRPCException("Missing field(transaction) on rpc param type(SendTransactionRawParams)");
             this.transaction= transaction;
         }
     }

@@ -32,7 +32,7 @@ public interface RPCServerMethods extends RPC{
             <#list methods as method>
             if(request.method.equals("${method.name}")){
                 ${macros.toJavaType(method.param)} params= ${macros.toJavaConverter(method.param)}.decode(request.params);
-                if (params==null) throw ${macros.toJavaException("InvalidParams")}.INSTANCE;
+                if (params==null) throw new ${macros.toJavaException("InvalidParams")}();
                 ${macros.toJavaType(method.returnType)} result = rpc.${method.name}(<#list method.param.fields as parameter>params.${parameter.fieldName}<#if parameter_has_next>,</#if></#list>);
                 // JSON RPC spec demands that if the result member does not exist
                 // we should return an error see: https://www.jsonrpc.org/specification#response_object
@@ -40,7 +40,7 @@ public interface RPCServerMethods extends RPC{
                 else res = ${macros.toJavaConverter(method.returnType)}.encode(result);
             }else
             </#list>
-                throw ${macros.toJavaException("MethodNotFound")}.INSTANCE;
+                throw new ${macros.toJavaException("MethodNotFound")}();
         return res;
     }
 

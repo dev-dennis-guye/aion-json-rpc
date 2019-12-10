@@ -18,7 +18,7 @@ import org.json.JSONObject;
 *
 * AUTO-GENERATED SOURCE FILE.  DO NOT EDIT MANUALLY -- YOUR CHANGES WILL
 * BE WIPED OUT WHEN THIS FILE GETS RE-GENERATED OR UPDATED.
-* GENERATED: 2019-12-11
+* GENERATED: 2019-12-10
 *
 *****************************************************************************/
 public class RPCTypesConverter{
@@ -542,7 +542,7 @@ public class RPCTypesConverter{
                 JSONObject jsonObject = str instanceof JSONObject? (JSONObject)str :new JSONObject(str.toString());
                 return new Request( IntConverter.decode(jsonObject.opt("id")) , StringConverter.decode(jsonObject.opt("method")) , AnyConverter.decode(jsonObject.opt("params")) , VersionTypeConverter.decode(jsonObject.opt("jsonrpc")) );
             } catch (Exception e){
-                throw new ParseErrorRPCException("Could not decode composite type(request}}): "+ str);
+                throw new ParseErrorRPCException();
             }
         }
 
@@ -583,7 +583,7 @@ public class RPCTypesConverter{
                 JSONObject jsonObject = str instanceof JSONObject? (JSONObject)str :new JSONObject(str.toString());
                 return new SyncInfo( LongHexStringConverter.decode(jsonObject.opt("startingBlock")) , LongHexStringConverter.decode(jsonObject.opt("currentBlock")) , LongHexStringConverter.decode(jsonObject.opt("highestBlock")) );
             } catch (Exception e){
-                throw new ParseErrorRPCException("Could not decode composite type(syncInfo}}): "+ str);
+                throw new ParseErrorRPCException();
             }
         }
 
@@ -622,7 +622,7 @@ public class RPCTypesConverter{
                 JSONObject jsonObject = str instanceof JSONObject? (JSONObject)str :new JSONObject(str.toString());
                 return new Response( IntConverter.decode(jsonObject.opt("id")) , AnyConverter.decode(jsonObject.opt("result")) , RpcErrorConverter.decode(jsonObject.opt("error")) , VersionTypeConverter.decode(jsonObject.opt("jsonrpc")) );
             } catch (Exception e){
-                throw new ParseErrorRPCException("Could not decode composite type(response}}): "+ str);
+                throw new ParseErrorRPCException();
             }
         }
 
@@ -663,7 +663,7 @@ public class RPCTypesConverter{
                 JSONObject jsonObject = str instanceof JSONObject? (JSONObject)str :new JSONObject(str.toString());
                 return new RpcError( IntConverter.decode(jsonObject.opt("code")) , StringConverter.decode(jsonObject.opt("message")) );
             } catch (Exception e){
-                throw new ParseErrorRPCException("Could not decode composite type(rpcError}}): "+ str);
+                throw new ParseErrorRPCException();
             }
         }
 
@@ -700,7 +700,7 @@ public class RPCTypesConverter{
                 JSONObject jsonObject = str instanceof JSONObject? (JSONObject)str :new JSONObject(str.toString());
                 return new TxLogDetails( AddressConverter.decode(jsonObject.opt("address")) , IntConverter.decode(jsonObject.opt("transactionIndex")) , DataHexStringConverter.decode(jsonObject.opt("data")) , DataHexStringListConverter.decode(jsonObject.opt("topics")) , LongConverter.decode(jsonObject.opt("blockNumber")) );
             } catch (Exception e){
-                throw new ParseErrorRPCException("Could not decode composite type(txLogDetails}}): "+ str);
+                throw new ParseErrorRPCException();
             }
         }
 
@@ -743,7 +743,7 @@ public class RPCTypesConverter{
                 JSONObject jsonObject = str instanceof JSONObject? (JSONObject)str :new JSONObject(str.toString());
                 return new TxDetails( AddressConverter.decode(jsonObject.opt("contractAddress")) , Byte32StringConverter.decode(jsonObject.opt("hash")) , IntConverter.decode(jsonObject.opt("transactionIndex")) , BigIntHexStringConverter.decode(jsonObject.opt("value")) , LongConverter.decode(jsonObject.opt("nrg")) , LongHexStringConverter.decode(jsonObject.opt("nrgPrice")) , LongConverter.decode(jsonObject.opt("gas")) , LongHexStringConverter.decode(jsonObject.opt("gasPrice")) , LongConverter.decode(jsonObject.opt("nonce")) , AddressConverter.decode(jsonObject.opt("from")) , AddressConverter.decode(jsonObject.opt("to")) , LongConverter.decode(jsonObject.opt("timestamp")) , DataHexStringConverter.decode(jsonObject.opt("input")) , LongHexStringConverter.decode(jsonObject.opt("blockNumber")) , Byte32StringConverter.decode(jsonObject.opt("blockHash")) , StringConverter.decode(jsonObject.opt("error")) , ByteHexStringConverter.decode(jsonObject.opt("type")) , LongHexStringConverter.decode(jsonObject.opt("nrgUsed")) , LongHexStringConverter.decode(jsonObject.opt("gasUsed")) , BoolConverter.decode(jsonObject.opt("hasInternalTransactions")) , TxLogDetailsListConverter.decode(jsonObject.opt("logs")) , Byte32StringConverter.decode(jsonObject.opt("beaconHash")) );
             } catch (Exception e){
-                throw new ParseErrorRPCException("Could not decode composite type(txDetails}}): "+ str);
+                throw new ParseErrorRPCException();
             }
         }
 
@@ -820,7 +820,7 @@ public class RPCTypesConverter{
                 JSONObject jsonObject = str instanceof JSONObject? (JSONObject)str :new JSONObject(str.toString());
                 return new TxCall( AddressConverter.decode(jsonObject.opt("from")) , AddressConverter.decode(jsonObject.opt("to")) , DataHexStringConverter.decode(jsonObject.opt("data")) , BigIntConverter.decode(jsonObject.opt("nonce")) , BigIntConverter.decode(jsonObject.opt("value")) , LongConverter.decode(jsonObject.opt("gas")) , LongConverter.decode(jsonObject.opt("gasPrice")) , Byte32StringConverter.decode(jsonObject.opt("beaconHash")) , ByteConverter.decode(jsonObject.opt("type")) );
             } catch (Exception e){
-                throw new ParseErrorRPCException("Could not decode composite type(txCall}}): "+ str);
+                throw new ParseErrorRPCException();
             }
         }
 
@@ -871,7 +871,7 @@ public class RPCTypesConverter{
                 JSONObject jsonObject = str instanceof JSONObject? (JSONObject)str :new JSONObject(str.toString());
                 return new BlockDetails( LongConverter.decode(jsonObject.opt("number")) , Byte32StringConverter.decode(jsonObject.opt("hash")) , Byte32StringConverter.decode(jsonObject.opt("parentHash")) , ByteArrayConverter.decode(jsonObject.opt("logsBloom")) , DataHexStringConverter.decode(jsonObject.opt("transactionsRoot")) , DataHexStringConverter.decode(jsonObject.opt("stateRoot")) , DataHexStringConverter.decode(jsonObject.opt("receiptsRoot")) , BigIntHexStringConverter.decode(jsonObject.opt("difficulty")) , BigIntHexStringConverter.decode(jsonObject.opt("totalDifficulty")) , AddressConverter.decode(jsonObject.opt("miner")) , LongHexStringConverter.decode(jsonObject.opt("timestamp")) , LongHexStringConverter.decode(jsonObject.opt("gasUsed")) , LongHexStringConverter.decode(jsonObject.opt("gasLimit")) , LongHexStringConverter.decode(jsonObject.opt("nrgUsed")) , LongHexStringConverter.decode(jsonObject.opt("nrgLimit")) , ByteHexStringConverter.decode(jsonObject.opt("sealType")) , BoolConverter.decode(jsonObject.opt("mainChain")) , DataHexStringConverter.decode(jsonObject.opt("extraData")) , IntConverter.decode(jsonObject.opt("size")) , IntConverter.decode(jsonObject.opt("numTransactions")) , DataHexStringConverter.decode(jsonObject.opt("txTrieRoot")) , BigIntHexStringConverter.decode(jsonObject.opt("blockReward")) , TxDetailsListConverter.decode(jsonObject.opt("transactions")) , DataHexStringConverter.decode(jsonObject.opt("nonce")) , DataHexStringConverter.decode(jsonObject.opt("solution")) , DataHexStringConverter.decode(jsonObject.opt("seed")) , DataHexStringConverter.decode(jsonObject.opt("signature")) , DataHexStringConverter.decode(jsonObject.opt("publicKey")) , IntConverter.decode(jsonObject.opt("blockTime")) );
             } catch (Exception e){
-                throw new ParseErrorRPCException("Could not decode composite type(blockDetails}}): "+ str);
+                throw new ParseErrorRPCException();
             }
         }
 
@@ -962,7 +962,7 @@ public class RPCTypesConverter{
                 JSONObject jsonObject = str instanceof JSONObject? (JSONObject)str :new JSONObject(str.toString());
                 return new BlockTemplate( Byte32StringConverter.decode(jsonObject.opt("previousblockhash")) , LongConverter.decode(jsonObject.opt("height")) , Uint256HexStringConverter.decode(jsonObject.opt("target")) , Byte32StringConverter.decode(jsonObject.opt("headerHash")) , Uint128HexStringConverter.decode(jsonObject.opt("blockBaseReward")) , Uint128HexStringConverter.decode(jsonObject.opt("blockTxFee")) );
             } catch (Exception e){
-                throw new ParseErrorRPCException("Could not decode composite type(blockTemplate}}): "+ str);
+                throw new ParseErrorRPCException();
             }
         }
 
@@ -1007,7 +1007,7 @@ public class RPCTypesConverter{
                 JSONObject jsonObject = str instanceof JSONObject? (JSONObject)str :new JSONObject(str.toString());
                 return new SubmissionResult( BoolConverter.decode(jsonObject.opt("result")) );
             } catch (Exception e){
-                throw new ParseErrorRPCException("Could not decode composite type(submissionResult}}): "+ str);
+                throw new ParseErrorRPCException();
             }
         }
 
@@ -1042,7 +1042,7 @@ public class RPCTypesConverter{
                 JSONObject jsonObject = str instanceof JSONObject? (JSONObject)str :new JSONObject(str.toString());
                 return new ValidateAddressResult( BoolConverter.decode(jsonObject.opt("isvalid")) , AddressConverter.decode(jsonObject.opt("address")) , BoolConverter.decode(jsonObject.opt("ismine")) );
             } catch (Exception e){
-                throw new ParseErrorRPCException("Could not decode composite type(validateAddressResult}}): "+ str);
+                throw new ParseErrorRPCException();
             }
         }
 
@@ -1081,7 +1081,7 @@ public class RPCTypesConverter{
                 JSONObject jsonObject = str instanceof JSONObject? (JSONObject)str :new JSONObject(str.toString());
                 return new MinerStats( DecimalstringConverter.decode(jsonObject.opt("networkHashRate")) , DecimalstringConverter.decode(jsonObject.opt("minerHashrate")) , DecimalstringConverter.decode(jsonObject.opt("minerHashrateShare")) );
             } catch (Exception e){
-                throw new ParseErrorRPCException("Could not decode composite type(minerStats}}): "+ str);
+                throw new ParseErrorRPCException();
             }
         }
 
@@ -1120,7 +1120,7 @@ public class RPCTypesConverter{
                 JSONObject jsonObject = str instanceof JSONObject? (JSONObject)str :new JSONObject(str.toString());
                 return new TxLog( AddressConverter.decode(jsonObject.opt("address")) , IntConverter.decode(jsonObject.opt("transactionIndex")) , DataHexStringConverter.decode(jsonObject.opt("data")) , DataHexStringListConverter.decode(jsonObject.opt("topics")) );
             } catch (Exception e){
-                throw new ParseErrorRPCException("Could not decode composite type(txLog}}): "+ str);
+                throw new ParseErrorRPCException();
             }
         }
 
@@ -1161,7 +1161,7 @@ public class RPCTypesConverter{
                 JSONObject jsonObject = str instanceof JSONObject? (JSONObject)str :new JSONObject(str.toString());
                 return new AccountState( AddressConverter.decode(jsonObject.opt("address")) , LongConverter.decode(jsonObject.opt("blockNumber")) , Uint256HexStringConverter.decode(jsonObject.opt("balance")) , Uint256HexStringConverter.decode(jsonObject.opt("nonce")) );
             } catch (Exception e){
-                throw new ParseErrorRPCException("Could not decode composite type(accountState}}): "+ str);
+                throw new ParseErrorRPCException();
             }
         }
 
@@ -1202,7 +1202,7 @@ public class RPCTypesConverter{
                 JSONObject jsonObject = str instanceof JSONObject? (JSONObject)str :new JSONObject(str.toString());
                 return new EthTransaction( Byte32StringConverter.decode(jsonObject.opt("hash")) , Uint16Converter.decode(jsonObject.opt("transactionIndex")) , Uint32HexStringConverter.decode(jsonObject.opt("nrg")) , Uint32HexStringConverter.decode(jsonObject.opt("nrgPrice")) , Uint32HexStringConverter.decode(jsonObject.opt("gas")) , Uint32HexStringConverter.decode(jsonObject.opt("gasPrice")) , AddressConverter.decode(jsonObject.opt("contractAddress")) , AddressConverter.decode(jsonObject.opt("from")) , AddressConverter.decode(jsonObject.opt("to")) , Uint32Converter.decode(jsonObject.opt("timestamp")) , DataHexStringConverter.decode(jsonObject.opt("input")) , Uint32HexStringConverter.decode(jsonObject.opt("blockNumber")) , Byte32StringConverter.decode(jsonObject.opt("blockHash")) );
             } catch (Exception e){
-                throw new ParseErrorRPCException("Could not decode composite type(ethTransaction}}): "+ str);
+                throw new ParseErrorRPCException();
             }
         }
 
@@ -1261,7 +1261,7 @@ public class RPCTypesConverter{
                 JSONObject jsonObject = str instanceof JSONObject? (JSONObject)str :new JSONObject(str.toString());
                 return new EthTransactionForBlock( Byte32StringConverter.decode(jsonObject.opt("hash")) , Uint16Converter.decode(jsonObject.opt("transactionIndex")) , Uint32HexStringConverter.decode(jsonObject.opt("nrg")) , Uint32HexStringConverter.decode(jsonObject.opt("nrgPrice")) , Uint32HexStringConverter.decode(jsonObject.opt("gas")) , Uint32HexStringConverter.decode(jsonObject.opt("gasPrice")) , AddressConverter.decode(jsonObject.opt("contractAddress")) , AddressConverter.decode(jsonObject.opt("from")) , AddressConverter.decode(jsonObject.opt("to")) , Uint32Converter.decode(jsonObject.opt("timestamp")) , DataHexStringConverter.decode(jsonObject.opt("input")) , Uint32Converter.decode(jsonObject.opt("blockNumber")) );
             } catch (Exception e){
-                throw new ParseErrorRPCException("Could not decode composite type(ethTransactionForBlock}}): "+ str);
+                throw new ParseErrorRPCException();
             }
         }
 
@@ -1318,7 +1318,7 @@ public class RPCTypesConverter{
                 JSONObject jsonObject = str instanceof JSONObject? (JSONObject)str :new JSONObject(str.toString());
                 return new EthTransactionReceipt( Byte32StringConverter.decode(jsonObject.opt("transactionHash")) , Uint16HexStringConverter.decode(jsonObject.opt("transactionIndex")) , Uint32HexStringConverter.decode(jsonObject.opt("blockNumber")) , Byte32StringConverter.decode(jsonObject.opt("blockHash")) , Uint32HexStringConverter.decode(jsonObject.opt("nrgUsed")) , Uint32HexStringConverter.decode(jsonObject.opt("nrgPrice")) , Uint32HexStringConverter.decode(jsonObject.opt("gasUsed")) , Uint32HexStringConverter.decode(jsonObject.opt("gasPrice")) , Uint32HexStringConverter.decode(jsonObject.opt("gasLimit")) , Uint32HexStringConverter.decode(jsonObject.opt("cumulativeNrgUsed")) , Uint32HexStringConverter.decode(jsonObject.opt("cumulativeGasUsed")) , AddressConverter.decode(jsonObject.opt("contractAddress")) , AddressConverter.decode(jsonObject.opt("from")) , AddressConverter.decode(jsonObject.opt("to")) , DataHexStringConverter.decode(jsonObject.opt("logsBloom")) , Byte32StringConverter.decode(jsonObject.opt("root")) , ByteHexStringConverter.decode(jsonObject.opt("status")) , EthTxReceiptLogsListConverter.decode(jsonObject.opt("logs")) );
             } catch (Exception e){
-                throw new ParseErrorRPCException("Could not decode composite type(ethTransactionReceipt}}): "+ str);
+                throw new ParseErrorRPCException();
             }
         }
 
@@ -1387,7 +1387,7 @@ public class RPCTypesConverter{
                 JSONObject jsonObject = str instanceof JSONObject? (JSONObject)str :new JSONObject(str.toString());
                 return new EthTxReceiptLogs( AddressConverter.decode(jsonObject.opt("address")) , DataHexStringConverter.decode(jsonObject.opt("data")) , LongConverter.decode(jsonObject.opt("blockNumber")) , Uint16HexStringConverter.decode(jsonObject.opt("transactionIndex")) , Uint16HexStringConverter.decode(jsonObject.opt("logIndex")) , DataHexStringListConverter.decode(jsonObject.opt("topics")) );
             } catch (Exception e){
-                throw new ParseErrorRPCException("Could not decode composite type(ethTxReceiptLogs}}): "+ str);
+                throw new ParseErrorRPCException();
             }
         }
 
@@ -1432,7 +1432,7 @@ public class RPCTypesConverter{
                 JSONObject jsonObject = str instanceof JSONObject? (JSONObject)str :new JSONObject(str.toString());
                 return new EthBlock( LongConverter.decode(jsonObject.opt("number")) , Byte32StringConverter.decode(jsonObject.opt("hash")) , Byte32StringConverter.decode(jsonObject.opt("parentHash")) , ByteArrayConverter.decode(jsonObject.opt("logsBloom")) , DataHexStringConverter.decode(jsonObject.opt("transactionsRoot")) , DataHexStringConverter.decode(jsonObject.opt("stateRoot")) , DataHexStringConverter.decode(jsonObject.opt("receiptsRoot")) , BigIntHexStringConverter.decode(jsonObject.opt("difficulty")) , BigIntHexStringConverter.decode(jsonObject.opt("totalDifficulty")) , LongHexStringConverter.decode(jsonObject.opt("timestamp")) , AddressConverter.decode(jsonObject.opt("miner")) , LongHexStringConverter.decode(jsonObject.opt("gasUsed")) , LongHexStringConverter.decode(jsonObject.opt("gasLimit")) , LongHexStringConverter.decode(jsonObject.opt("nrgUsed")) , LongHexStringConverter.decode(jsonObject.opt("nrgLimit")) , ByteHexStringConverter.decode(jsonObject.opt("sealType")) , BoolConverter.decode(jsonObject.opt("mainChain")) , IntConverter.decode(jsonObject.opt("size")) , TransactionUnionConverter.decode(jsonObject.opt("transactions")) , DataHexStringConverter.decode(jsonObject.opt("nonce")) , DataHexStringConverter.decode(jsonObject.opt("solution")) , DataHexStringConverter.decode(jsonObject.opt("seed")) , DataHexStringConverter.decode(jsonObject.opt("signature")) , DataHexStringConverter.decode(jsonObject.opt("publicKey")) );
             } catch (Exception e){
-                throw new ParseErrorRPCException("Could not decode composite type(ethBlock}}): "+ str);
+                throw new ParseErrorRPCException();
             }
         }
 
@@ -1513,7 +1513,7 @@ public class RPCTypesConverter{
                 JSONObject jsonObject = str instanceof JSONObject? (JSONObject)str :new JSONObject(str.toString());
                 return new OpsTransaction( LongConverter.decode(jsonObject.opt("timestampVal")) , Byte32StringConverter.decode(jsonObject.opt("transactionHash")) , LongConverter.decode(jsonObject.opt("blockNumber")) , Byte32StringConverter.decode(jsonObject.opt("blockHash")) , BigIntHexStringConverter.decode(jsonObject.opt("nonce")) , AddressConverter.decode(jsonObject.opt("fromAddr")) , AddressConverter.decode(jsonObject.opt("toAddr")) , BigIntHexStringConverter.decode(jsonObject.opt("value")) , LongHexStringConverter.decode(jsonObject.opt("nrgPrice")) , LongHexStringConverter.decode(jsonObject.opt("nrgConsumed")) , DataHexStringConverter.decode(jsonObject.opt("data")) , IntConverter.decode(jsonObject.opt("transactionIndex")) , Byte32StringConverter.decode(jsonObject.opt("beaconHash")) , TxLogListConverter.decode(jsonObject.opt("logs")) );
             } catch (Exception e){
-                throw new ParseErrorRPCException("Could not decode composite type(opsTransaction}}): "+ str);
+                throw new ParseErrorRPCException();
             }
         }
 
@@ -1590,7 +1590,7 @@ public class RPCTypesConverter{
                 if(checkConstraints(result))
                     return result;
                 else
-                    throw new ParseErrorRPCException("Failed to encode constraint type(dataHexString): "+ result);
+                    throw new ParseErrorRPCException();
             }
             else{
                 return null;
@@ -1625,7 +1625,7 @@ public class RPCTypesConverter{
                 if(checkConstraints(result))
                     return result;
                 else
-                    throw new ParseErrorRPCException("Failed to encode constraint type(bigIntHexString): "+ result);
+                    throw new ParseErrorRPCException();
             }
             else{
                 return null;
@@ -1660,7 +1660,7 @@ public class RPCTypesConverter{
                 if(checkConstraints(result))
                     return result;
                 else
-                    throw new ParseErrorRPCException("Failed to encode constraint type(uint256HexString): "+ result);
+                    throw new ParseErrorRPCException();
             }
             else{
                 return null;
@@ -1668,7 +1668,7 @@ public class RPCTypesConverter{
         }
 
         private static boolean checkConstraints(String s){
-            return regex.matcher(s).find() && s.length() >= 2 && s.length() <= 66;
+            return regex.matcher(s).find() && s.length() >= 66 && s.length() <= 66;
         }
     }
 
@@ -1695,7 +1695,7 @@ public class RPCTypesConverter{
                 if(checkConstraints(result))
                     return result;
                 else
-                    throw new ParseErrorRPCException("Failed to encode constraint type(uint64HexString): "+ result);
+                    throw new ParseErrorRPCException();
             }
             else{
                 return null;
@@ -1703,7 +1703,7 @@ public class RPCTypesConverter{
         }
 
         private static boolean checkConstraints(String s){
-            return regex.matcher(s).find() && s.length() >= 2 && s.length() <= 18;
+            return regex.matcher(s).find() && s.length() >= 18 && s.length() <= 18;
         }
     }
 
@@ -1730,7 +1730,7 @@ public class RPCTypesConverter{
                 if(checkConstraints(result))
                     return result;
                 else
-                    throw new ParseErrorRPCException("Failed to encode constraint type(uint128HexString): "+ result);
+                    throw new ParseErrorRPCException();
             }
             else{
                 return null;
@@ -1738,7 +1738,7 @@ public class RPCTypesConverter{
         }
 
         private static boolean checkConstraints(String s){
-            return regex.matcher(s).find() && s.length() >= 2 && s.length() <= 34;
+            return regex.matcher(s).find() && s.length() >= 34 && s.length() <= 34;
         }
     }
 
@@ -1765,7 +1765,7 @@ public class RPCTypesConverter{
                 if(checkConstraints(result))
                     return result;
                 else
-                    throw new ParseErrorRPCException("Failed to encode constraint type(uint32HexString): "+ result);
+                    throw new ParseErrorRPCException();
             }
             else{
                 return null;
@@ -1773,7 +1773,7 @@ public class RPCTypesConverter{
         }
 
         private static boolean checkConstraints(String s){
-            return regex.matcher(s).find() && s.length() >= 2 && s.length() <= 18;
+            return regex.matcher(s).find() && s.length() >= 18 && s.length() <= 18;
         }
     }
 
@@ -1800,7 +1800,7 @@ public class RPCTypesConverter{
                 if(checkConstraints(result))
                     return result;
                 else
-                    throw new ParseErrorRPCException("Failed to encode constraint type(uint16HexString): "+ result);
+                    throw new ParseErrorRPCException();
             }
             else{
                 return null;
@@ -1808,7 +1808,7 @@ public class RPCTypesConverter{
         }
 
         private static boolean checkConstraints(String s){
-            return regex.matcher(s).find() && s.length() >= 2 && s.length() <= 18;
+            return regex.matcher(s).find() && s.length() >= 18 && s.length() <= 18;
         }
     }
 
@@ -1835,7 +1835,7 @@ public class RPCTypesConverter{
                 if(checkConstraints(result))
                     return result;
                 else
-                    throw new ParseErrorRPCException("Failed to encode constraint type(longHexString): "+ result);
+                    throw new ParseErrorRPCException();
             }
             else{
                 return null;
@@ -1870,7 +1870,7 @@ public class RPCTypesConverter{
                 if(checkConstraints(result))
                     return result;
                 else
-                    throw new ParseErrorRPCException("Failed to encode constraint type(intHexString): "+ result);
+                    throw new ParseErrorRPCException();
             }
             else{
                 return null;
@@ -1905,7 +1905,7 @@ public class RPCTypesConverter{
                 if(checkConstraints(result))
                     return result;
                 else
-                    throw new ParseErrorRPCException("Failed to encode constraint type(byteHexString): "+ result);
+                    throw new ParseErrorRPCException();
             }
             else{
                 return null;
@@ -1940,7 +1940,7 @@ public class RPCTypesConverter{
                 if(checkConstraints(result))
                     return result;
                 else
-                    throw new ParseErrorRPCException("Failed to encode constraint type(byte32String): "+ result);
+                    throw new ParseErrorRPCException();
             }
             else{
                 return null;
@@ -1975,7 +1975,7 @@ public class RPCTypesConverter{
                 if(checkConstraints(result))
                     return result;
                 else
-                    throw new ParseErrorRPCException("Failed to encode constraint type(byte64String): "+ result);
+                    throw new ParseErrorRPCException();
             }
             else{
                 return null;
@@ -2010,7 +2010,7 @@ public class RPCTypesConverter{
                 if(checkConstraints(result))
                     return result;
                 else
-                    throw new ParseErrorRPCException("Failed to encode constraint type(decimalstring): "+ result);
+                    throw new ParseErrorRPCException();
             }
             else{
                 return null;

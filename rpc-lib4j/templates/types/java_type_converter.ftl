@@ -58,7 +58,7 @@ public class RPCTypesConverter{
         public static Boolean decode(Object s){
             if(s==null || s == JSONObject.NULL) return null;
             if ( booleanPattern.matcher(s.toString()).find()) return Boolean.parseBoolean(s.toString());
-            else throw ${macros.toJavaException(decodeError.error_class)}.INSTANCE;
+            else throw new  ${macros.toJavaException(encodeError.error_class)}("Failed to parse bool: " + s);
         }
 
         public static Boolean encode(Boolean b){
@@ -76,7 +76,7 @@ public class RPCTypesConverter{
                 return Byte.parseByte(s.toString());
             }
             else{
-                throw ${macros.toJavaException(decodeError.error_class)}.INSTANCE;
+                throw new  ${macros.toJavaException(encodeError.error_class)}("Failed to parse byte: " + s);
             }
         }
 
@@ -84,7 +84,7 @@ public class RPCTypesConverter{
             try {
                 return s;
             } catch (Exception e) {
-                throw ${macros.toJavaException(encodeError.error_class)}.INSTANCE;
+                throw new ${macros.toJavaException(encodeError.error_class)}();
             }
         }
 
@@ -93,7 +93,7 @@ public class RPCTypesConverter{
                 if (s==null||s.equals(JSONObject.NULL)) return null;
                 else return "0x"+ByteUtil.oneByteToHexString(s);
             } catch (Exception e) {
-                throw ${macros.toJavaException(encodeError.error_class)}.INSTANCE;
+                throw new ${macros.toJavaException(encodeError.error_class)}();
             }
         }
     }
@@ -109,7 +109,7 @@ public class RPCTypesConverter{
                 return Long.parseLong(s.toString());
             }
             else{
-                throw ${macros.toJavaException(decodeError.error_class)}.INSTANCE;
+                throw new  ${macros.toJavaException(encodeError.error_class)}("Failed to parse long: " + s);
             }
         }
 
@@ -117,7 +117,7 @@ public class RPCTypesConverter{
             try{
                 return s;
             }catch (Exception e){
-                throw ${macros.toJavaException(encodeError.error_class)}.INSTANCE;
+                throw new ${macros.toJavaException(encodeError.error_class)}();
             }
         }
 
@@ -126,7 +126,7 @@ public class RPCTypesConverter{
             if (s==null || s.equals(JSONObject.NULL)) return null;
             else return "0x"+Long.toHexString(s);
             }catch (Exception e){
-                throw ${macros.toJavaException(encodeError.error_class)}.INSTANCE;
+                throw new ${macros.toJavaException(encodeError.error_class)}();
             }
         }
 
@@ -156,7 +156,7 @@ public class RPCTypesConverter{
                 } else if (unsignedHexPattern.matcher(string).find()){
                     integer = TypeUtils.decodeIntFromHex(string);
                 } else{
-                    throw ${macros.toJavaException(decodeError.error_class)}.INSTANCE;
+                    throw new ${macros.toJavaException(decodeError.error_class)}();
                 }
                 TypeUtils.checkUnsigned(integer);
                 return integer;
@@ -188,7 +188,7 @@ public class RPCTypesConverter{
                 }else if (unsignedHexPattern.matcher(string).find()){
                     integer= TypeUtils.decodeLongFromHex(string);
                 } else{
-                    throw ${macros.toJavaException(decodeError.error_class)}.INSTANCE;
+                    throw new ${macros.toJavaException(decodeError.error_class)}();
                 }
                 TypeUtils.checkUnsigned(integer);
                 return integer;
@@ -221,7 +221,7 @@ public class RPCTypesConverter{
                 } else if (unsignedHexPattern.matcher(string).find()){
                     integer= TypeUtils.decodeBigIntFromHex(string);
                 } else{
-                    throw ${macros.toJavaException(decodeError.error_class)}.INSTANCE;
+                    throw new ${macros.toJavaException(decodeError.error_class)}();
                 }
                 TypeUtils.checkUnsigned(integer);
                 return integer;
@@ -254,7 +254,7 @@ public class RPCTypesConverter{
                 } else if (unsignedHexPattern.matcher(string).find()){
                     integer= TypeUtils.decodeBigIntFromHex(string);
                 } else{
-                    throw ${macros.toJavaException(decodeError.error_class)}.INSTANCE;
+                    throw new ${macros.toJavaException(decodeError.error_class)}();
                 }
                 TypeUtils.checkUnsigned(integer);
                 return integer;
@@ -287,7 +287,7 @@ public class RPCTypesConverter{
                 } else if (unsignedHexPattern.matcher(string).find()){
                     returnValue= TypeUtils.decodeBigIntFromHex(string);
                 } else{
-                    throw ParseErrorRPCException.INSTANCE;
+                    throw new ParseErrorRPCException();
                 }
                 TypeUtils.checkUnsigned(returnValue);
                 return returnValue;
@@ -306,7 +306,7 @@ public class RPCTypesConverter{
                 return Integer.parseInt(s.toString());
             }
             else{
-                throw ${macros.toJavaException(decodeError.error_class)}.INSTANCE;
+                throw new ${macros.toJavaException(decodeError.error_class)}();
             }
         }
 
@@ -314,7 +314,7 @@ public class RPCTypesConverter{
             try{
                 return s;
             }catch (Exception e){
-                throw ${macros.toJavaException(encodeError.error_class)}.INSTANCE;
+                throw new ${macros.toJavaException(encodeError.error_class)}();
             }
         }
 
@@ -323,7 +323,7 @@ public class RPCTypesConverter{
                 if (s==null) return null;
                 else return "0x"+Integer.toHexString(s);
             }catch (Exception e){
-                throw ${macros.toJavaException(encodeError.error_class)}.INSTANCE;
+                throw new  ${macros.toJavaException(encodeError.error_class)}("Failed to parse int: " + s);
             }
         }
     }
@@ -335,7 +335,7 @@ public class RPCTypesConverter{
                 if(bigInteger==null) return null;
                 return "0x"+bigInteger.toString(16);
             } catch (Exception e){
-                throw ${macros.toJavaException(encodeError.error_class)}.INSTANCE;
+                throw new ${macros.toJavaException(encodeError.error_class)}();
             }
         }
 
@@ -344,7 +344,7 @@ public class RPCTypesConverter{
                 if(bigInteger==null) return null;
                 return bigInteger.toString(10);
             } catch(Exception e){
-                throw ${macros.toJavaException(encodeError.error_class)}.INSTANCE;
+                throw new ${macros.toJavaException(encodeError.error_class)}();
             }
         }
 
@@ -358,7 +358,7 @@ public class RPCTypesConverter{
                 return new BigInteger(s.toString());
             }
             else{
-                throw ${macros.toJavaException(decodeError.error_class)}.INSTANCE;
+                throw new  ${macros.toJavaException(encodeError.error_class)}("Failed to parse bigint: " + s);
             }
         }
     }
@@ -378,7 +378,7 @@ public class RPCTypesConverter{
                     return new ByteArray(ByteUtil.hexStringToBytes(encodedString));
                 }
             }
-            throw ${macros.toJavaException(encodeError.error_class)}.INSTANCE;
+            throw new  ${macros.toJavaException(encodeError.error_class)}("Failed to parse byte-array: " + obj);
         }
 
         public static String encode(ByteArray bytes){
@@ -400,10 +400,10 @@ public class RPCTypesConverter{
                     return new AionAddress(((byte[])obj));
                 }
                 else {
-                    throw ${macros.toJavaException(encodeError.error_class)}.INSTANCE;
+                    throw new ${macros.toJavaException(encodeError.error_class)}();
                 }
             }catch (Exception e){
-                throw ${macros.toJavaException(encodeError.error_class)}.INSTANCE;
+                throw new  ${macros.toJavaException(encodeError.error_class)}("Failed to parse address: " + obj);
             }
         }
 
@@ -439,7 +439,7 @@ public class RPCTypesConverter{
                 JSONObject jsonObject = str instanceof JSONObject? (JSONObject)str :new JSONObject(str.toString());
                 return new ${macros.toJavaType(compositeType)}(<#list compositeType.fields as field> ${macros.toJavaConverter(field.type)}.decode(jsonObject.opt("${field.fieldName}")) <#if field_has_next>,</#if></#list>);
             } catch (Exception e){
-                throw ${macros.toJavaException(decodeError.error_class)}.INSTANCE;
+                throw new ${macros.toJavaException(decodeError.error_class)}("Could not decode composite type(${compositeType.name}}}): "+ str);
             }
         }
 
@@ -453,7 +453,7 @@ public class RPCTypesConverter{
                 return jsonObject.toString();
             }
             catch (Exception e){
-                throw ${macros.toJavaException(encodeError.error_class)}.INSTANCE;
+                throw new ${macros.toJavaException(encodeError.error_class)}();
             }
         }
 
@@ -466,7 +466,7 @@ public class RPCTypesConverter{
                 </#list>
                 return jsonObject;
             }catch (Exception e){
-                throw ${macros.toJavaException(encodeError.error_class)}.INSTANCE;
+                throw new ${macros.toJavaException(encodeError.error_class)}();
             }
         }
     }
@@ -483,10 +483,10 @@ public class RPCTypesConverter{
                     return ${macros.toJavaConverter(constrainedType.baseType)}.decode(object);
                 }
                 else{
-                    throw ${macros.toJavaException(decodeError.error_class)}.INSTANCE;
+                    throw new  ${macros.toJavaException(encodeError.error_class)}("Failed constraints on type ${constrainedType.name}: " + object);
                 }
             } catch(Exception e){
-                throw ${macros.toJavaException(decodeError.error_class)}.INSTANCE;
+                throw new ${macros.toJavaException(decodeError.error_class)}();
             }
         }
 
@@ -500,7 +500,7 @@ public class RPCTypesConverter{
                 if(checkConstraints(result))
                     return result;
                 else
-                    throw ${macros.toJavaException(encodeError.error_class)}.INSTANCE;
+                    throw new ${macros.toJavaException(encodeError.error_class)}("Failed to encode constraint type(${constrainedType.name}): "+ result);
             }
             else{
                 return null;
@@ -522,16 +522,16 @@ public class RPCTypesConverter{
                 ${macros.toJavaType(paramType)} obj;
                 if(s.startsWith("[") && s.endsWith("]")){
                     JSONArray jsonArray = new JSONArray(s);
-                    if(jsonArray.length() > ${paramType.fields?size}) throw ${macros.toJavaException(decodeError.error_class)}.INSTANCE;
+                    if(jsonArray.length() > ${paramType.fields?size}) throw new ${macros.toJavaException(decodeError.error_class)}();
                     else obj = new ${macros.toJavaType(paramType)}(<#list paramType.fields as param> ${macros.toJavaConverter(param.type)}.decode(jsonArray.opt(${param.index}))<#if param_has_next>,</#if></#list>);
                 }
                 else if(s.startsWith("{") && s.endsWith("}")){
                     JSONObject jsonObject = new JSONObject(s);
-                    if(jsonObject.keySet().size() > ${paramType.fields?size}) throw ${macros.toJavaException(decodeError.error_class)}.INSTANCE;
+                    if(jsonObject.keySet().size() > ${paramType.fields?size}) throw new ${macros.toJavaException(decodeError.error_class)}();
                     else obj = new ${macros.toJavaType(paramType)}(<#list paramType.fields as param> ${macros.toJavaConverter(param.type)}.decode(jsonObject.opt("${param.fieldName}"))<#if param_has_next>,</#if></#list>);
                 }
                 else{
-                    throw ${macros.toJavaException(decodeError.error_class)}.INSTANCE;
+                    throw new ${macros.toJavaException(decodeError.error_class)}();
                 }
                 return obj;<#else >
                 if(object instanceof JSONArray && ((JSONArray) object).length()==0){
@@ -544,11 +544,11 @@ public class RPCTypesConverter{
                     return new ${macros.toJavaType(paramType)}();
                 }
                 else{
-                    throw ${macros.toJavaException(decodeError.error_class)}.INSTANCE;
+                    throw new ${macros.toJavaException(decodeError.error_class)}();
                 }</#if>
             }
             catch(Exception e){
-                throw ${macros.toJavaException("InvalidParams")}.INSTANCE;
+                throw new ${macros.toJavaException("InvalidParams")}();
             }
         }
 
@@ -564,7 +564,7 @@ public class RPCTypesConverter{
                 return null;
                 </#if>
             }catch(Exception e){
-                throw ${macros.toJavaException(decodeError.error_class)}.INSTANCE;
+                throw new ${macros.toJavaException(decodeError.error_class)}();
             }
         }
     }

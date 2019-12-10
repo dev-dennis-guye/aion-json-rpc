@@ -11,7 +11,7 @@
     ]>
 <errors>
     <error error_class="InvalidRequest" code="-32600" message="Invalid Request" modifiable="false"/>
-    <error error_class="ParseError" code="-32700" message="Parse error" modifiable="false">
+    <error error_class="ParseError" code="-32700" message="Parse error" modifiable="true">
         <comment>Occurs if a user submits a malformed json payload</comment>
     </error>
     <error error_class="MethodNotFound" code="-32601" message="Method not found" modifiable="true"/>

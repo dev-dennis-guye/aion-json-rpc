@@ -6,7 +6,7 @@ import org.aion.rpc.types.RPCTypesConverter.RpcErrorConverter;
 *
 * AUTO-GENERATED SOURCE FILE.  DO NOT EDIT MANUALLY -- YOUR CHANGES WILL
 * BE WIPED OUT WHEN THIS FILE GETS RE-GENERATED OR UPDATED.
-* GENERATED: 2019-12-10
+* GENERATED: 2019-12-11
 *
 *****************************************************************************/
 public class RPCExceptions{
@@ -94,7 +94,9 @@ public class RPCExceptions{
     * @return the RPCException which contains the specified code and message if it can be created. Otherwise an instance of InternalErrorRPCException.
     */
     public static RPCException fromCodeAndMessage(int code, String message){
-         if(code == -32601){
+         if(code == -32700){
+            return new ParseErrorRPCException(code, message);
+        }else if(code == -32601){
             return new MethodNotFoundRPCException(code, message);
         }else if(code == -32603){
             return new InternalErrorRPCException(code, message);
@@ -109,13 +111,9 @@ public class RPCExceptions{
     public static class RPCException extends RuntimeException{
 
         private final transient RpcError error;
-        RPCException(String message){
-            super(message);
-            this.error = RpcErrorConverter.decode(message);
-        }
-
-        RPCException(Integer code ,String message){
-            this("{\"code\":"+code+",\"message\":\""+message+"\"}");
+        RPCException(final Integer code , final String message){
+            super("{\"code\":"+code+",\"message\":\""+message+"\"}");
+            error = new RpcError(code, message);
         }
 
         /**
@@ -132,8 +130,8 @@ public class RPCExceptions{
     */
     public static class InvalidRequestRPCException extends RPCException{
         public static final InvalidRequestRPCException INSTANCE = new InvalidRequestRPCException();
-        private InvalidRequestRPCException(){
-            super("{\"code\":-32600,\"message\":\"Invalid Request\"}");
+        public InvalidRequestRPCException(){
+            super(-32600,"Invalid Request");
         }
     }
 
@@ -144,8 +142,14 @@ public class RPCExceptions{
     */
     public static class ParseErrorRPCException extends RPCException{
         public static final ParseErrorRPCException INSTANCE = new ParseErrorRPCException();
-        private ParseErrorRPCException(){
-            super("{\"code\":-32700,\"message\":\"Parse error\"}");
+        public ParseErrorRPCException(){
+            super(-32700,"Parse error");
+        }
+        public ParseErrorRPCException(String appendedMessage){
+            super(-32700,"Parse error:"+appendedMessage);
+        }
+        ParseErrorRPCException(Integer code, String message){
+            super(code,message);
         }
     }
 
@@ -155,11 +159,11 @@ public class RPCExceptions{
     */
     public static class MethodNotFoundRPCException extends RPCException{
         public static final MethodNotFoundRPCException INSTANCE = new MethodNotFoundRPCException();
-        private MethodNotFoundRPCException(){
-            super("{\"code\":-32601,\"message\":\"Method not found\"}");
+        public MethodNotFoundRPCException(){
+            super(-32601,"Method not found");
         }
         public MethodNotFoundRPCException(String appendedMessage){
-            super("{\"code\":-32601,\"message\":\"Method not found:"+appendedMessage+"\"}");
+            super(-32601,"Method not found:"+appendedMessage);
         }
         MethodNotFoundRPCException(Integer code, String message){
             super(code,message);
@@ -173,8 +177,8 @@ public class RPCExceptions{
     */
     public static class InvalidParamsRPCException extends RPCException{
         public static final InvalidParamsRPCException INSTANCE = new InvalidParamsRPCException();
-        private InvalidParamsRPCException(){
-            super("{\"code\":-32602,\"message\":\"Invalid params\"}");
+        public InvalidParamsRPCException(){
+            super(-32602,"Invalid params");
         }
     }
 
@@ -185,11 +189,11 @@ public class RPCExceptions{
     */
     public static class InternalErrorRPCException extends RPCException{
         public static final InternalErrorRPCException INSTANCE = new InternalErrorRPCException();
-        private InternalErrorRPCException(){
-            super("{\"code\":-32603,\"message\":\"Internal error\"}");
+        public InternalErrorRPCException(){
+            super(-32603,"Internal error");
         }
         public InternalErrorRPCException(String appendedMessage){
-            super("{\"code\":-32603,\"message\":\"Internal error:"+appendedMessage+"\"}");
+            super(-32603,"Internal error:"+appendedMessage);
         }
         InternalErrorRPCException(Integer code, String message){
             super(code,message);
@@ -203,8 +207,8 @@ public class RPCExceptions{
     */
     public static class UnsupportedUnityFeatureRPCException extends RPCException{
         public static final UnsupportedUnityFeatureRPCException INSTANCE = new UnsupportedUnityFeatureRPCException();
-        private UnsupportedUnityFeatureRPCException(){
-            super("{\"code\":-32001,\"message\":\"Unity fork is not enabled\"}");
+        public UnsupportedUnityFeatureRPCException(){
+            super(-32001,"Unity fork is not enabled");
         }
     }
 
@@ -214,8 +218,8 @@ public class RPCExceptions{
     */
     public static class BlockTemplateNotFoundRPCException extends RPCException{
         public static final BlockTemplateNotFoundRPCException INSTANCE = new BlockTemplateNotFoundRPCException();
-        private BlockTemplateNotFoundRPCException(){
-            super("{\"code\":-32002,\"message\":\"Could not find the block template for the supplied header hash.\"}");
+        public BlockTemplateNotFoundRPCException(){
+            super(-32002,"Could not find the block template for the supplied header hash.");
         }
     }
 
@@ -225,8 +229,8 @@ public class RPCExceptions{
     */
     public static class FailedToSealBlockRPCException extends RPCException{
         public static final FailedToSealBlockRPCException INSTANCE = new FailedToSealBlockRPCException();
-        private FailedToSealBlockRPCException(){
-            super("{\"code\":-32003,\"message\":\"Could not seal the pow block.\"}");
+        public FailedToSealBlockRPCException(){
+            super(-32003,"Could not seal the pow block.");
         }
     }
 
@@ -236,8 +240,8 @@ public class RPCExceptions{
     */
     public static class FailedToComputeMetricsRPCException extends RPCException{
         public static final FailedToComputeMetricsRPCException INSTANCE = new FailedToComputeMetricsRPCException();
-        private FailedToComputeMetricsRPCException(){
-            super("{\"code\":-32004,\"message\":\"Could not compute the POW metrics.\"}");
+        public FailedToComputeMetricsRPCException(){
+            super(-32004,"Could not compute the POW metrics.");
         }
     }
 
@@ -247,11 +251,11 @@ public class RPCExceptions{
     */
     public static class NullReturnRPCException extends RPCException{
         public static final NullReturnRPCException INSTANCE = new NullReturnRPCException();
-        private NullReturnRPCException(){
-            super("{\"code\":-32005,\"message\":\"Block chain rpc returned null\"}");
+        public NullReturnRPCException(){
+            super(-32005,"Block chain rpc returned null");
         }
         public NullReturnRPCException(String appendedMessage){
-            super("{\"code\":-32005,\"message\":\"Block chain rpc returned null:"+appendedMessage+"\"}");
+            super(-32005,"Block chain rpc returned null:"+appendedMessage);
         }
         NullReturnRPCException(Integer code, String message){
             super(code,message);
@@ -266,11 +270,11 @@ public class RPCExceptions{
     */
     public static class TxFailedRPCException extends RPCException{
         public static final TxFailedRPCException INSTANCE = new TxFailedRPCException();
-        private TxFailedRPCException(){
-            super("{\"code\":-32006,\"message\":\"Failed to execute transaction\"}");
+        public TxFailedRPCException(){
+            super(-32006,"Failed to execute transaction");
         }
         public TxFailedRPCException(String appendedMessage){
-            super("{\"code\":-32006,\"message\":\"Failed to execute transaction:"+appendedMessage+"\"}");
+            super(-32006,"Failed to execute transaction:"+appendedMessage);
         }
         TxFailedRPCException(Integer code, String message){
             super(code,message);

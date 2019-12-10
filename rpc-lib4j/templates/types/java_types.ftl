@@ -26,7 +26,7 @@ public class RPCTypes{
 
         public ByteArray(byte[] bytes) {
             if (bytes == null) {
-                throw new NullPointerException("Byte array is null");
+                throw new  NullPointerException("Byte array is null");
             }
             this.bytes = bytes;
         }
@@ -34,7 +34,7 @@ public class RPCTypes{
         * @param hexString a hexadecimal string that encodes a byte array.
         */
         public ByteArray(String hexString){
-            if (hexString == null) throw new NullPointerException("Hex String is null");
+            if (hexString == null) throw new  NullPointerException("Hex String is null");
             this.bytes = ByteUtil.hexStringToBytes(hexString);
         }
 
@@ -99,13 +99,13 @@ public class RPCTypes{
         <#list unionType.unionElements as unionElement >
         public ${macros.toJavaType(unionType)}(${macros.toJavaType(unionElement.type)} ${unionElement.name}){
             this(<#list 0..unionType.unionElements?size-1 as i><#if i==unionElement_index>${unionElement.name}<#else>null</#if><#if i_has_next>,</#if ></#list>);
-            if(${unionElement.name} == null) throw ${macros.toJavaException(decodeError.error_class)}.INSTANCE;
+            if(${unionElement.name} == null) throw new ${macros.toJavaException(decodeError.error_class)}();
         }
         </#list>
 
         <#list unionType.unionElements as unionElement >
         public static ${macros.toJavaType(unionType)} wrap(${macros.toJavaType(unionElement.type)} ${unionElement.name}){
-            if(${unionElement.name} == null) throw ${macros.toJavaException(decodeError.error_class)}.INSTANCE;
+            if(${unionElement.name} == null) throw new ${macros.toJavaException(decodeError.error_class)}();
             else return new ${macros.toJavaType(unionType)}(${unionElement.name});
         }
         </#list>
@@ -114,7 +114,7 @@ public class RPCTypes{
             <#list unionType.unionElements as unionElement>
             if(this.${unionElement.name} != null) return ${macros.toJavaConverter(unionElement.type)}.encode(${unionElement.name});
             </#list>
-            throw ${macros.toJavaException(encodeError.error_class)}.INSTANCE;
+            throw new ${macros.toJavaException(encodeError.error_class)}();
         }
 
         public static ${macros.toJavaType(unionType)} decode(Object object){
@@ -123,7 +123,7 @@ public class RPCTypes{
                 return new ${macros.toJavaType(unionType)}(${macros.toJavaConverter(unionElement.type)}.decode(object));
             }catch(Exception e){}
             </#list>
-            throw ${macros.toJavaException(decodeError.error_class)}.INSTANCE;
+            throw new ${macros.toJavaException(decodeError.error_class)}();
         }
     }
 
@@ -151,7 +151,7 @@ public class RPCTypes{
 
         public ${macros.toJavaType(composite_type)}(<#list composite_type.fields as field>${macros.toJavaType(field.type)} ${field.fieldName} <#if field_has_next>,</#if></#list>){
             <#list composite_type.fields as field><#if field.required=="true" >
-            if(${field.fieldName}==null) throw ${macros.toJavaException("ParseError")}.INSTANCE;
+            if(${field.fieldName}==null) throw new  ${macros.toJavaException("ParseError")}("Missing field(${field.fieldName}) on type(${macros.toJavaType(composite_type)})");
             </#if>
             this.${field.fieldName}=<#if field.defaultValue?has_content>${field.fieldName}==null? ${field.fieldName}DefaultValue:</#if>${field.fieldName};
             </#list>
@@ -174,12 +174,12 @@ public class RPCTypes{
         }
 
         public static ${macros.toJavaType(enum)} fromString(String x){
-            if(x==null) throw ${macros.toJavaException("ParseError")}.INSTANCE;
+            if(x==null) throw new ${macros.toJavaException("ParseError")}();
             <#list enum.values as value>
             if(x.equals("${value.value}")){
                 return ${value.name};
             }else</#list>
-                throw ${macros.toJavaException("ParseError")}.INSTANCE;
+                throw new ${macros.toJavaException("ParseError")}();
         }
     }
 </#list>
@@ -206,7 +206,7 @@ public class RPCTypes{
 
         public ${macros.toJavaType(paramType)}(<#list paramType.fields as field>${macros.toJavaType(field.type)} ${field.fieldName} <#if field_has_next>,</#if></#list>){
     <#list paramType.fields as field><#if field.required=="true" >
-            if(${field.fieldName}==null) throw ${macros.toJavaException("ParseError")}.INSTANCE;
+            if(${field.fieldName}==null) throw new  ${macros.toJavaException("ParseError")}("Missing field(${field.fieldName}) on rpc param type(${macros.toJavaType(paramType)})");
     </#if>
             this.${field.fieldName}=<#if field.defaultValue?has_content> ${field.fieldName}==null? ${field.fieldName}DefaultValue:</#if> ${field.fieldName};
     </#list>
