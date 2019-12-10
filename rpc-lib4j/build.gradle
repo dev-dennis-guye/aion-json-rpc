@@ -18,6 +18,21 @@ test {
     useJUnitPlatform()
 }
 
+compileJava {
+    doFirst {
+        options.compilerArgs = [
+                '--module-path', classpath.asPath,
+        ]
+        classpath = files()
+    }
+}
+
+javadoc{
+    doFirst{
+        options.addStringOption("-module-path", classpath.asPath)
+    }
+}
+
 def workingDir = rootDir.absolutePath
 def generatedFolderPath = "${workingDir}/out/"
 def javaLibraryPath = "${workingDir}/rpc-lib4j/src/main/java/org/aion/rpc"
