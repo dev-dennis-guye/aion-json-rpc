@@ -62,6 +62,26 @@ class TypeUtils {
         }
     }
 
+
+    /**
+     *
+     * @param object the encoded object
+     * @return a valid hex string
+     */
+    static String fixByteHexStringEncoding(Object object){
+        final String hexString = object.toString();
+        final String prefix = "0x0";
+        if (encodesBytes(hexString)){
+            return hexString;
+        } else {
+            if (hexString.startsWith("0x")){
+                return prefix + hexString.substring(2); // We assuming bigendian
+            } else {
+                return prefix + hexString;
+            }
+        }
+    }
+
     static String encodeLongToHexFixedLength(long l) {
         byte[] output = padArray(Long.BYTES, ByteUtil.longToBytes(l));
         String outputString = ByteUtil.toHexString(output);

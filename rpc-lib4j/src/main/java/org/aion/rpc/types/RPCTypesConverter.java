@@ -393,12 +393,13 @@ public class RPCTypesConverter{
             else if(obj instanceof byte[]){
                 return new ByteArray((byte[]) obj);
             }
-            else if (obj instanceof String && byteArrayPattern.matcher(((String)obj)).find()){
-                return new ByteArray(ByteUtil.hexStringToBytes((String) obj));
+            else if (obj instanceof String){
+                String encodedString = TypeUtils.fixByteHexStringEncoding(obj);
+                if (byteArrayPattern.matcher(encodedString).find()){
+                    return new ByteArray(ByteUtil.hexStringToBytes(encodedString));
+                }
             }
-            else {
-                throw ParseErrorRPCException.INSTANCE;
-            }
+            throw ParseErrorRPCException.INSTANCE;
         }
 
         public static String encode(ByteArray bytes){

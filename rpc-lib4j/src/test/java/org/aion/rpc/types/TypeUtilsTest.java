@@ -5,9 +5,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.math.BigInteger;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 import org.aion.rpc.errors.RPCExceptions.ParseErrorRPCException;
+import org.aion.util.bytes.ByteUtil;
+import org.aion.util.conversions.Hex;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -109,5 +112,30 @@ public class TypeUtilsTest {
         assertDoesNotThrow(()-> TypeUtils.checkUnsigned(BigInteger.ZERO));
         assertDoesNotThrow(()-> TypeUtils.checkUnsigned(BigInteger.ONE));
         assertDoesNotThrow(()-> TypeUtils.checkUnsigned((BigInteger) null));
+    }
+
+    @ParameterizedTest
+    @MethodSource("byteEncodingArgumentStream")
+    void fixByteEncoding(String hexString, String validHexString){
+        assertEquals(validHexString, TypeUtils.fixByteHexStringEncoding(hexString)); // test that we add a leading 0
+        assertEquals(validHexString, TypeUtils.fixByteHexStringEncoding(validHexString)); // test that the valid hex string will remain unchanged
+    }
+
+
+    static Stream<Arguments> byteEncodingArgumentStream(){
+        return IntStream.rangeClosed(0x00, 0x20).mapToObj(TypeUtilsTest::generateRandomArray)
+            .map(Hex::toHexString)
+            .map(hs->
+                Arguments.of("0x"+"8"+hs, // 8 -> 00001000 and therefore only the last 4 bits are encoded so the result is 8
+                    "0x"+ ByteUtil.oneByteToHexString((byte)8) +hs) // uses the byte util encoder which will encode 8 as 08
+            );
+    }
+
+    private static byte[] generateRandomArray(final int arrayLength){
+        byte[] bytes = new byte[arrayLength];
+        for (int i = 0; i < arrayLength; i++) {
+            bytes[i] = (byte) ThreadLocalRandom.current().nextInt(0, 255);
+        }
+        return bytes;
     }
 }
