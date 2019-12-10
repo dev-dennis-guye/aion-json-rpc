@@ -143,7 +143,7 @@
             <union-element name="passwordParams" type="passwordParams"/>
         </type-union>
         <type-union nullable="true" typeName="transactionUnion">
-            <union-element name="transactionList" type="ethTransaction_array"/>
+            <union-element name="transactionList" type="ethTransactionForBlock_array"/>
             <union-element name="transactionHashes" type="byte32String_array"/>
         </type-union>
     </union>
@@ -283,7 +283,7 @@
         </type-composite>
         <type-composite typeName="ethTransaction">
             <field fieldName="hash" required="true" type="byte32String"/>
-            <field fieldName="transactionIndex" required="value" type="uint128"/>
+            <field fieldName="transactionIndex" required="value" type="uint16"/>
             <field fieldName="nrg" required="true" type="uint32HexString"/>
             <field fieldName="nrgPrice" required="true" type="uint32HexString"/>
             <field fieldName="gas" required="true" type="uint32HexString"/>
@@ -295,6 +295,20 @@
             <field fieldName="input" required="false" type="dataHexString" defaultValue="0x"/>
             <field fieldName="blockNumber" required="true" type="uint32HexString"/>
             <field fieldName="blockHash" required="true" type="byte32String"/>
+        </type-composite>
+        <type-composite typeName="ethTransactionForBlock">
+            <field fieldName="hash" required="true" type="byte32String"/>
+            <field fieldName="transactionIndex" required="value" type="uint16"/>
+            <field fieldName="nrg" required="true" type="uint32HexString"/>
+            <field fieldName="nrgPrice" required="true" type="uint32HexString"/>
+            <field fieldName="gas" required="true" type="uint32HexString"/>
+            <field fieldName="gasPrice" required="true" type="uint32HexString"/>
+            <field fieldName="contractAddress" required="false" type="address"/>
+            <field fieldName="from" required="true" type="address"/>
+            <field fieldName="to" required="false" type="address"/>
+            <field fieldName="timestamp" required="true" type="uint32"/>
+            <field fieldName="input" required="false" type="dataHexString" defaultValue="0x"/>
+            <field fieldName="blockNumber" required="true" type="uint32"/>
         </type-composite>
         <type-composite typeName="ethTransactionReceipt">
             <field fieldName="transactionHash" required="true" type="byte32String"/>
@@ -380,6 +394,7 @@
         <type-list typeName="txDetails_array" nestedType="txDetails"/>
         <type-list typeName="ethTxReceiptLogs_array" nestedType="ethTxReceiptLogs"/>
         <type-list typeName="ethTransaction_array" nestedType="ethTransaction"/>
+        <type-list typeName="ethTransactionForBlock_array" nestedType="ethTransactionForBlock"/>
     </array>
     <constrained>
         <!--Constrained types define a maximum and minimum size, and a regex to be used for validating the type-->

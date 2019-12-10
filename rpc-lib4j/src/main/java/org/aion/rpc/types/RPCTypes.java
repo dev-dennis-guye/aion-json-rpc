@@ -644,14 +644,14 @@ public class RPCTypes{
     }
 
     public static final class TransactionUnion{
-        public final EthTransaction[] transactionList;
+        public final EthTransactionForBlock[] transactionList;
         public final ByteArray[] transactionHashes;
-        private TransactionUnion(EthTransaction[] transactionList ,ByteArray[] transactionHashes ){
+        private TransactionUnion(EthTransactionForBlock[] transactionList ,ByteArray[] transactionHashes ){
             this.transactionList=transactionList;
             this.transactionHashes=transactionHashes;
         }
 
-        public TransactionUnion(EthTransaction[] transactionList){
+        public TransactionUnion(EthTransactionForBlock[] transactionList){
             this(transactionList,null);
             if(transactionList == null) throw ParseErrorRPCException.INSTANCE;
         }
@@ -660,7 +660,7 @@ public class RPCTypes{
             if(transactionHashes == null) throw ParseErrorRPCException.INSTANCE;
         }
 
-        public static TransactionUnion wrap(EthTransaction[] transactionList){
+        public static TransactionUnion wrap(EthTransactionForBlock[] transactionList){
             if(transactionList == null) throw ParseErrorRPCException.INSTANCE;
             else return new TransactionUnion(transactionList);
         }
@@ -670,14 +670,14 @@ public class RPCTypes{
         }
 
         public Object encode(){
-            if(this.transactionList != null) return EthTransactionListConverter.encode(transactionList);
+            if(this.transactionList != null) return EthTransactionForBlockListConverter.encode(transactionList);
             if(this.transactionHashes != null) return Byte32StringListConverter.encode(transactionHashes);
             throw ParseErrorRPCException.INSTANCE;
         }
 
         public static TransactionUnion decode(Object object){
             try{
-                return new TransactionUnion(EthTransactionListConverter.decode(object));
+                return new TransactionUnion(EthTransactionForBlockListConverter.decode(object));
             }catch(Exception e){}
             try{
                 return new TransactionUnion(Byte32StringListConverter.decode(object));
@@ -1048,7 +1048,7 @@ public class RPCTypes{
     }
     public static final class EthTransaction {
         public final ByteArray hash;
-        public final BigInteger transactionIndex;
+        public final Integer transactionIndex;
         public final Long nrg;
         public final Long nrgPrice;
         public final Long gas;
@@ -1062,7 +1062,7 @@ public class RPCTypes{
         public final Long blockNumber;
         public final ByteArray blockHash;
 
-        public EthTransaction(ByteArray hash ,BigInteger transactionIndex ,Long nrg ,Long nrgPrice ,Long gas ,Long gasPrice ,AionAddress contractAddress ,AionAddress from ,AionAddress to ,Long timestamp ,ByteArray input ,Long blockNumber ,ByteArray blockHash ){
+        public EthTransaction(ByteArray hash ,Integer transactionIndex ,Long nrg ,Long nrgPrice ,Long gas ,Long gasPrice ,AionAddress contractAddress ,AionAddress from ,AionAddress to ,Long timestamp ,ByteArray input ,Long blockNumber ,ByteArray blockHash ){
             if(hash==null) throw ParseErrorRPCException.INSTANCE;
             this.hash=hash;
             this.transactionIndex=transactionIndex;
@@ -1085,6 +1085,44 @@ public class RPCTypes{
             this.blockNumber=blockNumber;
             if(blockHash==null) throw ParseErrorRPCException.INSTANCE;
             this.blockHash=blockHash;
+        }
+    }
+    public static final class EthTransactionForBlock {
+        public final ByteArray hash;
+        public final Integer transactionIndex;
+        public final Long nrg;
+        public final Long nrgPrice;
+        public final Long gas;
+        public final Long gasPrice;
+        public final AionAddress contractAddress;
+        public final AionAddress from;
+        public final AionAddress to;
+        public final Long timestamp;
+        public final ByteArray input;
+        public static final ByteArray inputDefaultValue=DataHexStringConverter.decode("0x");
+        public final Long blockNumber;
+
+        public EthTransactionForBlock(ByteArray hash ,Integer transactionIndex ,Long nrg ,Long nrgPrice ,Long gas ,Long gasPrice ,AionAddress contractAddress ,AionAddress from ,AionAddress to ,Long timestamp ,ByteArray input ,Long blockNumber ){
+            if(hash==null) throw ParseErrorRPCException.INSTANCE;
+            this.hash=hash;
+            this.transactionIndex=transactionIndex;
+            if(nrg==null) throw ParseErrorRPCException.INSTANCE;
+            this.nrg=nrg;
+            if(nrgPrice==null) throw ParseErrorRPCException.INSTANCE;
+            this.nrgPrice=nrgPrice;
+            if(gas==null) throw ParseErrorRPCException.INSTANCE;
+            this.gas=gas;
+            if(gasPrice==null) throw ParseErrorRPCException.INSTANCE;
+            this.gasPrice=gasPrice;
+            this.contractAddress=contractAddress;
+            if(from==null) throw ParseErrorRPCException.INSTANCE;
+            this.from=from;
+            this.to=to;
+            if(timestamp==null) throw ParseErrorRPCException.INSTANCE;
+            this.timestamp=timestamp;
+            this.input=input==null? inputDefaultValue:input;
+            if(blockNumber==null) throw ParseErrorRPCException.INSTANCE;
+            this.blockNumber=blockNumber;
         }
     }
     public static final class EthTransactionReceipt {
