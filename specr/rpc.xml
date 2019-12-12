@@ -9,7 +9,8 @@
         name CDATA #REQUIRED
         param CDATA #REQUIRED
         returnType CDATA #REQUIRED
-        namespace CDATA #REQUIRED>
+        namespace CDATA #REQUIRED
+        async CDATA #REQUIRED>
     <!ELEMENT errors (error)*>
     <!ELEMENT error (#PCDATA)>
     <!ATTLIST error
@@ -22,38 +23,38 @@
         </comment>
     </comments>
     <methods>
-        <method name="personal_ecRecover" param="ecRecoverParams" returnType="address" namespace="personal">
+        <method name="personal_ecRecover" param="ecRecoverParams" returnType="address" namespace="personal" async="false">
             <comment>Returns the key used to sign an input string.</comment>
         </method>
-        <method name="getSeed" param="voidParams" returnType="data_hex_string" namespace="stratum">
+        <method name="getSeed" param="voidParams" returnType="data_hex_string" namespace="stratum" async="false">
             <errors>
                 <error value="UnsupportedUnityFeature"/>
             </errors>
         </method>
-        <method name="submitSeed" param="submitSeedParams" returnType="data_hex_string" namespace="stratum">
+        <method name="submitSeed" param="submitSeedParams" returnType="data_hex_string" namespace="stratum" async="false">
             <errors>
                 <error value="UnsupportedUnityFeature"/>
             </errors>
         </method>
-        <method name="submitSignature" param="submitSignatureParams" returnType="bool" namespace="stratum">
+        <method name="submitSignature" param="submitSignatureParams" returnType="bool" namespace="stratum" async="false">
             <errors>
                 <error value="UnsupportedUnityFeature"/>
                 <error value="BlockTemplateNotFound"/>
             </errors>
         </method>
-        <method name="ops_getBlockDetails" param="blockSpecifier" returnType="blockDetails" namespace="ops" >
+        <method name="ops_getBlockDetails" param="blockSpecifier" returnType="blockDetails" namespace="ops" async="false">
             <comment>Returns the details of the specified block.</comment>
         </method>
-        <method name="getBlockTemplate" param="voidParams" returnType="blockTemplate" namespace="stratum"/>
-        <method name="submitBlock" param="submitBlockParams" returnType="submissionResult" namespace="stratum">
+        <method name="getBlockTemplate" param="voidParams" returnType="blockTemplate" namespace="stratum" async="false"/>
+        <method name="submitBlock" param="submitBlockParams" returnType="submissionResult" namespace="stratum" async="false">
             <errors>
                 <error value="BlockTemplateNotFound"/>
                 <error value="FailedToSealBlock"/>
             </errors>
         </method>
-        <method name="validateAddress" param="addressParams" returnType="validateAddressResult" namespace="stratum"/>
-        <method name="getDifficulty" param="voidParams" returnType="big_int_hex_string" namespace="stratum"/>
-        <method name="getMinerStats" param="addressParams" returnType="minerStats" namespace="stratum">
+        <method name="validateAddress" param="addressParams" returnType="validateAddressResult" namespace="stratum" async="false"/>
+        <method name="getDifficulty" param="voidParams" returnType="big_int_hex_string" namespace="stratum" async="false"/>
+        <method name="getMinerStats" param="addressParams" returnType="minerStats" namespace="stratum" async="false">
             <errors>
                 <error value="FailedToComputeMetrics"/>
             </errors>

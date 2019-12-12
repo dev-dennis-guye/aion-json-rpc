@@ -35,7 +35,7 @@ build_rpc_trait! {
         <#list methods as method>
         <#if method.namespace=="ops">
         #[rpc(name = "${method.name}")]
-        fn ${macros.toSnakeCase(method.name)}(&self${macros.toRustParams(method.param)}) -> Result<${macros.toRustType(method.returnType)}>;
+        fn ${macros.toSnakeCase(method.name)}(&self${macros.toRustParams(method.param)}) -> <#if method.async=="true">BoxFuture<#else>Result</#if><${macros.toRustType(method.returnType)}>;
 
         </#if>
         </#list>

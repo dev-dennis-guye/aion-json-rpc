@@ -24,15 +24,17 @@ public class MethodSchema implements Mappable {
     private final List<String> errors;
     private final List<ErrorSchema> errorSchemas;
     private final String namespace;
+    private final String async;
 
     MethodSchema(String name, String paramName, String returnName,
-        List<String> comments, List<String> errors, String namespace) {
+        List<String> comments, List<String> errors, String namespace, String async) {
         this.name = name;
         this.paramName = paramName;
         this.returnName = returnName;
         this.comments = comments;
         this.errors = errors;
         this.namespace = namespace;
+        this.async = async;
         errorSchemas = new ArrayList<>();
     }
 
@@ -46,7 +48,9 @@ public class MethodSchema implements Mappable {
                 .map(e->SchemaUtils.getErrors(e.getChildNodes()))
                 .orElse(Collections.emptyList()),
             XMLUtils.hasAttribute(node, "namespace") ?
-                XMLUtils.valueFromAttribute(node, "namespace"): "");
+                XMLUtils.valueFromAttribute(node, "namespace"): "",
+            XMLUtils.hasAttribute(node, "async") ?
+                XMLUtils.valueFromAttribute(node, "async"): "");
     }
 
     public void setParamType(List<Type> types) {
@@ -92,7 +96,8 @@ public class MethodSchema implements Mappable {
             Map.entry("returnType", returnType.toMap()),
             Map.entry("comments", comments),
             Map.entry("errors", Utils.toListOfMaps(errorSchemas)),
-            Map.entry("namespace", namespace)
+            Map.entry("namespace", namespace),
+            Map.entry("async", async)
         );
     }
 }
