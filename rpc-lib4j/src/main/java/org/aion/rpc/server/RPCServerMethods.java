@@ -125,7 +125,7 @@ public interface RPCServerMethods extends RPC{
                 AddressBlockParams params= AddressBlockParamsConverter.decode(request.params);
                 if (params==null) throw InvalidParamsRPCException.INSTANCE;
                 BigInteger result = rpc.eth_getTransactionCount(params.address,params.block);
-                res = BigIntConverter.encode(result);
+                res = BigIntHexStringConverter.encode(result);
             }else
             if(request.method.equals("personal_unlockAccount")){
                 UnlockAccountParams params= UnlockAccountParamsConverter.decode(request.params);

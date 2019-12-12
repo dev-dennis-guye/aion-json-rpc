@@ -167,7 +167,8 @@ public class RPCTypes{
     </#if>
     public enum ${macros.toJavaType(enum)}{
         <#list enum.values as value>
-        ${value.name}("${value.value}")<#if value_has_next>,</#if></#list>;
+        ${value.name}("${value.value}")<#if value_has_next>,
+        </#if></#list>;
         public final ${macros.toJavaType(enum.internalType)} x;
         ${macros.toJavaType(enum)}(${macros.toJavaType(enum.internalType)} x){
             this.x = x;
@@ -175,10 +176,9 @@ public class RPCTypes{
 
         public static ${macros.toJavaType(enum)} fromString(String x){
             if(x==null) throw ${macros.toJavaException("ParseError")}.INSTANCE;
-            <#list enum.values as value>
-            if(x.equals("${value.value}")){
+            <#list enum.values as value>if(x.equalsIgnoreCase("${value.value}")){
                 return ${value.name};
-            }else</#list>
+            }else </#list>
                 throw ${macros.toJavaException("ParseError")}.INSTANCE;
         }
     }

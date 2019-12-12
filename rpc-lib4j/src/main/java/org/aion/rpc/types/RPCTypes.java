@@ -964,14 +964,16 @@ public class RPCTypes{
 
         public static VersionType fromString(String x){
             if(x==null) throw ParseErrorRPCException.INSTANCE;
-            if(x.equals("2.0")){
+            if(x.equalsIgnoreCase("2.0")){
                 return Version2;
-            }else
+            }else 
                 throw ParseErrorRPCException.INSTANCE;
         }
     }
     public enum BlockEnum{
-        LATEST("latest"),        PENDING("pending"),        EARLIEST("earliest");
+        LATEST("latest"),
+                PENDING("pending"),
+                EARLIEST("earliest");
         public final String x;
         BlockEnum(String x){
             this.x = x;
@@ -979,13 +981,13 @@ public class RPCTypes{
 
         public static BlockEnum fromString(String x){
             if(x==null) throw ParseErrorRPCException.INSTANCE;
-            if(x.equals("latest")){
+            if(x.equalsIgnoreCase("latest")){
                 return LATEST;
-            }else            if(x.equals("pending")){
+            }else if(x.equalsIgnoreCase("pending")){
                 return PENDING;
-            }else            if(x.equals("earliest")){
+            }else if(x.equalsIgnoreCase("earliest")){
                 return EARLIEST;
-            }else
+            }else 
                 throw ParseErrorRPCException.INSTANCE;
         }
     }
@@ -998,9 +1000,9 @@ public class RPCTypes{
 
         public static PongEnum fromString(String x){
             if(x==null) throw ParseErrorRPCException.INSTANCE;
-            if(x.equals("pong")){
+            if(x.equalsIgnoreCase("pong")){
                 return PONG;
-            }else
+            }else 
                 throw ParseErrorRPCException.INSTANCE;
         }
     }
