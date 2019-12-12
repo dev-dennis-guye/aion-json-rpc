@@ -1,5 +1,5 @@
+<#import "../rust_macros.ftl" as macros/>
 /*******************************************************************************
- * Copyright (c) 2015-2018 Parity Technologies (UK) Ltd.
  * Copyright (c) 2018-2019 Aion foundation.
  *
  *     This file is part of the aion network project.
@@ -20,30 +20,24 @@
  *
  ******************************************************************************/
 
-#![warn(unused_extern_crates)]
-extern crate rustc_hex;
-extern crate serde;
-extern crate aion_types;
+/******************************************************************************
+*
+* AUTO-GENERATED SOURCE FILE.  DO NOT EDIT MANUALLY -- YOUR CHANGES WILL
+* BE WIPED OUT WHEN THIS FILE GETS RE-GENERATED OR UPDATED.
+* GENERATED: ${date}
+*
+*****************************************************************************/
 
-extern crate jsonrpc_core;
+use super::*;
 
-#[macro_use]
-extern crate jsonrpc_macros;
-#[macro_use]
-extern crate serde_derive;
+build_rpc_trait! {
+    pub trait Personal {
+        <#list methods as method>
+        <#if method.namespace=="personal">
+        #[rpc(name = "${method.name}")]
+        fn ${macros.toSnakeCase(method.name)}(&self${macros.toRustParams(method.param)}) -> Result<${macros.toRustType(method.returnType)}>;
 
-#[cfg(test)]
-#[macro_use]
-extern crate pretty_assertions;
-
-
-
-mod errors;
-pub mod types;
-pub mod traits;
-
-
-
-fn main() {
-    println!("Hello, world!");
+        </#if>
+        </#list>
+    }
 }

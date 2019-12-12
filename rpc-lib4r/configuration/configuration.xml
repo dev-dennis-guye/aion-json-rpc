@@ -11,10 +11,9 @@
         <template outputfile="rpc_errors.rs" templatefile="rust_errors.ftl"/>
     </error-templates>
     <rpc-templates dir="rpc"> <!--For use with rpc.xml-->
-        <template outputfile="rpc_server.rs" templatefile="rust_rpc.ftl"/>
-        <template outputfile="rpc_client.rs" templatefile="rust_rpc_client.ftl"/>
-        <template outputfile="rpc_test.rs" templatefile="rust_test.ftl"/>
-        <template outputfile="rpc_test_utils.rs" templatefile="rust_testUtils.ftl"/>
+        <template outputfile="stratum.rs" templatefile="stratum.ftl"/>
+        <template outputfile="ops.rs" templatefile="ops.ftl"/>
+        <template outputfile="personal.rs" templatefile="personal.ftl"/>
     </rpc-templates>
     <type-templates dir="types"> <!--For use with type.xml-->
         <template outputfile="rpc_types.rs" templatefile="rust_types.ftl"/>

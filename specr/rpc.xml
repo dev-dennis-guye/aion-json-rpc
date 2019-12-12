@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE rpc [
+    <!ELEMENT rpc (comments|methods)*>
+    <!ELEMENT comments (comment)*>
+    <!ELEMENT comment (#PCDATA)>
+    <!ELEMENT methods (method)*>
+    <!ELEMENT method (comment|errors)*>
+    <!ATTLIST method
+        name CDATA #REQUIRED
+        param CDATA #REQUIRED
+        returnType CDATA #REQUIRED
+        namespace CDATA #REQUIRED>
+    <!ELEMENT errors (error)*>
+    <!ELEMENT error (#PCDATA)>
+    <!ATTLIST error
+        value CDATA #REQUIRED>
+    ]>
+<rpc>
+    <comments>
+        <comment>Allows you to interact with accounts on the aion network and provides a handful of
+            crypto utilities
+        </comment>
+    </comments>
+    <methods>
+        <method name="personal_ecRecover" param="ecRecoverParams" returnType="address" namespace="personal">
+            <comment>Returns the key used to sign an input string.</comment>
+        </method>
+        <method name="getSeed" param="voidParams" returnType="data_hex_string" namespace="stratum">
+            <errors>
+                <error value="UnsupportedUnityFeature"/>
+            </errors>
+        </method>
+        <method name="submitSeed" param="submitSeedParams" returnType="data_hex_string" namespace="stratum">
+            <errors>
+                <error value="UnsupportedUnityFeature"/>
+            </errors>
+        </method>
+        <method name="submitSignature" param="submitSignatureParams" returnType="bool" namespace="stratum">
+            <errors>
+                <error value="UnsupportedUnityFeature"/>
+                <error value="BlockTemplateNotFound"/>
+            </errors>
+        </method>
+        <method name="ops_getBlockDetails" param="blockSpecifier" returnType="blockDetails" namespace="ops" >
+            <comment>Returns the details of the specified block.</comment>
+        </method>
+        <method name="getBlockTemplate" param="voidParams" returnType="blockTemplate" namespace="stratum"/>
+        <method name="submitBlock" param="submitBlockParams" returnType="submissionResult" namespace="stratum">
+            <errors>
+                <error value="BlockTemplateNotFound"/>
+                <error value="FailedToSealBlock"/>
+            </errors>
+        </method>
+        <method name="validateAddress" param="addressParams" returnType="validateAddressResult" namespace="stratum"/>
+        <method name="getDifficulty" param="voidParams" returnType="big_int_hex_string" namespace="stratum"/>
+        <method name="getMinerStats" param="addressParams" returnType="minerStats" namespace="stratum">
+            <errors>
+                <error value="FailedToComputeMetrics"/>
+            </errors>
+        </method>
+    </methods>
+</rpc>

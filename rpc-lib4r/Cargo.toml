@@ -2,6 +2,18 @@
 name = "rpc-lib4r"
 version = "0.1.0"
 authors = ["Camus Qiu <camus@aion.network>"]
-edition = "2018"
 
 [dependencies]
+futures = "0.1.6"
+log = "0.3"
+rustc-hex = "1.0"
+serde = "1.0"
+serde_derive = "1.0"
+
+aion-types = { path = "util/aion-types"}
+
+jsonrpc-core = { git = "https://github.com/paritytech/jsonrpc.git", branch = "parity-2.2" }
+jsonrpc-macros = { git = "https://github.com/paritytech/jsonrpc.git", branch = "parity-2.2" }
+
+[dev-dependencies]
+pretty_assertions = "0.1"

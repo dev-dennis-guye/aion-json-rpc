@@ -21,29 +21,38 @@
  ******************************************************************************/
 
 #![warn(unused_extern_crates)]
-extern crate rustc_hex;
+#![cfg_attr(not(feature = "std"), no_std)]
+#![cfg_attr(asm_available, feature(asm))]
+
+#[cfg(feature = "std")]
+extern crate core;
+#[macro_use]
+extern crate crunchy;
+#[macro_use]
+extern crate uint as uint_crate;
+#[macro_use]
+extern crate fixed_hash;
+extern crate num_bigint;
+
+#[cfg(feature = "serialize")]
+extern crate ethereum_types_serialize;
+#[cfg(feature = "serialize")]
 extern crate serde;
-extern crate aion_types;
 
-extern crate jsonrpc_core;
+mod hash;
+mod uint;
 
-#[macro_use]
-extern crate jsonrpc_macros;
-#[macro_use]
-extern crate serde_derive;
+pub use uint::{U64, U128, U256, U512};
+pub use hash::{H32, H64, H128, H160, H256, H264, H512, H520, H768, H1024};
+pub use fixed_hash::clean_0x;
 
-#[cfg(test)]
-#[macro_use]
-extern crate pretty_assertions;
+pub type Address = H256;
+pub type Ed25519Public = H256;
 
-
-
-mod errors;
-pub mod types;
-pub mod traits;
-
-
-
-fn main() {
-    println!("Hello, world!");
+pub fn to_u256(input: Vec<u8>, length: usize) -> U256 {
+    if input.len() > length {
+        U256::from_big_endian(&input[input.len() - length..input.len()])
+    } else {
+        U256::from_big_endian(&input.as_slice())
+    }
 }

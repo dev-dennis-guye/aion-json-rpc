@@ -17,8 +17,9 @@ task copyRustClientMethods(type:Copy){
 }
 
 task copyRustServerMethods(type:Copy){
-    from "${generatedFolderPath}/rpc/rpc_server.rs"
+    from "${generatedFolderPath}/rpc/"
     into "${rustLibraryPath}/traits"
+    include "*.rs"
 }
 
 task copyRustTypes(type:Copy){

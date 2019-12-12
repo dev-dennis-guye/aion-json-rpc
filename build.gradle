@@ -6,6 +6,7 @@ def rustTemplatePath = "${workingDir}/rpc-lib4r/templates"
 def javaConfigurationPath = "${workingDir}/rpc-lib4j/configuration/configuration.xml"
 def rustConfigurationPath = "${workingDir}/rpc-lib4r/configuration/configuration.xml"
 def specPath = "${workingDir}/spec/"
+def specPathr = "${workingDir}/specr/"
 def buildRoot = "${rootDir.absolutePath}/build"
 
 allprojects{
@@ -79,7 +80,7 @@ task genRust(type:Exec){
     dependsOn 'clean', 'createGenerator'
     commandLine("$generatorPath/bin/generator",
             '-s',
-            "$specPath",
+            "$specPathr",
             '-o', "$generatedFolderPath",
             "--templates", "$rustTemplatePath",
             "--config", "$rustConfigurationPath")
