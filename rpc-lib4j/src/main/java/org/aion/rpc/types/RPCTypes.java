@@ -12,7 +12,7 @@ import org.json.JSONObject;
 *
 * AUTO-GENERATED SOURCE FILE.  DO NOT EDIT MANUALLY -- YOUR CHANGES WILL
 * BE WIPED OUT WHEN THIS FILE GETS RE-GENERATED OR UPDATED.
-* GENERATED: 2019-12-07
+* GENERATED: 2019-12-12
 *
 *****************************************************************************/
 public class RPCTypes{
@@ -971,7 +971,7 @@ public class RPCTypes{
         }
     }
     public enum BlockEnum{
-        LATEST("latest");
+        LATEST("latest"),        PENDING("pending"),        EARLIEST("earliest");
         public final String x;
         BlockEnum(String x){
             this.x = x;
@@ -981,6 +981,10 @@ public class RPCTypes{
             if(x==null) throw ParseErrorRPCException.INSTANCE;
             if(x.equals("latest")){
                 return LATEST;
+            }else            if(x.equals("pending")){
+                return PENDING;
+            }else            if(x.equals("earliest")){
+                return EARLIEST;
             }else
                 throw ParseErrorRPCException.INSTANCE;
         }

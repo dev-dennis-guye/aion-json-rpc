@@ -316,6 +316,8 @@
         </type-enum>
         <type-enum typeName="blockEnum" internalType="string">
             <value name="LATEST" var="latest"/>
+            <value name="PENDING" var="pending"/>
+            <value name="EARLIEST" var="earliest"/>
         </type-enum>
         <type-enum typeName="pongEnum" internalType="string">
             <value name="PONG" var="pong"/>
