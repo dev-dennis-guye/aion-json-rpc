@@ -12,7 +12,7 @@ import org.aion.util.types.ByteArrayWrapper;
 *
 * AUTO-GENERATED SOURCE FILE.  DO NOT EDIT MANUALLY -- YOUR CHANGES WILL
 * BE WIPED OUT WHEN THIS FILE GETS RE-GENERATED OR UPDATED.
-* GENERATED: 2019-12-07
+* GENERATED: 2019-12-12
 *
 *****************************************************************************/
 public interface RPCServerMethods extends RPC{
@@ -77,7 +77,7 @@ public interface RPCServerMethods extends RPC{
                 VoidParams params= VoidParamsConverter.decode(request.params);
                 if (params==null) throw InvalidParamsRPCException.INSTANCE;
                 BigInteger result = rpc.getDifficulty();
-                res = BigIntHexStringConverter.encode(result);
+                res = Uint128HexStringConverter.encode(result);
             }else
             if(request.method.equals("getMinerStatistics")){
                 AddressParams params= AddressParamsConverter.decode(request.params);
@@ -125,7 +125,7 @@ public interface RPCServerMethods extends RPC{
                 AddressBlockParams params= AddressBlockParamsConverter.decode(request.params);
                 if (params==null) throw InvalidParamsRPCException.INSTANCE;
                 BigInteger result = rpc.eth_getTransactionCount(params.address,params.block);
-                res = Uint128HexStringConverter.encode(result);
+                res = BigIntConverter.encode(result);
             }else
             if(request.method.equals("personal_unlockAccount")){
                 UnlockAccountParams params= UnlockAccountParamsConverter.decode(request.params);

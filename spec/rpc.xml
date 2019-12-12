@@ -66,7 +66,7 @@
         <method name="eth_getBalance" param="addressBlockParams" returnType="uint256HexString" namespace="eth">
             <comment>The account balance for the specified account at a given block height </comment>
         </method>
-        <method name="eth_getTransactionCount" param="addressBlockParams" returnType="uint128HexString" namespace="eth">
+        <method name="eth_getTransactionCount" param="addressBlockParams" returnType="bigIntHexString" namespace="eth">
             <comment>The account balance for the specified account at a given block height </comment>
         </method>
         <method name="personal_unlockAccount" param="unlockAccountParams" returnType="bool" namespace="personal"/>

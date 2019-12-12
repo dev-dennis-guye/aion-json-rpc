@@ -13,7 +13,7 @@ import org.aion.util.types.ByteArrayWrapper;
 *
 * AUTO-GENERATED SOURCE FILE.  DO NOT EDIT MANUALLY -- YOUR CHANGES WILL
 * BE WIPED OUT WHEN THIS FILE GETS RE-GENERATED OR UPDATED.
-* GENERATED: 2019-12-07
+* GENERATED: 2019-12-12
 *
 *****************************************************************************/
 public class RPCClientMethods{
@@ -142,7 +142,7 @@ public class RPCClientMethods{
         VoidParams params= new VoidParams();
         Request request = new Request(generator.generateID(), "getDifficulty", VoidParamsConverter.encode(params), VersionType.Version2);
 
-        return provider.execute(request, BigIntHexStringConverter::decode);
+        return provider.execute(request, Uint128HexStringConverter::decode);
     }
     /**
     * 
@@ -255,7 +255,7 @@ public class RPCClientMethods{
         AddressBlockParams params= new AddressBlockParams(address ,block);
         Request request = new Request(generator.generateID(), "eth_getTransactionCount", AddressBlockParamsConverter.encode(params), VersionType.Version2);
 
-        return provider.execute(request, Uint128HexStringConverter::decode);
+        return provider.execute(request, BigIntHexStringConverter::decode);
     }
     /**
     * 
@@ -444,7 +444,7 @@ public class RPCClientMethods{
         VoidParams params= new VoidParams();
         Request request = new Request(generator.generateID(), "getDifficulty", VoidParamsConverter.encode(params), VersionType.Version2);
 
-        return provider.executeAsync(request, BigIntHexStringConverter::decode, asyncTask);
+        return provider.executeAsync(request, Uint128HexStringConverter::decode, asyncTask);
     }
     /**
     * 
@@ -573,7 +573,7 @@ public class RPCClientMethods{
         AddressBlockParams params= new AddressBlockParams(address ,block);
         Request request = new Request(generator.generateID(), "eth_getTransactionCount", AddressBlockParamsConverter.encode(params), VersionType.Version2);
 
-        return provider.executeAsync(request, Uint128HexStringConverter::decode, asyncTask);
+        return provider.executeAsync(request, BigIntHexStringConverter::decode, asyncTask);
     }
     /**
     * 
