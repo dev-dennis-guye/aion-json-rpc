@@ -34,7 +34,7 @@ fn method_name(&self, param1: InputType1, param2: InputType2, ...) -> Result<Ret
 
 So three parts are included:
 
-1. RPC name (if the method name is not in snake case)
+1. RPC name
 2. input params which are already deserialized.
 3. Result including `ReturnType` and implicit `Error`.(Result<ReturnType> is a specific type for generic Result<T, Error>)
 

@@ -48,13 +48,15 @@ pub struct ${macros.toRustType(composite_type)} {
     </#list>
     */
     </#if>
-    <#if field.fieldName?matches(r"[a-z_]+")><#else>
+    <#if field.fieldName?matches(r"[a-z_]+")><#if field.fieldName=="type">
+    #[serde(rename = "type")]
+    </#if><#else>
     #[serde(rename = "${field.fieldName}")]
     </#if>
     <#if field.required=="false">
     #[serde(skip_serializing_if = "Option::is_none")]
     </#if>
-    pub ${macros.toSnakeCase(field.fieldName)}: ${macros.toOption(field.type, field.required)},
+    pub <#if field.fieldName == "type">tx_type<#else>${macros.toSnakeCase(field.fieldName)}</#if>: ${macros.toOption(field.type, field.required)},
 
 </#list>
 }

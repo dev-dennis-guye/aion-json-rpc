@@ -163,7 +163,7 @@
             <field fieldName="blockNumber" required="true" type="long_hex_string"/>
             <field fieldName="blockHash" required="true" type="byte_32_string"/>
             <field fieldName="error" required="true" type="string"/>
-            <field fieldName="txType" required="true" type="byte_hex_string"/>
+            <field fieldName="type" required="true" type="byte_hex_string"/>
             <field fieldName="nrgUsed" required="true" type="long_hex_string"/>
             <field fieldName="gasUsed" required="true" type="long_hex_string"/>
             <field fieldName="hasInternalTransactions" required="true" type="bool"/>
@@ -202,7 +202,7 @@
             <field fieldName="blockTime" required="false" type="int"/>
         </type-composite>
         <type-composite typeName="blockTemplate">
-            <field fieldName="previousBlockHash" type="byte_32_string" required="true"/>
+            <field fieldName="previousblockhash" type="byte_32_string" required="true"/>
             <field fieldName="height" type="long" required="true"/>
             <field fieldName="target" type="uint256_hex_string" required="true"/>
             <field fieldName="headerHash" type="byte_32_string" required="true"/>
@@ -213,9 +213,9 @@
             <field fieldName="result" type="bool" required="true"/>
         </type-composite>
         <type-composite typeName="validateAddressResult">
-            <field fieldName="isValid" type="bool" required="true"/>
+            <field fieldName="isvalid" type="bool" required="true"/>
             <field fieldName="address" type="address" required="true"/>
-            <field fieldName="isMine" type="bool" required="true"/>
+            <field fieldName="ismine" type="bool" required="true"/>
         </type-composite>
         <type-composite typeName="minerStats">
             <field fieldName="networkHashRate" type="decimal_string" required="true"/>
