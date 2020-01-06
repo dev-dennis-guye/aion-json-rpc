@@ -4,3 +4,10 @@ build
 gradle
 out
 output
+/src/main/java/org/aion/rpc/types/RPCTypes.java
+/src/main/java/org/aion/rpc/types/RPCTypesConverter.java
+/src/main/java/org/aion/rpc/server/RPCServerMethods.java
+/src/main/java/org/aion/rpc/errors/RPCExceptions.java
+/src/main/java/org/aion/rpc/client/RPCClientMethods.java
+/src/main/java/org/aion/rpc/constants/**
+/tests
